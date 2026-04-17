@@ -48,7 +48,7 @@ export const profile = {
   email: "parthgadekar060202@gmail.com",
   phone: "+1 (551) 260-5658",
   github: "https://github.com/ParthGadekar0631",
-  resume: "/Parth_Gadekar_Resume.pdf",
+  resume: "Parth_Gadekar_Resume.pdf",
 };
 
 export const requestedStack = [

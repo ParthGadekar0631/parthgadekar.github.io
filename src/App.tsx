@@ -44,6 +44,7 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
 
   const visibleStack = useMemo(() => requestedStack, []);
+  const resumeHref = `${import.meta.env.BASE_URL}${profile.resume}`;
 
   const sendMessage = (text: string) => {
     const trimmed = text.trim();
@@ -112,7 +113,7 @@ function App() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <a className="button button-primary" href={profile.resume} target="_blank" rel="noreferrer">
+              <a className="button button-primary" href={resumeHref} target="_blank" rel="noreferrer">
                 Download resume
               </a>
               <a className="button button-secondary" href={`mailto:${profile.email}`}>
