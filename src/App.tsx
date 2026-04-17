@@ -1,8 +1,11 @@
 import { CSSProperties, FormEvent, useEffect, useMemo, useState } from "react";
 import {
+  capabilitySections,
   educationEntries,
   experienceEntries,
   homeHighlights,
+  homepageImpactMetrics,
+  homepageProjectSlugs,
   moduleConfigs,
   profile,
   projects,
@@ -10,7 +13,7 @@ import {
   skillsGroups,
 } from "./content/site";
 import { validateContentIntegrity } from "./lib/integrity";
-import { AppRoute, navigate, parseRoute } from "./lib/routes";
+import { AppRoute, navigate, parseRoute, toAppPath } from "./lib/routes";
 import { ModuleConfig, ProjectSummary } from "./types";
 
 validateContentIntegrity();
@@ -43,7 +46,7 @@ function AppLink({
   return (
     <a
       className={className}
-      href={to}
+      href={toAppPath(to)}
       onClick={(event) => {
         event.preventDefault();
         navigate(to);
@@ -264,67 +267,91 @@ function ProjectCards({
   );
 }
 
-function HomeView({ activeModule }: { activeModule: ModuleConfig }) {
-  const featuredProjects = projects.filter((item) => activeModule.featuredProjectSlugs.includes(item.slug));
+function HomeView() {
+  const featuredProjects = projects.filter((item) => homepageProjectSlugs.includes(item.slug));
 
   return (
-    <div className="space-y-16">
-      <section className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
-        <div className="hero-panel reveal">
-          <div className="hero-shine" />
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium tracking-[0.24em] text-[var(--muted)] uppercase">
-            Landing page
-          </div>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <span className="eyebrow-tag">software engineering</span>
-            <span className="eyebrow-tag">data systems</span>
-            <span className="eyebrow-tag">AI-native product thinking</span>
-          </div>
-          <p className="mt-8 max-w-3xl text-lg leading-9 text-[var(--soft)]">
-            {profile.shortSummary}
+    <div className="space-y-20">
+      <section className="space-y-6">
+        <div className="reveal">
+          <div className="section-kicker">Core stack</div>
+          <h2 className="section-title">Tools I use to build backend, data, and product systems.</h2>
+          <p className="section-copy">
+            This landing page is intentionally shaped more like a strong personal product page: quick positioning, clear
+            technical coverage, outcome-driven project highlights, and direct routes into deeper detail.
           </p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {homeHighlights.map((item) => (
-              <article key={item.label} className="metric-card">
-                <div className="text-3xl font-semibold text-white">{item.value}</div>
-                <div className="mt-2 text-sm font-medium text-[var(--text)]">{item.label}</div>
-                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{item.detail}</p>
-              </article>
-            ))}
-          </div>
         </div>
-
-        <div className="spotlight-panel reveal" style={{ animationDelay: "120ms" }}>
-          <div className="section-kicker">Explore the portfolio</div>
-          <h2 className="section-title">A modular site instead of one overloaded resume page.</h2>
-          <div className="mt-8 space-y-4">
-            {[
-              "Start on the landing page for a concise profile summary and key highlights.",
-              "Open Experience for three work roles across backend, ETL, and information systems.",
-              "Use Projects to review eight builds with descriptions, stacks, and detail pages.",
-              "Visit Skills, Education, and Contact for the remaining hiring context.",
-            ].map((point) => (
-              <div key={point} className="signal-row">
-                <span className="signal-dot" />
-                <span>{point}</span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <LinkButton className="button button-primary" to="/projects">
-              View projects
-            </LinkButton>
-            <LinkButton className="button button-secondary" to="/experience">
-              View experience
-            </LinkButton>
-          </div>
+        <div className="skills-cloud reveal" style={{ animationDelay: "120ms" }}>
+          {requestedStack.map((item, index) => (
+            <span
+              key={item}
+              className={index % 4 === 0 ? "stack-pill stack-pill-emphasis" : "stack-pill"}
+            >
+              {item}
+            </span>
+          ))}
         </div>
       </section>
 
       <section className="space-y-6">
         <div className="reveal">
-          <div className="section-kicker">Portfolio modules</div>
-          <h2 className="section-title">Each route is focused on one hiring conversation.</h2>
+          <div className="section-kicker">Impact snapshot</div>
+          <h2 className="section-title">Project outcomes with measurable signal.</h2>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {homepageImpactMetrics.map((item, index) => (
+            <article
+              key={item.label}
+              className="impact-card reveal"
+              style={{ animationDelay: `${index * 80}ms` }}
+            >
+              <div className="impact-value">{item.value}</div>
+              <div className="mt-3 text-lg font-semibold text-white">{item.label}</div>
+              <p className="mt-4 text-sm leading-7 text-[var(--soft)]">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <div className="reveal">
+          <div className="section-kicker">Selected work</div>
+          <h2 className="section-title">Six projects I would lead with in an interview conversation.</h2>
+        </div>
+        <ProjectCards columns="xl:grid-cols-3" items={featuredProjects} />
+      </section>
+
+      <section className="space-y-6">
+        <div className="reveal">
+          <div className="section-kicker">What I focus on</div>
+          <h2 className="section-title">Three capability areas that organize the rest of the portfolio.</h2>
+        </div>
+        <div className="grid gap-5 xl:grid-cols-3">
+          {capabilitySections.map((section, index) => (
+            <article
+              key={section.title}
+              className="spotlight-panel reveal"
+              style={{ animationDelay: `${index * 90}ms` }}
+            >
+              <div className="section-kicker">{section.title}</div>
+              <p className="mt-5 text-sm leading-8 text-[var(--soft)]">{section.summary}</p>
+              <div className="mt-6 space-y-3">
+                {section.bullets.map((point) => (
+                  <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
+                    <span className="signal-dot" />
+                    <span>{point}</span>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <div className="reveal">
+          <div className="section-kicker">Portfolio routes</div>
+          <h2 className="section-title">A strong landing page on top of modular pages underneath.</h2>
         </div>
         <div className="grid gap-4 lg:grid-cols-3">
           {moduleConfigs.map((item, index) => (
@@ -333,7 +360,7 @@ function HomeView({ activeModule }: { activeModule: ModuleConfig }) {
                 <span className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
                   0{index + 1}
                 </span>
-                <span className="module-status">Module</span>
+                <span className="module-status">Route</span>
               </div>
               <h3 className="mt-5 text-xl font-semibold text-white">{item.navLabel}</h3>
               <p className="mt-3 text-sm leading-7 text-[var(--soft)]">{item.summary}</p>
@@ -342,12 +369,14 @@ function HomeView({ activeModule }: { activeModule: ModuleConfig }) {
         </div>
       </section>
 
-      <section className="space-y-6">
-        <div className="reveal">
-          <div className="section-kicker">Featured projects</div>
-          <h2 className="section-title">Proof of work with deeper routes behind every card.</h2>
-        </div>
-        <ProjectCards columns="xl:grid-cols-3" items={featuredProjects} />
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {homeHighlights.map((item, index) => (
+          <article key={item.label} className="metric-card reveal" style={{ animationDelay: `${index * 70}ms` }}>
+            <div className="text-3xl font-semibold text-white">{item.value}</div>
+            <div className="mt-2 text-sm font-medium text-[var(--text)]">{item.label}</div>
+            <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{item.detail}</p>
+          </article>
+        ))}
       </section>
     </div>
   );
@@ -788,16 +817,18 @@ function App() {
               <span className="typed-text">{typedText}</span>
               <span className="typed-cursor" />
             </div>
-            <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--soft)] sm:text-lg">{profile.summary}</p>
+            <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--soft)] sm:text-lg">
+              {route.kind === "home" ? profile.shortSummary : profile.summary}
+            </p>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--muted)] sm:text-base">
               {profile.availability}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <LinkButton className="button button-primary" to="/contact">
-                Contact Parth
+                Let&apos;s connect
               </LinkButton>
               <LinkButton className="button button-secondary" to="/projects">
-                Explore projects
+                Explore work
               </LinkButton>
             </div>
             <div className="mt-10">
@@ -842,7 +873,7 @@ function App() {
           )}
         </section>
 
-        {route.kind === "home" ? <HomeView activeModule={activeModule} /> : null}
+        {route.kind === "home" ? <HomeView /> : null}
         {route.kind === "experience" ? <ExperienceView /> : null}
         {route.kind === "projects" ? <ProjectsView /> : null}
         {route.kind === "project-detail" ? <ProjectDetailView slug={route.slug} /> : null}

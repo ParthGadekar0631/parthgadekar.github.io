@@ -3,11 +3,11 @@ import { EducationEntry, ExperienceEntry, ModuleConfig, ProjectSummary } from ".
 export const profile = {
   siteName: "Parth Gadekar",
   name: "Parth Gadekar",
-  title: "Software Engineer | Systems, Data, Full Stack, and AI-Native Product Thinking",
+  title: "Software Engineer | Systems, Data, Full Stack, and Platform-Oriented Product Thinking",
   summary:
-    "I am an M.S. Computer Science student at Stevens Institute of Technology building software across realtime systems, data pipelines, full-stack products, and AI-native experiences. My work is strongest when reliability, clear architecture, and user-facing product value all matter together.",
+    "I am an M.S. Computer Science student at Stevens Institute of Technology building software across realtime systems, data pipelines, full-stack products, and platform-oriented experiences. My strongest work sits where reliability, clear architecture, and user-facing value all matter together.",
   shortSummary:
-    "Software engineer with experience across backend workflows, ETL pipelines, cloud-connected systems, and product-focused engineering. I enjoy building software that is observable, practical, and easy to reason about.",
+    "Software engineer with experience across backend workflows, ETL pipelines, cloud-connected systems, and product-focused engineering. I enjoy building software that is reliable, practical, and easy to reason about.",
   availability:
     "Open to software engineering, data engineering, and AI systems roles in the USA. Based in Hoboken, NJ and open to relocation.",
   email: "parthgadekar060202@gmail.com",
@@ -19,19 +19,22 @@ export const profile = {
 };
 
 export const requestedStack = [
-  "react",
-  "portfolio",
-  "typescript",
-  "ai",
-  "chatbot",
-  "observability",
-  "claude",
-  "tailwindcss",
-  "vite",
-  "vercel",
-  "llm",
-  "llmops",
-  "langfuse",
+  "Python",
+  "TypeScript",
+  "React",
+  "Spring Boot",
+  "Node.js",
+  "FastAPI",
+  "MongoDB",
+  "PostgreSQL",
+  "PySpark",
+  "AWS S3",
+  "SQL",
+  "GitHub Actions",
+  "Flutter",
+  "Solidity",
+  "OpenCV",
+  "Tableau",
 ];
 
 export const moduleConfigs: ModuleConfig[] = [
@@ -41,12 +44,12 @@ export const moduleConfigs: ModuleConfig[] = [
     navLabel: "Home",
     path: "/",
     kicker: "Landing page",
-    title: "A dynamic engineering portfolio built to feel like a real product.",
+    title: "Build reliable systems. Ship software that holds up under load.",
     summary:
-      "The homepage gives a clear overview of who I am, what I build, and where to explore the rest of the portfolio.",
-    heroWords: ["systems that scale", "projects with signal", "software with clarity"],
-    chips: ["landing page", "summary", "navigation", "product feel"],
-    featuredProjectSlugs: ["f1-telemetry", "distributed-pipeline", "portfolio-system"],
+      "The homepage acts like a stronger landing page: clear positioning, visible technical depth, featured projects, and direct paths into the rest of the portfolio.",
+    heroWords: ["reliable systems", "data pipelines", "production-minded software"],
+    chips: ["software engineer", "data systems", "full stack", "cloud workflows"],
+    featuredProjectSlugs: ["land-registry", "fullstack-commerce", "medication-adherence-tracker"],
     theme: {
       accent: "#67e8f9",
       accentSoft: "rgba(103, 232, 249, 0.16)",
@@ -103,10 +106,10 @@ export const moduleConfigs: ModuleConfig[] = [
     kicker: "Technical stack",
     title: "Skills grouped by how I actually use them, not by keyword stuffing.",
     summary:
-      "This route organizes programming languages, frameworks, cloud tools, data tooling, and AI/LLMOps interests into meaningful groups.",
-    heroWords: ["typescript", "python", "observability"],
-    chips: ["languages", "frameworks", "cloud", "AI workflows"],
-    featuredProjectSlugs: ["portfolio-system", "f1-telemetry", "distributed-pipeline"],
+      "This route organizes programming languages, frameworks, cloud tools, data tooling, and engineering interests into meaningful groups.",
+    heroWords: ["typescript", "python", "cloud tooling"],
+    chips: ["languages", "frameworks", "cloud", "engineering practices"],
+    featuredProjectSlugs: ["fullstack-commerce", "f1-telemetry", "distributed-pipeline"],
     theme: {
       accent: "#f87171",
       accentSoft: "rgba(248, 113, 113, 0.16)",
@@ -146,7 +149,7 @@ export const moduleConfigs: ModuleConfig[] = [
       "This route lets visitors enter a name, email, and message, then open a ready-to-send email to me.",
     heroWords: ["let's connect", "software roles", "project discussions"],
     chips: ["contact form", "email", "github", "resume"],
-    featuredProjectSlugs: ["portfolio-system", "f1-telemetry", "fullstack-commerce"],
+    featuredProjectSlugs: ["medication-adherence-tracker", "f1-telemetry", "fullstack-commerce"],
     theme: {
       accent: "#22d3ee",
       accentSoft: "rgba(34, 211, 238, 0.16)",
@@ -159,9 +162,127 @@ export const moduleConfigs: ModuleConfig[] = [
 
 export const projects: ProjectSummary[] = [
   {
+    slug: "land-registry",
+    title: "Blockchain in Land Registry Process",
+    timeline: "Jul 2022 - May 2023",
+    status: "Selected project",
+    summary:
+      "A blockchain-backed land registry workflow that uses Solidity, Flutter, and SHA-256 validation to improve trust, traceability, and user confidence.",
+    stack: ["Ethereum", "Solidity", "Flutter", "Blockchain APIs", "SHA-256"],
+    outcomes: [
+      "Reduced fraud risk by about 50% through tamper-resistant transfer records.",
+      "Improved transparent user verification flows, contributing to roughly 90% testing satisfaction.",
+      "Strengthened data integrity with SHA-256 validation and secure on-chain state handling.",
+    ],
+    detailIntro:
+      "This project focused on trust-sensitive software where correctness, validation, and a clear user flow matter as much as the underlying technical architecture.",
+    detailSections: [
+      {
+        title: "System intent",
+        body:
+          "The registry was designed to make ownership transfer more traceable and harder to manipulate by combining smart contracts, record validation, and a Flutter-based user workflow.",
+        bullets: [
+          "Ownership history is recorded through Solidity contract flows.",
+          "Hash-based validation protects the integrity of submitted records.",
+          "The interface is part of the trust model, not just a presentation layer.",
+        ],
+      },
+      {
+        title: "Why it matters",
+        body:
+          "It shows breadth beyond traditional CRUD applications and highlights interest in systems where user confidence and data correctness are tightly connected.",
+        bullets: [
+          "Trust-sensitive workflows require stronger validation discipline.",
+          "User-facing transparency improved verification satisfaction in testing.",
+          "Good evidence of product thinking inside a technical system.",
+        ],
+      },
+    ],
+    primaryModuleId: "projects",
+    href: "https://github.com/ParthGadekar0631/Land-Registry-using-Blockchain",
+  },
+  {
+    slug: "fullstack-commerce",
+    title: "Full-Stack E-Commerce Platform",
+    timeline: "Sep 2024 - Dec 2024",
+    status: "Selected project",
+    summary:
+      "A full-stack shopping application built with React, Spring Boot, and MySQL, centered on checkout performance, modular APIs, and secure session flows.",
+    stack: ["React", "Spring Boot", "MySQL", "REST APIs", "Authentication"],
+    outcomes: [
+      "Improved checkout completion by about 35% through optimized user flows.",
+      "Reduced request latency by about 30% under peak traffic through SQL indexing and modular endpoints.",
+      "Lowered security failures by roughly 25% through authentication and session handling improvements.",
+    ],
+    detailIntro:
+      "This project rounds out the portfolio with a product-facing system where frontend experience, backend design, and transactional correctness all matter together.",
+    detailSections: [
+      {
+        title: "System intent",
+        body:
+          "The platform was designed to create a smoother checkout experience while keeping the backend modular enough to scale with more products, billing features, and user actions.",
+        bullets: [
+          "React, Spring Boot, and MySQL were combined as one product workflow instead of isolated layers.",
+          "Request latency was reduced with indexing and cleaner endpoint boundaries.",
+          "Authentication and session handling were treated as core platform concerns.",
+        ],
+      },
+      {
+        title: "Why it matters",
+        body:
+          "It demonstrates that I can build reliable product software, not just engineering demos, and that I think about system design through the user journey.",
+        bullets: [
+          "Strong signal for full-stack and application engineering roles.",
+          "Balances user experience and backend correctness.",
+          "Shows comfort with modular service design and debugging.",
+        ],
+      },
+    ],
+    primaryModuleId: "projects",
+  },
+  {
+    slug: "medication-adherence-tracker",
+    title: "Medication Adherence Tracker",
+    timeline: "Sep 2025 - Jan 2026",
+    status: "Selected project",
+    summary:
+      "A healthcare-oriented adherence tracking system using Node.js, MongoDB, REST APIs, and GitHub Actions for reliable data handling and faster delivery.",
+    stack: ["Node.js", "MongoDB", "REST APIs", "GitHub Actions"],
+    outcomes: [
+      "Improved backend request throughput by about 28% with REST APIs and MongoDB-backed handling.",
+      "Reduced health data inconsistencies through schema validation and consistency checks.",
+      "Improved release stability by about 25% through CI/CD with GitHub Actions.",
+    ],
+    detailIntro:
+      "This project sits at the intersection of backend reliability, data correctness, and delivery discipline, which is exactly the kind of work I enjoy most.",
+    detailSections: [
+      {
+        title: "System intent",
+        body:
+          "The tracker was built to support real-time medication adherence workflows while keeping data consistency, reliability, and release quality under control.",
+        bullets: [
+          "REST APIs were structured to support live adherence updates.",
+          "MongoDB validation checks protected health tracking consistency.",
+          "CI/CD reduced release friction and made delivery more repeatable.",
+        ],
+      },
+      {
+        title: "Why it matters",
+        body:
+          "It shows backend focus, data quality instincts, and practical engineering discipline through API design, indexing, and continuous delivery.",
+        bullets: [
+          "Health-related data raised the bar for correctness and validation.",
+          "GitHub Actions made deployment quality part of the workflow.",
+          "Good evidence of production-style backend habits.",
+        ],
+      },
+    ],
+    primaryModuleId: "projects",
+  },
+  {
     slug: "f1-telemetry",
     title: "F1 Telemetry Simulation System",
-    timeline: "2025 - Present",
+    timeline: "Jun 2025 - Present",
     status: "Flagship build",
     summary:
       "A race-style telemetry environment for streaming signals, replay workflows, anomaly visibility, and engineering storytelling.",
@@ -200,7 +321,7 @@ export const projects: ProjectSummary[] = [
   {
     slug: "distributed-pipeline",
     title: "Distributed Data Processing Pipeline",
-    timeline: "2026 - Present",
+    timeline: "Feb 2026 - Present",
     status: "Core data project",
     summary:
       "A cloud-oriented ETL workflow focused on partitioning, scalability, retries, and monitoring across distributed workloads.",
@@ -237,49 +358,10 @@ export const projects: ProjectSummary[] = [
     primaryModuleId: "projects",
   },
   {
-    slug: "portfolio-system",
-    title: "RisksRay Portfolio System",
-    timeline: "2026",
-    status: "Live product demo",
-    summary:
-      "A modular portfolio app with dynamic routes, richer motion, branding, and product-style information architecture.",
-    stack: ["React", "TypeScript", "Tailwind CSS", "Vite", "Vercel"],
-    outcomes: [
-      "Reframed the portfolio as a route-based product instead of a single static page.",
-      "Added dedicated pages for experience, projects, skills, education, and contact.",
-      "Introduced stronger branding, dynamic themes, and a cleaner portfolio shell.",
-    ],
-    detailIntro:
-      "This site is designed to feel like a product, not a resume dump. The architecture itself is part of the portfolio story.",
-    detailSections: [
-      {
-        title: "Design intent",
-        body:
-          "The site uses multiple routes, a persistent shell, and theme shifts so visitors can move through the portfolio as a system instead of one overloaded page.",
-        bullets: [
-          "Dedicated pages instead of one long scroll.",
-          "Consistent product-style navigation and CTA structure.",
-          "Visual identity built around RisksRay branding.",
-        ],
-      },
-      {
-        title: "Why it matters",
-        body:
-          "A portfolio that demonstrates organization, UX judgment, and implementation quality is stronger than one that only lists technologies.",
-        bullets: [
-          "Shows frontend architecture and product framing.",
-          "Demonstrates how I think about user flow and clarity.",
-          "Acts as a living proof-of-work artifact.",
-        ],
-      },
-    ],
-    primaryModuleId: "home",
-  },
-  {
     slug: "spotify-warehouse",
     title: "Spotify Data Warehouse and Analytics System",
-    timeline: "2025",
-    status: "Academic project",
+    timeline: "Jan 2025 - May 2025",
+    status: "Analytics project",
     summary:
       "An analytics-oriented warehouse project with ETL, star schema modeling, SQL transformations, and dashboard delivery.",
     stack: ["Python", "PostgreSQL", "SQL", "Tableau"],
@@ -306,8 +388,8 @@ export const projects: ProjectSummary[] = [
   {
     slug: "nyc-taxi",
     title: "NYC Taxi Data Pipeline",
-    timeline: "2026 - Present",
-    status: "Personal project",
+    timeline: "Jan 2026 - Present",
+    status: "Selected project",
     summary:
       "An end-to-end analytics pipeline for large mobility data, designed around ingestion quality and reliable downstream querying.",
     stack: ["Python", "AWS S3", "PostgreSQL", "SQL", "Tableau"],
@@ -321,39 +403,21 @@ export const projects: ProjectSummary[] = [
     detailSections: [
       {
         title: "System intent",
-        body: "The project connects ingestion quality, SQL performance, and reporting usefulness.",
+          body: "The project connects ingestion quality, SQL performance, and reporting usefulness.",
         bullets: [
           "End-to-end pipeline design instead of isolated scripts.",
           "Built around downstream confidence and query clarity.",
           "Strong evidence for data engineering fit.",
         ],
       },
-    ],
-    primaryModuleId: "projects",
-  },
-  {
-    slug: "fullstack-commerce",
-    title: "Full-Stack E-Commerce Platform",
-    timeline: "2024",
-    status: "Academic project",
-    summary:
-      "A full-stack shopping app that ties frontend flows, backend APIs, authentication, and SQL-backed checkout together.",
-    stack: ["React", "Spring Boot", "MySQL"],
-    outcomes: [
-      "Improved checkout completion by about 35% through better interaction flow.",
-      "Reduced request latency by roughly 30% with modular endpoints and indexing.",
-      "Strengthened security and validation behavior during user sessions and checkout paths.",
-    ],
-    detailIntro:
-      "This project rounds out the portfolio by showing I can connect user-facing experience with backend structure and delivery logic.",
-    detailSections: [
       {
-        title: "System intent",
-        body: "The project aimed to tighten product flow and backend reliability together.",
+        title: "Why it matters",
+        body:
+          "It proves comfort with large datasets, structured reporting, and the practical work needed to keep analytics queries fast and decision-ready.",
         bullets: [
-          "Frontend and backend built as one coherent user journey.",
-          "Validation and performance mattered as much as feature count.",
-          "Helpful signal for full-stack engineering roles.",
+          "Built around reliable reporting instead of raw ingestion alone.",
+          "SQL tuning and data modeling both mattered here.",
+          "Strong signal for data engineering and analytics roles.",
         ],
       },
     ],
@@ -362,8 +426,8 @@ export const projects: ProjectSummary[] = [
   {
     slug: "air-canvas",
     title: "Air Canvas",
-    timeline: "2021",
-    status: "Public repo",
+    timeline: "Jun 2021 - Dec 2021",
+    status: "Computer vision project",
     summary:
       "A realtime computer vision canvas that translates hand gestures into responsive drawing behavior.",
     stack: ["Python", "OpenCV", "NumPy", "TensorFlow"],
@@ -387,35 +451,6 @@ export const projects: ProjectSummary[] = [
     ],
     primaryModuleId: "projects",
     href: "https://github.com/ParthGadekar0631/Air-Canvas",
-  },
-  {
-    slug: "land-registry",
-    title: "Land Registry Using Blockchain",
-    timeline: "2023",
-    status: "Public repo",
-    summary:
-      "A blockchain-backed property registry concept focused on trust, traceability, and clear transaction flow for users.",
-    stack: ["Dart", "Flutter", "Solidity", "Web3.js"],
-    outcomes: [
-      "Implemented ownership transaction flows on Ethereum-style infrastructure.",
-      "Built a user-facing interface for registry and transfer workflows.",
-      "Strengthened my thinking around trust-sensitive systems and product confidence.",
-    ],
-    detailIntro:
-      "This project explores systems where correctness, user trust, and transaction clarity matter together.",
-    detailSections: [
-      {
-        title: "System intent",
-        body: "The project focused on transparent property transaction workflows and digital trust.",
-        bullets: [
-          "Traceability and user confidence were key design concerns.",
-          "The interface was part of the trust model, not just decoration.",
-          "Shows breadth across product and systems ideas.",
-        ],
-      },
-    ],
-    primaryModuleId: "projects",
-    href: "https://github.com/ParthGadekar0631/Land-Registry-using-Blockchain",
   },
 ];
 
@@ -500,7 +535,7 @@ export const skillsGroups = [
   },
   {
     title: "AI and LLMOps Direction",
-    items: ["Claude", "Chatbot UX", "Observability", "Langfuse", "Prompt Framing", "AI Product Thinking"],
+    items: ["Applied AI", "Chatbot UX", "Observability", "Prompt Framing", "AI Product Thinking"],
   },
   {
     title: "Engineering Practices",
@@ -531,10 +566,85 @@ export const homeHighlights = [
   },
 ];
 
+export const homepageProjectSlugs = [
+  "land-registry",
+  "fullstack-commerce",
+  "medication-adherence-tracker",
+  "f1-telemetry",
+  "distributed-pipeline",
+  "nyc-taxi",
+];
+
+export const homepageImpactMetrics = [
+  {
+    value: "50%",
+    label: "Fraud risk reduction",
+    detail: "Blockchain-backed land registry records improved trust and traceability across transfer workflows.",
+  },
+  {
+    value: "40%",
+    label: "Pipeline scalability gain",
+    detail: "Distributed ETL workflows on AWS S3 and Python improved reliability under larger workloads.",
+  },
+  {
+    value: "35%",
+    label: "Checkout completion lift",
+    detail: "React, Spring Boot, and MySQL improvements tightened the e-commerce purchase flow.",
+  },
+  {
+    value: "28%",
+    label: "API throughput improvement",
+    detail: "Medication adherence APIs and MongoDB-backed handling reduced backend friction in live workflows.",
+  },
+  {
+    value: "30%",
+    label: "Analytics latency reduction",
+    detail: "NYC Taxi and Spotify analytics work used SQL tuning and structured schemas to speed reporting.",
+  },
+  {
+    value: "95%",
+    label: "Gesture accuracy",
+    detail: "Air Canvas demonstrated responsive computer vision interaction with smooth tracking performance.",
+  },
+];
+
+export const capabilitySections = [
+  {
+    title: "Software Engineering",
+    summary:
+      "Building production-oriented backend and full-stack systems with strong attention to reliability, modularity, and user-facing product quality.",
+    bullets: [
+      "REST APIs, backend validation, and modular service design.",
+      "Full-stack delivery across React, Spring Boot, Node.js, and SQL systems.",
+      "Comfort with debugging, request latency tuning, and secure session flows.",
+    ],
+  },
+  {
+    title: "Data & Analytics Systems",
+    summary:
+      "Designing ETL workflows, analytical data models, and reporting pipelines that stay useful under real operational constraints.",
+    bullets: [
+      "Batch pipelines with retries, partitioning, and failure recovery.",
+      "Data quality validation, schema design, and downstream reporting reliability.",
+      "Projects spanning PySpark, AWS S3, PostgreSQL, SQL, and Tableau.",
+    ],
+  },
+  {
+    title: "Cloud & Platform Work",
+    summary:
+      "Using automation, CI/CD, and platform-minded engineering practices to keep systems maintainable and easier to operate over time.",
+    bullets: [
+      "GitHub Actions, monitoring workflows, and repeatable delivery practices.",
+      "Cloud-connected systems with S3, RDS, and service reliability focus.",
+      "Engineering habits centered on observability, resilience, and clean architecture.",
+    ],
+  },
+];
+
 export const publicMetricsSeed = {
   totalChats: 12,
   avgLatencyMs: 780,
   popularModule: "Projects",
-  serviceStatus: "Configured for Vercel",
+  serviceStatus: "Static portfolio mode",
   lastUpdated: new Date().toISOString(),
 };

@@ -1,15 +1,13 @@
-# RisksRay Portfolio
+# Parth Gadekar Portfolio
 
-Modular portfolio for Parth Gadekar, built as a multi-page product-style site instead of a single scrolling page.
+Personal portfolio for Parth Gadekar, rebuilt as a stronger landing page with modular routes underneath.
 
-The current site is organized around the hiring flow:
+The current direction is:
 
-- landing page with a short personal summary
-- dedicated experience page with 3 work experiences
-- projects page with 8 project cards and deep-linkable detail routes
-- grouped skills page
-- education page
-- contact page with name, email, and message fields
+- homepage inspired by a modern personal product-style portfolio
+- separate routes for experience, projects, skills, education, and contact
+- GitHub Pages deployment through GitHub Actions
+- static hosting friendly architecture
 
 ## Stack
 
@@ -17,9 +15,8 @@ The current site is organized around the hiring flow:
 - TypeScript
 - Tailwind CSS
 - Vite
-- Vercel
-- Claude
-- Langfuse
+- GitHub Pages
+- GitHub Actions
 
 ## Routes
 
@@ -36,27 +33,25 @@ The current site is organized around the hiring flow:
 ```text
 src/
   App.tsx              Route-based application shell
-  types.ts             Shared content and API types
+  types.ts             Shared content and UI types
   content/
-    site.ts            Portfolio profile, modules, projects, experience, education, skills
-    knowledge.ts       Curated documents used by the server-side copilot
+    site.ts            Portfolio profile, routes, projects, experience, education, skills
+    knowledge.ts       Curated content kept for future chatbot/backend work
   lib/
     api.ts             Browser API helpers
     integrity.ts       Runtime content validation
-    routes.ts          Client-side route parsing and navigation
-  index.css            Motion system, themed visual language, shared UI styles
+    routes.ts          Route parsing, base-path handling, and navigation helpers
+  index.css            Motion system, landing page visuals, and shared UI styles
   main.tsx             React entry point
 
-api/
-  chat.ts              Claude-backed serverless endpoint
-  metrics.ts           Public summary metrics endpoint
-  _lib/
-    anthropic.ts       Claude request orchestration
-    langfuse.ts        Langfuse metrics and tracing helpers
-    shared.ts          Retrieval scoring and shared server helpers
-
 public/
+  404.html             GitHub Pages SPA redirect fallback
   Parth_Gadekar_Resume.pdf
+  parth-profile.jpg
+
+.github/workflows/
+  ci.yml               Typecheck, tests, and build
+  deploy.yml           GitHub Pages deployment
 ```
 
 ## Local Development
@@ -67,16 +62,10 @@ Install dependencies:
 npm install
 ```
 
-Run the front end locally:
+Run the app locally:
 
 ```bash
 npm run dev
-```
-
-Run the full Vercel-style app locally, including `/api` routes:
-
-```bash
-npx vercel dev
 ```
 
 ## Checks
@@ -87,70 +76,41 @@ npm run test
 npm run build
 ```
 
-CI is configured in `.github/workflows/ci.yml` to run:
-
-- type checking
-- tests
-- production build
-
-## Environment Variables
-
-Copy `.env.example` and configure:
-
-```bash
-ANTHROPIC_API_KEY=
-ANTHROPIC_MODEL=claude-3-5-sonnet-latest
-LANGFUSE_PUBLIC_KEY=
-LANGFUSE_SECRET_KEY=
-LANGFUSE_BASE_URL=https://cloud.langfuse.com
-```
-
-Behavior by configuration:
-
-- Without `ANTHROPIC_API_KEY`, the server-side copilot falls back to curated retrieval summaries.
-- Without Langfuse credentials, public metrics fall back to safe defaults.
-
 ## Deployment
 
-Primary runtime target is Vercel.
+This repo deploys to GitHub Pages using GitHub Actions.
 
-Recommended deployment flow:
+Recommended setup:
 
 1. Push the repo to GitHub.
-2. Import the repo into Vercel.
-3. Keep the preset as `Vite` and the root directory as `./`.
-4. Add the environment variables from `.env.example`.
-5. Deploy.
+2. Open the repository `Settings -> Pages`.
+3. Set `Source` to `GitHub Actions`.
+4. Push to `main` or run the `Deploy Portfolio` workflow manually.
 
-Current free production domain pattern:
+The deploy workflow builds the Vite app, uploads `dist`, and publishes it through the GitHub Pages actions.
 
-- `https://<project-name>.vercel.app`
+## GitHub Pages Notes
 
-Example:
-
-- `https://risksray.vercel.app`
+- `vite.config.ts` computes the correct `base` for GitHub Pages builds.
+- `src/lib/routes.ts` handles internal links under a repository subpath.
+- `public/404.html` enables SPA deep-link refreshes on GitHub Pages project sites.
 
 ## Verification Checklist
 
 After deployment, verify:
 
-- `/` loads as the landing page
+- `/` loads with the redesigned landing page
 - `/experience` shows 3 work experiences
 - `/projects` shows 8 projects
 - `/projects/f1-telemetry` loads directly
-- `/skills` loads directly
-- `/education` loads directly
-- `/contact` shows the contact form
-- browser tab title shows `RisksRay | AI-Native Engineering Portfolio`
+- `/skills`, `/education`, and `/contact` load directly
+- browser tab title shows `Parth Gadekar | Software Engineer Portfolio`
 
-## Custom Domain
+## Chatbot Note
 
-If you buy `risksray.io` later:
+GitHub Pages is static hosting. A real OpenAI-powered chatbot should not call the API directly from the browser because API keys must stay server-side.
 
-1. Open the Vercel project.
-2. Go to `Settings -> Domains`.
-3. Add `risksray.io`.
-4. Configure the DNS records Vercel provides.
-5. Wait for verification and SSL.
+That means:
 
-Until then, use the default `vercel.app` domain.
+- this portfolio can ship cleanly on GitHub Pages first
+- a real chatbot should be added later through a separate backend or serverless endpoint

@@ -210,6 +210,12 @@ textarea {
   font-size: 0.78rem;
 }
 
+.stack-pill-emphasis {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(135deg, var(--theme-accent-soft), rgba(255, 255, 255, 0.06));
+}
+
 .interactive-pill {
   cursor: pointer;
 }
@@ -409,6 +415,24 @@ textarea {
   padding: 1.15rem;
 }
 
+.impact-card {
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(180deg, rgba(15, 20, 36, 0.94), rgba(12, 15, 28, 0.92)),
+    radial-gradient(circle at top right, var(--theme-accent-soft), transparent 38%);
+  padding: 1.3rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.26);
+}
+
+.impact-value {
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 0.95;
+  color: white;
+  text-shadow: 0 0 24px var(--theme-accent-glow);
+}
+
 .metric-label {
   font-size: 0.76rem;
   font-weight: 700;
@@ -468,6 +492,19 @@ textarea {
   font-size: 0.98rem;
   line-height: 1.9;
   color: var(--muted);
+}
+
+.skills-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  padding: 1.25rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(12, 15, 28, 0.92), rgba(8, 11, 20, 0.92)),
+    radial-gradient(circle at top left, var(--theme-accent-soft), transparent 34%);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.24);
 }
 
 .timeline-card {

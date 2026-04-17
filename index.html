@@ -14,6 +14,24 @@
       property="og:description"
       content="A modular software engineering portfolio with route-based storytelling, dynamic visuals, and detailed project pages."
     />
+    <script>
+      (function () {
+        var location = window.location;
+        if (!location.search || location.search.length < 2 || location.search[1] !== "/") {
+          return;
+        }
+
+        var decoded = location.search
+          .slice(1)
+          .split("&")
+          .map(function (segment) {
+            return segment.replace(/~and~/g, "&");
+          })
+          .join("?");
+
+        window.history.replaceState(null, "", location.pathname.slice(0, -1) + decoded + location.hash);
+      })();
+    </script>
     <title>Parth Gadekar | Software Engineer Portfolio</title>
   </head>
   <body>

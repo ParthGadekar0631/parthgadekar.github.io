@@ -50,13 +50,13 @@ export const knowledgeDocuments: KnowledgeDocument[] = [
   },
   {
     id: "portfolio-system-knowledge",
-    title: "RisksRay Portfolio System",
+    title: "Parth Gadekar Portfolio System",
     moduleId: "home",
     path: "/",
     summary: "A modular portfolio app with dynamic routes, branding, and product-style information architecture.",
-    tags: ["portfolio", "react", "vercel", "routing", "product"],
+    tags: ["portfolio", "react", "github-pages", "routing", "product"],
     content:
-      "RisksRay is designed as a modular portfolio instead of one overloaded page. It uses dedicated routes for home, experience, projects, skills, education, and contact, along with route-aware theming, dynamic motion, and a product-style shell.",
+      "Parth Gadekar's portfolio is designed as a modular site instead of one overloaded page. It uses dedicated routes for home, experience, projects, skills, education, and contact, along with route-aware theming, dynamic motion, and a stronger landing-page presentation.",
   },
   {
     id: "skills-overview",

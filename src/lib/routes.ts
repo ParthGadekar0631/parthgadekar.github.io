@@ -7,8 +7,26 @@ export type AppRoute =
   | { kind: "education" }
   | { kind: "contact" };
 
+const basePath = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+
+function stripBasePath(pathname: string) {
+  if (!basePath || basePath === "/") {
+    return pathname;
+  }
+
+  if (pathname === basePath || pathname === `${basePath}/`) {
+    return "/";
+  }
+
+  if (pathname.startsWith(`${basePath}/`)) {
+    return pathname.slice(basePath.length) || "/";
+  }
+
+  return pathname;
+}
+
 export function parseRoute(pathname: string): AppRoute {
-  const normalized = pathname.replace(/\/+$/, "") || "/";
+  const normalized = stripBasePath(pathname).replace(/\/+$/, "") || "/";
 
   if (normalized === "/") {
     return { kind: "home" };
@@ -41,11 +59,27 @@ export function parseRoute(pathname: string): AppRoute {
   return { kind: "home" };
 }
 
+export function toAppPath(path: string) {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+
+  if (!basePath || basePath === "/") {
+    return normalized;
+  }
+
+  if (normalized === "/") {
+    return `${basePath}/`;
+  }
+
+  return `${basePath}${normalized}`;
+}
+
 export function navigate(path: string) {
-  if (window.location.pathname === path) {
+  const targetPath = toAppPath(path);
+
+  if (window.location.pathname === targetPath) {
     return;
   }
 
-  window.history.pushState({}, "", path);
+  window.history.pushState({}, "", targetPath);
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
