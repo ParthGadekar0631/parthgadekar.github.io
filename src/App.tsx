@@ -1,15 +1,14 @@
-import { FormEvent, useMemo, useState } from "react";
+import { CSSProperties, FormEvent, useEffect, useMemo, useState } from "react";
 import {
   chatKnowledge,
   chatPrompts,
   education,
   experience,
-  focusCards,
   heroMetrics,
+  modules,
   profile,
   projects,
   requestedStack,
-  strengths,
 } from "./content";
 
 type ChatMessage = {
@@ -21,11 +20,11 @@ const initialMessages: ChatMessage[] = [
   {
     role: "assistant",
     text:
-      "Ask me about Parth's background, projects, and the kind of systems he wants to build. This version runs fully on the front end so it can deploy cleanly to GitHub Pages.",
+      "Ask me about Parth's background, projects, or how this portfolio could evolve into a real AI product. This version runs fully on the front end so it stays GitHub Pages compatible.",
   },
 ];
 
-function resolveAnswer(input: string) {
+function resolveAnswer(input: string, moduleLabel: string) {
   const normalized = input.toLowerCase();
   const directHit = chatKnowledge.find((entry) =>
     entry.match.some((keyword) => normalized.includes(keyword)),
@@ -35,16 +34,80 @@ function resolveAnswer(input: string) {
     return directHit.answer;
   }
 
-  return "I do not use a live model in this GitHub Pages build yet, but I can still route you to the right topics. Try asking about Parth's engineering profile, the F1 telemetry system, data engineering, observability, or target roles.";
+  return `You are currently in the ${moduleLabel} module. Try asking about systems work, data pipelines, the F1 telemetry project, AI portfolio upgrades, or target roles.`;
 }
 
 function App() {
+  const [activeModuleId, setActiveModuleId] = useState(modules[0].id);
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [draft, setDraft] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [typedText, setTypedText] = useState("");
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const visibleStack = useMemo(() => requestedStack, []);
+  const activeModule = useMemo(
+    () => modules.find((module) => module.id === activeModuleId) ?? modules[0],
+    [activeModuleId],
+  );
+
+  const activeProjects = useMemo(
+    () => projects.filter((project) => activeModule.projectIds.includes(project.id)),
+    [activeModule],
+  );
+
   const resumeHref = `${import.meta.env.BASE_URL}${profile.resume}`;
+
+  useEffect(() => {
+    setTypedText("");
+    setPhraseIndex(0);
+    setIsDeleting(false);
+  }, [activeModule.id]);
+
+  useEffect(() => {
+    const words = activeModule.heroWords;
+    const currentWord = words[phraseIndex % words.length];
+    let delay = isDeleting ? 45 : 80;
+
+    if (!isDeleting && typedText === currentWord) {
+      delay = 1200;
+    }
+
+    if (isDeleting && typedText.length === 0) {
+      delay = 250;
+    }
+
+    const timeout = window.setTimeout(() => {
+      if (!isDeleting) {
+        const nextText = currentWord.slice(0, typedText.length + 1);
+        setTypedText(nextText);
+
+        if (nextText === currentWord) {
+          setIsDeleting(true);
+        }
+
+        return;
+      }
+
+      const nextText = currentWord.slice(0, typedText.length - 1);
+      setTypedText(nextText);
+
+      if (nextText.length === 0) {
+        setIsDeleting(false);
+        setPhraseIndex((current) => current + 1);
+      }
+    }, delay);
+
+    return () => window.clearTimeout(timeout);
+  }, [activeModule.heroWords, phraseIndex, typedText, isDeleting]);
+
+  const themeStyle = {
+    "--theme-accent": activeModule.theme.accent,
+    "--theme-accent-soft": activeModule.theme.accentSoft,
+    "--theme-accent-glow": activeModule.theme.accentGlow,
+    "--theme-secondary": activeModule.theme.secondary,
+    "--theme-panel": activeModule.theme.panel,
+  } as CSSProperties;
 
   const sendMessage = (text: string) => {
     const trimmed = text.trim();
@@ -62,11 +125,11 @@ function App() {
         ...current,
         {
           role: "assistant",
-          text: resolveAnswer(trimmed),
+          text: resolveAnswer(trimmed, activeModule.label),
         },
       ]);
       setIsTyping(false);
-    }, 700);
+    }, 650);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -75,84 +138,103 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      <div className="aurora aurora-one" />
-      <div className="aurora aurora-two" />
+    <div className="portfolio-shell min-h-screen text-[var(--text)]" style={themeStyle}>
+      <div className="ambient ambient-one" />
+      <div className="ambient ambient-two" />
+      <div className="grid-overlay" />
 
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[rgba(7,10,22,0.7)] backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[rgba(5,8,20,0.72)] backdrop-blur-2xl">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-          <a className="text-sm font-semibold tracking-[0.3em] text-[var(--muted)] uppercase" href="#top">
+          <a className="text-sm font-semibold tracking-[0.34em] text-[var(--muted)] uppercase" href="#top">
             Parth Gadekar
           </a>
-          <nav className="hidden gap-6 text-sm text-[var(--muted)] md:flex">
+          <nav className="hidden items-center gap-6 text-sm text-[var(--muted)] lg:flex">
+            <a href="#modules">Modules</a>
             <a href="#projects">Projects</a>
             <a href="#experience">Experience</a>
-            <a href="#education">Education</a>
-            <a href="#chat">Chat</a>
+            <a href="#copilot">Copilot</a>
           </nav>
-          <a className="button button-secondary" href={profile.github} target="_blank" rel="noreferrer">
-            GitHub
-          </a>
+          <div className="flex gap-3">
+            <a className="button button-secondary" href={profile.github} target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+            <a className="button button-primary" href={resumeHref} target="_blank" rel="noreferrer">
+              Resume
+            </a>
+          </div>
         </div>
       </header>
 
-      <main id="top" className="mx-auto flex w-full max-w-7xl flex-col gap-20 px-5 pb-16 pt-10 sm:px-8 sm:pt-14">
-        <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="panel relative overflow-hidden">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs font-medium tracking-[0.2em] text-cyan-200 uppercase">
-              Software Engineer · Systems · Data · AI-native product thinking
+      <main id="top" className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-5 pb-16 pt-10 sm:px-8 sm:pt-14">
+        <section className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
+          <div className="hero-panel reveal">
+            <div className="hero-shine" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium tracking-[0.24em] text-[var(--muted)] uppercase">
+              Dynamic portfolio system
             </div>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-7xl">
-              Building reliable software from telemetry dashboards to data pipelines.
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <span className="eyebrow-tag">{activeModule.kicker}</span>
+              <span className="eyebrow-tag">{activeModule.label}</span>
+            </div>
+
+            <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.02] text-white sm:text-5xl lg:text-7xl">
+              Building
+              <span className="typed-wrap">
+                <span className="typed-text">{typedText}</span>
+                <span className="typed-cursor" />
+              </span>
+              that stay useful under pressure.
             </h1>
-            <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--muted)] sm:text-lg">
+
+            <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--soft)] sm:text-lg">
               {profile.summary}
             </p>
-            <p className="mt-6 max-w-3xl text-sm leading-7 text-[var(--soft)] sm:text-base">
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--muted)] sm:text-base">
               {profile.availability}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <a className="button button-primary" href={resumeHref} target="_blank" rel="noreferrer">
-                Download resume
+              <a className="button button-primary" href={`mailto:${profile.email}`}>
+                Contact Parth
               </a>
-              <a className="button button-secondary" href={`mailto:${profile.email}`}>
-                {profile.email}
+              <a className="button button-secondary" href={resumeHref} target="_blank" rel="noreferrer">
+                Download resume
               </a>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-3">
-              {visibleStack.map((item) => (
-                <span key={item} className="pill">
-                  {item}
-                </span>
-              ))}
+            <div className="mt-10">
+              <div className="marquee">
+                <div className="marquee-track">
+                  {[...requestedStack, ...requestedStack].map((item, index) => (
+                    <span key={`${item}-${index}`} className="stack-pill">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
-          <aside className="panel flex flex-col justify-between gap-8">
-            <div>
-              <div className="text-xs font-medium tracking-[0.25em] text-[var(--muted)] uppercase">
-                Current Snapshot
-              </div>
-              <div className="mt-4 rounded-[28px] border border-white/10 bg-white/5 p-5">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-lg font-semibold text-white">{profile.name}</div>
-                    <div className="mt-1 text-sm text-[var(--muted)]">Hoboken, NJ</div>
-                  </div>
-                  <div className="avatar">PG</div>
+          <aside className="signal-panel reveal" style={{ animationDelay: "120ms" }}>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <div className="text-xs font-semibold tracking-[0.24em] text-[var(--muted)] uppercase">
+                  Active module
                 </div>
-                <p className="mt-5 text-sm leading-7 text-[var(--soft)]">
-                  Focused on shipping strong fundamentals now and leaving room for a future Claude + Langfuse +
-                  observability layer when this portfolio grows beyond static hosting.
-                </p>
+                <h2 className="mt-3 text-2xl font-semibold text-white">{activeModule.label}</h2>
+                <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--soft)]">{activeModule.intro}</p>
+              </div>
+              <div className="orbital-core">
+                <span className="orbital-dot orbital-dot-one" />
+                <span className="orbital-dot orbital-dot-two" />
+                <span className="orbital-dot orbital-dot-three" />
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {heroMetrics.map((metric) => (
-                <article key={metric.label} className="rounded-[28px] border border-white/10 bg-white/5 p-5">
+                <article key={metric.label} className="metric-card">
                   <div className="text-3xl font-semibold text-white">{metric.value}</div>
                   <div className="mt-2 text-sm font-medium text-[var(--text)]">{metric.label}</div>
                   <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{metric.detail}</p>
@@ -162,94 +244,126 @@ function App() {
           </aside>
         </section>
 
-        <section className="grid gap-5 md:grid-cols-3">
-          {focusCards.map((card) => (
-            <article key={card.title} className="panel">
-              <div className="text-xs font-medium tracking-[0.24em] text-cyan-200 uppercase">{card.eyebrow}</div>
-              <h2 className="mt-4 text-2xl font-semibold text-white">{card.title}</h2>
-              <p className="mt-4 text-sm leading-7 text-[var(--muted)]">{card.copy}</p>
-            </article>
-          ))}
+        <section id="modules" className="space-y-6">
+          <div className="reveal">
+            <div className="section-kicker">Module rail</div>
+            <h2 className="section-title">Not a single flat page. A portfolio system with dynamic modes.</h2>
+            <p className="section-copy">
+              Each module changes the visual palette, the typed hero narrative, the highlighted projects, and the
+              engineering story being told.
+            </p>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-4">
+            {modules.map((module) => {
+              const isActive = module.id === activeModule.id;
+
+              return (
+                <button
+                  key={module.id}
+                  className={`module-card reveal ${isActive ? "module-card-active" : ""}`}
+                  onClick={() => setActiveModuleId(module.id)}
+                  type="button"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
+                      {module.index}
+                    </span>
+                    <span className="module-status">{isActive ? "Live" : "Switch"}</span>
+                  </div>
+                  <h3 className="mt-5 text-xl font-semibold text-white">{module.label}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--soft)]">{module.intro}</p>
+                </button>
+              );
+            })}
+          </div>
         </section>
 
-        <section className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
-          <div className="panel">
-            <div className="section-label">Why This Site Exists</div>
-            <h2 className="section-heading">
-              Inspired by the reference portfolio, but rebuilt around your own engineering signal.
-            </h2>
-            <p className="section-copy">
-              The goal here is not to imitate someone else's copy. It is to create the same level of intentionality:
-              strong first impression, visible proof-of-work, an AI-flavored interaction layer, and a layout that feels
-              built for an engineer instead of a generic template.
-            </p>
+        <section className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr]">
+          <div className="spotlight-panel reveal">
+            <div className="section-kicker">Module spotlight</div>
+            <h2 className="section-title">{activeModule.title}</h2>
+            <p className="section-copy">{activeModule.detail}</p>
 
-            <div className="mt-8 grid gap-4">
-              {strengths.map((item) => (
-                <div key={item} className="rounded-[22px] border border-white/10 bg-[rgba(255,255,255,0.03)] px-4 py-4 text-sm text-[var(--soft)]">
-                  {item}
+            <div className="mt-8 space-y-4">
+              {activeModule.bullets.map((bullet) => (
+                <div key={bullet} className="signal-row">
+                  <span className="signal-dot" />
+                  <span>{bullet}</span>
                 </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {activeModule.chips.map((chip) => (
+                <span key={chip} className="stack-pill">
+                  {chip}
+                </span>
               ))}
             </div>
           </div>
 
-          <div className="panel">
-            <div className="section-label">Impact Signals</div>
-            <h2 className="section-heading">Numbers that repeat across your resumes.</h2>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <article className="impact-card">
-                <span className="impact-number">~40%</span>
-                <p>Pipeline reliability and ingestion robustness improvements in data engineering work.</p>
+          <div className="grid gap-4">
+            {activeModule.metrics.map((metric, index) => (
+              <article
+                key={metric.label}
+                className="focus-metric reveal"
+                style={{ animationDelay: `${index * 70 + 120}ms` }}
+              >
+                <div className="text-4xl font-semibold text-white">{metric.value}</div>
+                <div className="mt-2 text-base font-medium text-[var(--text)]">{metric.label}</div>
+                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{metric.detail}</p>
               </article>
-              <article className="impact-card">
-                <span className="impact-number">~35%</span>
-                <p>Performance and latency gains across telemetry, ETL, and computer vision workflows.</p>
-              </article>
-              <article className="impact-card">
-                <span className="impact-number">~30%</span>
-                <p>Better debugging, stability, and release reliability through logging, monitoring, and CI/CD.</p>
-              </article>
-              <article className="impact-card">
-                <span className="impact-number">95%</span>
-                <p>Gesture tracking accuracy reached in the Air Canvas real-time computer vision project.</p>
-              </article>
-            </div>
+            ))}
+
+            <article className="focus-note reveal" style={{ animationDelay: "280ms" }}>
+              <div className="section-kicker">Why this matters</div>
+              <p className="mt-4 text-sm leading-7 text-[var(--soft)]">
+                The reference portfolio feels strong because it is narrative-rich and interactive. This version now
+                does the same by changing emphasis, tone, and motion as the user explores different parts of your
+                engineering profile.
+              </p>
+            </article>
           </div>
         </section>
 
         <section id="projects" className="space-y-6">
-          <div>
-            <div className="section-label">Selected Projects</div>
-            <h2 className="section-heading">Work that best represents where you are strongest.</h2>
+          <div className="reveal">
+            <div className="section-kicker">Projects</div>
+            <h2 className="section-title">Projects that shift based on the active module.</h2>
           </div>
 
-          <div className="grid gap-5 xl:grid-cols-2">
-            {projects.map((project) => (
-              <article key={project.title} className="project-card">
+          <div className="grid gap-5 xl:grid-cols-3">
+            {activeProjects.map((project, index) => (
+              <article
+                key={project.id}
+                className="project-card reveal"
+                style={{ animationDelay: `${index * 90}ms` }}
+              >
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-medium tracking-[0.24em] text-cyan-200 uppercase">
+                    <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
                       {project.timeline}
                     </div>
                     <h3 className="mt-3 text-2xl font-semibold text-white">{project.title}</h3>
                   </div>
-                  <span className="status-badge">{project.status}</span>
+                  <span className="module-status">{project.status}</span>
                 </div>
 
-                <p className="mt-5 text-sm leading-7 text-[var(--muted)]">{project.summary}</p>
+                <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{project.summary}</p>
 
                 <div className="mt-5 flex flex-wrap gap-2">
                   {project.stack.map((item) => (
-                    <span key={item} className="stack-chip">
+                    <span key={item} className="stack-pill stack-pill-compact">
                       {item}
                     </span>
                   ))}
                 </div>
 
                 <div className="mt-6 space-y-3">
-                  {project.impact.map((point) => (
-                    <div key={point} className="flex gap-3 text-sm leading-7 text-[var(--soft)]">
-                      <span className="mt-2 h-2 w-2 rounded-full bg-cyan-300" />
+                  {project.outcomes.map((point) => (
+                    <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
+                      <span className="signal-dot" />
                       <span>{point}</span>
                     </div>
                   ))}
@@ -261,7 +375,7 @@ function App() {
                       View repo
                     </a>
                   ) : (
-                    <span className="text-sm text-[var(--muted)]">Detailed repository link not public yet.</span>
+                    <span className="text-sm text-[var(--muted)]">Private or in-progress build.</span>
                   )}
                 </div>
               </article>
@@ -269,34 +383,39 @@ function App() {
           </div>
         </section>
 
-        <section id="experience" className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
-          <div className="panel">
-            <div className="section-label">Experience</div>
-            <h2 className="section-heading">Internships that gave you real operational instincts.</h2>
+        <section id="experience" className="grid gap-8 xl:grid-cols-[0.8fr_1.2fr]">
+          <div className="reveal">
+            <div className="section-kicker">Experience</div>
+            <h2 className="section-title">Where the operational habits came from.</h2>
             <p className="section-copy">
-              The recurring theme in both roles is not just coding. It is diagnosing system behavior, structuring
-              data flow, making pipelines safer to operate, and using tooling to reduce failure cost.
+              The common thread across internships is backend ownership, data movement, issue diagnosis, and using
+              tooling to reduce failure cost before it becomes user pain.
             </p>
           </div>
 
-          <div className="space-y-5">
-            {experience.map((item) => (
-              <article key={item.company} className="panel">
+          <div className="timeline-shell">
+            {experience.map((item, index) => (
+              <article
+                key={item.company}
+                className="timeline-card reveal"
+                style={{ animationDelay: `${index * 110}ms` }}
+              >
+                <div className="timeline-marker" />
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
-                    <div className="text-xl font-semibold text-white">{item.role}</div>
-                    <div className="mt-2 text-sm text-cyan-200">{item.company}</div>
+                    <h3 className="text-xl font-semibold text-white">{item.role}</h3>
+                    <div className="mt-2 text-sm text-[var(--theme-secondary)]">{item.company}</div>
                   </div>
                   <div className="text-right text-sm text-[var(--muted)]">
                     <div>{item.timeline}</div>
                     <div className="mt-1">{item.location}</div>
                   </div>
                 </div>
-
-                <div className="mt-6 space-y-3">
+                <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{item.summary}</p>
+                <div className="mt-5 space-y-3">
                   {item.points.map((point) => (
-                    <div key={point} className="flex gap-3 text-sm leading-7 text-[var(--soft)]">
-                      <span className="mt-2 h-2 w-2 rounded-full bg-[var(--accent)]" />
+                    <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
+                      <span className="signal-dot" />
                       <span>{point}</span>
                     </div>
                   ))}
@@ -306,19 +425,23 @@ function App() {
           </div>
         </section>
 
-        <section id="education" className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="panel">
-            <div className="section-label">Education</div>
-            <h2 className="section-heading">Grounded in CS fundamentals, now applied through product-facing work.</h2>
+        <section className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
+          <div className="reveal">
+            <div className="section-kicker">Education</div>
+            <h2 className="section-title">Grounded in CS fundamentals, then shaped by practical builds.</h2>
           </div>
 
-          <div className="grid gap-5">
-            {education.map((item) => (
-              <article key={item.school} className="panel">
-                <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="grid gap-4">
+            {education.map((item, index) => (
+              <article
+                key={item.school}
+                className="education-card reveal"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <h3 className="text-xl font-semibold text-white">{item.degree}</h3>
-                    <div className="mt-2 text-sm text-cyan-200">{item.school}</div>
+                    <div className="mt-2 text-sm text-[var(--theme-secondary)]">{item.school}</div>
                   </div>
                   <div className="text-sm text-[var(--muted)]">{item.timeline}</div>
                 </div>
@@ -328,52 +451,66 @@ function App() {
           </div>
         </section>
 
-        <section id="chat" className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
-          <div className="panel">
-            <div className="section-label">Portfolio Copilot</div>
-            <h2 className="section-heading">A chatbot-style layer, kept static so GitHub Pages can host it free.</h2>
+        <section id="copilot" className="grid gap-8 xl:grid-cols-[0.88fr_1.12fr]">
+          <div className="reveal">
+            <div className="section-kicker">Portfolio copilot</div>
+            <h2 className="section-title">Yes, your portfolio already has a chatbot surface.</h2>
             <p className="section-copy">
-              The reference portfolio uses a real AI backend. This version keeps the same interaction surface, but the
-              answers come from a local knowledge layer so the site works immediately on GitHub Pages. The UI is
-              intentionally ready for a later Claude, Vercel, observability, and Langfuse expansion.
+              Right now it is a front-end copilot so the site stays fast and free on GitHub Pages. The structure is
+              intentional though: this is the module most ready for a future Claude, observability, and Langfuse
+              upgrade.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              {chatPrompts.map((item) => (
-                <button key={item.label} className="pill-button" onClick={() => sendMessage(item.prompt)} type="button">
-                  {item.label}
+              <button
+                className="stack-pill interactive-pill"
+                onClick={() => sendMessage(activeModule.askPrompt)}
+                type="button"
+              >
+                Ask about {activeModule.label}
+              </button>
+              {chatPrompts.map((prompt) => (
+                <button
+                  key={prompt.label}
+                  className="stack-pill interactive-pill"
+                  onClick={() => sendMessage(prompt.prompt)}
+                  type="button"
+                >
+                  {prompt.label}
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="chat-shell">
-            <div className="chat-header">
+          <div className="copilot-shell reveal" style={{ animationDelay: "140ms" }}>
+            <div className="copilot-header">
               <div>
                 <div className="text-sm font-semibold text-white">Ask Parth</div>
-                <div className="text-xs text-[var(--muted)]">Static copilot · GitHub Pages compatible</div>
+                <div className="text-xs text-[var(--muted)]">Static copilot now. Real AI upgrade path next.</div>
               </div>
-              <div className="status-dot" />
+              <div className="status-lamp" />
             </div>
 
-            <div className="chat-body">
+            <div className="copilot-body">
               {messages.map((message, index) => (
                 <div
                   key={`${message.role}-${index}`}
-                  className={message.role === "assistant" ? "message assistant" : "message user"}
+                  className={message.role === "assistant" ? "copilot-message assistant" : "copilot-message user"}
                 >
                   {message.text}
                 </div>
               ))}
-              {isTyping ? <div className="message assistant">Thinking through Parth&apos;s portfolio...</div> : null}
+              {isTyping ? (
+                <div className="copilot-message assistant">Thinking through the best signal to surface...</div>
+              ) : null}
             </div>
 
-            <form className="chat-form" onSubmit={handleSubmit}>
+            <form className="copilot-form" onSubmit={handleSubmit}>
               <input
-                className="chat-input"
+                className="copilot-input"
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
-                placeholder="Ask about projects, roles, or technical strengths"
+                placeholder="Ask about projects, AI upgrades, roles, or systems work"
               />
               <button className="button button-primary" type="submit">
                 Send
@@ -382,17 +519,22 @@ function App() {
           </div>
         </section>
 
-        <section className="panel flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <section className="closing-panel reveal">
           <div>
-            <div className="section-label">Contact</div>
-            <h2 className="section-heading max-w-2xl">If the role needs ownership, technical depth, and clear execution, let&apos;s talk.</h2>
+            <div className="section-kicker">Next step</div>
+            <h2 className="section-title">If you want the site to feel even closer to santifer.io, the next upgrade is backend AI.</h2>
+            <p className="section-copy">
+              The current redesign already gives you modular storytelling, dynamic accents, animation, and a stronger
+              product feel. The next major jump is a real chatbot with traces, evals, and deployment off GitHub Pages.
+            </p>
           </div>
+
           <div className="flex flex-wrap gap-3">
             <a className="button button-primary" href={`mailto:${profile.email}`}>
               Email Parth
             </a>
             <a className="button button-secondary" href={profile.github} target="_blank" rel="noreferrer">
-              GitHub Profile
+              GitHub profile
             </a>
           </div>
         </section>
