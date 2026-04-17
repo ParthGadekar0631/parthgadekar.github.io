@@ -13,6 +13,7 @@ export const profile = {
   email: "parthgadekar060202@gmail.com",
   phone: "+1 (551) 260-5658",
   github: "https://github.com/ParthGadekar0631",
+  linkedin: "https://www.linkedin.com/in/parthgadekar622/",
   resume: "Parth_Gadekar_Resume.pdf",
   photo: "parth-profile.jpg",
   location: "Hoboken, NJ",
@@ -166,9 +167,12 @@ export const projects: ProjectSummary[] = [
     title: "Blockchain in Land Registry Process",
     timeline: "Jul 2022 - May 2023",
     status: "Selected project",
+    category: "Full-Stack & Systems",
+    context: "A. C. Patil College of Engineering | Ethereum, Solidity, Flutter, Blockchain APIs, SHA-256",
     summary:
       "A blockchain-backed land registry workflow that uses Solidity, Flutter, and SHA-256 validation to improve trust, traceability, and user confidence.",
     stack: ["Ethereum", "Solidity", "Flutter", "Blockchain APIs", "SHA-256"],
+    tags: ["Blockchain", "Flutter", "Security"],
     outcomes: [
       "Reduced fraud risk by about 50% through tamper-resistant transfer records.",
       "Improved transparent user verification flows, contributing to roughly 90% testing satisfaction.",
@@ -206,9 +210,12 @@ export const projects: ProjectSummary[] = [
     title: "Full-Stack E-Commerce Platform",
     timeline: "Sep 2024 - Dec 2024",
     status: "Selected project",
+    category: "Full-Stack & Systems",
+    context: "Stevens Institute of Technology | React, Spring Boot, MySQL",
     summary:
       "A full-stack shopping application built with React, Spring Boot, and MySQL, centered on checkout performance, modular APIs, and secure session flows.",
     stack: ["React", "Spring Boot", "MySQL", "REST APIs", "Authentication"],
+    tags: ["Full-Stack", "APIs", "Systems"],
     outcomes: [
       "Improved checkout completion by about 35% through optimized user flows.",
       "Reduced request latency by about 30% under peak traffic through SQL indexing and modular endpoints.",
@@ -245,9 +252,12 @@ export const projects: ProjectSummary[] = [
     title: "Medication Adherence Tracker",
     timeline: "Sep 2025 - Jan 2026",
     status: "Selected project",
+    category: "Full-Stack & Systems",
+    context: "Stevens Institute of Technology | Node.js, MongoDB, GitHub Actions, REST APIs",
     summary:
       "A healthcare-oriented adherence tracking system using Node.js, MongoDB, REST APIs, and GitHub Actions for reliable data handling and faster delivery.",
     stack: ["Node.js", "MongoDB", "REST APIs", "GitHub Actions"],
+    tags: ["Backend", "Healthcare", "CI/CD"],
     outcomes: [
       "Improved backend request throughput by about 28% with REST APIs and MongoDB-backed handling.",
       "Reduced health data inconsistencies through schema validation and consistency checks.",
@@ -284,9 +294,12 @@ export const projects: ProjectSummary[] = [
     title: "F1 Telemetry Simulation System",
     timeline: "Jun 2025 - Present",
     status: "Flagship build",
+    category: "Full-Stack & Systems",
+    context: "Personal Project | C++, Python, FastAPI, React, TypeScript, PostgreSQL",
     summary:
       "A race-style telemetry environment for streaming signals, replay workflows, anomaly visibility, and engineering storytelling.",
     stack: ["C++", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL"],
+    tags: ["Systems", "Telemetry", "Realtime"],
     outcomes: [
       "Modeled live race data streams and improved responsiveness by roughly 35%.",
       "Built replay and comparison flows for lap history, sector deltas, and trend inspection.",
@@ -323,9 +336,12 @@ export const projects: ProjectSummary[] = [
     title: "Distributed Data Processing Pipeline",
     timeline: "Feb 2026 - Present",
     status: "Core data project",
+    category: "Data Science",
+    context: "Stevens Institute of Technology | Python, PySpark, AWS S3, SQL",
     summary:
       "A cloud-oriented ETL workflow focused on partitioning, scalability, retries, and monitoring across distributed workloads.",
     stack: ["Python", "PySpark", "AWS S3", "SQL"],
+    tags: ["Data Engineering", "ETL", "Cloud"],
     outcomes: [
       "Improved system scalability and reliability by about 40% in the project framing.",
       "Reduced execution time by roughly 35% with better partitioning and transformation flow.",
@@ -362,9 +378,12 @@ export const projects: ProjectSummary[] = [
     title: "Spotify Data Warehouse and Analytics System",
     timeline: "Jan 2025 - May 2025",
     status: "Analytics project",
+    category: "Data Science",
+    context: "Stevens Institute of Technology | Python, PostgreSQL, SQL, Tableau",
     summary:
       "An analytics-oriented warehouse project with ETL, star schema modeling, SQL transformations, and dashboard delivery.",
     stack: ["Python", "PostgreSQL", "SQL", "Tableau"],
+    tags: ["Analytics", "Warehouse", "Tableau"],
     outcomes: [
       "Designed star schema models to improve KPI reporting performance by around 30%.",
       "Improved freshness and reliability of event ingestion with Python ETL workflows.",
@@ -390,9 +409,12 @@ export const projects: ProjectSummary[] = [
     title: "NYC Taxi Data Pipeline",
     timeline: "Jan 2026 - Present",
     status: "Selected project",
+    category: "Data Science",
+    context: "Personal Project | Python, AWS S3, PostgreSQL, SQL, Tableau",
     summary:
       "An end-to-end analytics pipeline for large mobility data, designed around ingestion quality and reliable downstream querying.",
     stack: ["Python", "AWS S3", "PostgreSQL", "SQL", "Tableau"],
+    tags: ["Data Science", "SQL", "Analytics"],
     outcomes: [
       "Processed large datasets through a structured ingestion and transformation pipeline.",
       "Improved query responsiveness through optimized SQL and indexing strategy.",
@@ -428,9 +450,12 @@ export const projects: ProjectSummary[] = [
     title: "Air Canvas",
     timeline: "Jun 2021 - Dec 2021",
     status: "Computer vision project",
+    category: "AI & ML",
+    context: "A. C. Patil College of Engineering | Python, OpenCV, NumPy, TensorFlow",
     summary:
       "A realtime computer vision canvas that translates hand gestures into responsive drawing behavior.",
     stack: ["Python", "OpenCV", "NumPy", "TensorFlow"],
+    tags: ["Machine Learning", "OpenCV", "Computer Vision"],
     outcomes: [
       "Reached about 95% gesture tracking accuracy.",
       "Reduced frame latency by roughly 30% with tighter contour and tracking logic.",

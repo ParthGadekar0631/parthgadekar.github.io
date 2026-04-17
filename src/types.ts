@@ -25,8 +25,11 @@ export type ProjectSummary = {
   title: string;
   timeline: string;
   status: string;
+  category: "AI & ML" | "Data Science" | "Full-Stack & Systems";
+  context: string;
   summary: string;
   stack: string[];
+  tags: string[];
   outcomes: string[];
   detailIntro: string;
   detailSections: Array<{

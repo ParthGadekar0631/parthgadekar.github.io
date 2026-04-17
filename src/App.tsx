@@ -213,53 +213,82 @@ function HeroPortrait({ imageHref, scrollOffset }: { imageHref: string; scrollOf
   );
 }
 
+const projectFilterOptions = ["All", "AI & ML", "Data Science", "Full-Stack & Systems"] as const;
+
+function ProjectPreview({ project }: { project: ProjectSummary }) {
+  return (
+    <div className="project-preview-shell">
+      <div className="project-preview-browser">
+        <span />
+        <span />
+        <span />
+      </div>
+      <div className="project-preview-screen">
+        <div className="project-preview-badge">{project.category}</div>
+        <div className="project-preview-title">{project.title}</div>
+        <div className="project-preview-lines">
+          <span />
+          <span />
+          <span />
+        </div>
+        <div className="project-preview-tags">
+          {project.tags.slice(0, 3).map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+      </div>
+      <div className="project-preview-base" />
+    </div>
+  );
+}
+
 function ProjectCards({
   items,
   columns = "xl:grid-cols-2",
+  showcase = false,
 }: {
   items: ProjectSummary[];
   columns?: string;
+  showcase?: boolean;
 }) {
   return (
     <div className={`grid gap-5 ${columns}`}>
       {items.map((project, index) => (
         <article
           key={project.slug}
-          className="project-card reveal"
+          className={showcase ? "project-showcase-card reveal" : "project-card reveal"}
           style={{ animationDelay: `${index * 80}ms` }}
         >
-          <div className="flex items-center justify-between gap-4">
-            <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
-              {project.timeline}
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h3 className="text-2xl font-semibold text-white">{project.title}</h3>
+              <div className="mt-3 text-base font-semibold text-[var(--theme-secondary)]">{project.category}</div>
+              <div className="mt-2 text-sm leading-7 text-[var(--muted)]">{project.context}</div>
             </div>
-            <span className="module-status">{project.status}</span>
+            {project.href ? (
+              <a className="project-chip-button" href={project.href} rel="noreferrer" target="_blank">
+                GitHub
+              </a>
+            ) : (
+              <AppLink className="project-chip-button" to={`/projects/${project.slug}`}>
+                Details
+              </AppLink>
+            )}
           </div>
-          <h3 className="mt-4 text-2xl font-semibold text-white">{project.title}</h3>
-          <p className="mt-4 text-sm leading-7 text-[var(--soft)]">{project.summary}</p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {project.stack.map((item) => (
-              <span key={item} className="stack-pill stack-pill-compact">
+          {showcase ? <ProjectPreview project={project} /> : null}
+          <p className="mt-6 text-lg leading-9 text-[var(--soft)]">{project.summary}</p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {project.tags.map((item) => (
+              <span key={item} className="stack-pill project-tag-pill">
                 {item}
               </span>
             ))}
           </div>
-          <div className="mt-6 space-y-3">
-            {project.outcomes.map((point) => (
-              <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
-                <span className="signal-dot" />
-                <span>{point}</span>
-              </div>
-            ))}
-          </div>
           <div className="mt-8 flex flex-wrap gap-3">
             <AppLink className="button button-secondary" to={`/projects/${project.slug}`}>
-              Open project
+              Explore project
             </AppLink>
-            {project.href ? (
-              <a className="button button-secondary" href={project.href} rel="noreferrer" target="_blank">
-                GitHub
-              </a>
-            ) : null}
+            <span className="project-timeline">{project.timeline}</span>
           </div>
         </article>
       ))}
@@ -441,17 +470,37 @@ function ExperienceView() {
 }
 
 function ProjectsView() {
+  const [activeFilter, setActiveFilter] = useState<(typeof projectFilterOptions)[number]>("All");
+  const filteredProjects =
+    activeFilter === "All" ? projects : projects.filter((project) => project.category === activeFilter);
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="reveal">
         <div className="section-kicker">Projects</div>
-        <h2 className="section-title">Eight selected projects with descriptions, stacks, and outcomes.</h2>
+        <h2 className="section-title">Projects</h2>
         <p className="section-copy">
-          This route is the proof-of-work layer: systems projects, data pipelines, full-stack applications, analytics
-          builds, and experimentation across different engineering domains.
+          Explore my latest work and contributions across full-stack systems, data engineering, and applied machine
+          learning.
         </p>
       </div>
-      <ProjectCards items={projects} />
+      <section className="filter-panel reveal" style={{ animationDelay: "120ms" }}>
+        <div className="section-kicker">Filter by category</div>
+        <div className="mt-6 flex flex-wrap gap-3">
+          {projectFilterOptions.map((option) => (
+            <button
+              key={option}
+              className={option === activeFilter ? "filter-chip filter-chip-active" : "filter-chip"}
+              onClick={() => setActiveFilter(option)}
+              type="button"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </section>
+      <div className="reveal text-xl font-semibold text-white">Showing {filteredProjects.length} projects</div>
+      <ProjectCards columns="xl:grid-cols-3" items={filteredProjects} showcase />
     </div>
   );
 }
@@ -640,7 +689,7 @@ function ContactView() {
         <h2 className="section-title">Reach out with a simple form and direct contact options.</h2>
         <p className="section-copy">
           Fill in the form below and it will open a ready-to-send email. You can also use the direct links for email,
-          GitHub, resume, and phone.
+          GitHub, LinkedIn, and phone.
         </p>
       </div>
 
@@ -669,13 +718,8 @@ function ContactView() {
             <a className="button button-secondary" href={profile.github} rel="noreferrer" target="_blank">
               GitHub
             </a>
-            <a
-              className="button button-primary"
-              href={`${import.meta.env.BASE_URL}${profile.resume}`}
-              rel="noreferrer"
-              target="_blank"
-            >
-              Resume
+            <a className="button button-primary" href={profile.linkedin} rel="noreferrer" target="_blank">
+              LinkedIn
             </a>
           </div>
         </article>
@@ -748,7 +792,6 @@ function App() {
   const activeModule = useMemo(() => getModuleForRoute(route), [route]);
   const scrollOffset = useScrollOffset();
   const typedText = useTypedWords(activeModule.heroWords);
-  const resumeHref = `${import.meta.env.BASE_URL}${profile.resume}`;
   const profilePhotoHref = `${import.meta.env.BASE_URL}${profile.photo}`;
 
   const themeStyle = {
@@ -783,8 +826,8 @@ function App() {
             <a className="button button-secondary" href={profile.github} rel="noreferrer" target="_blank">
               GitHub
             </a>
-            <a className="button button-primary" href={resumeHref} rel="noreferrer" target="_blank">
-              Resume
+            <a className="button button-primary" href={profile.linkedin} rel="noreferrer" target="_blank">
+              LinkedIn
             </a>
           </div>
         </div>
