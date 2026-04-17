@@ -45,7 +45,7 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
   } catch {
     res.status(200).json({
       answer:
-        "The Claude copilot is unavailable right now, but the portfolio routing and curated content remain available. Explore the Projects and About routes for grounded detail.",
+        "The Claude copilot is unavailable right now, but the portfolio routing and curated content remain available. Explore the Projects, Experience, and Skills routes for grounded detail.",
       citations: [],
       suggestedPrompts: [
         "Tell me about the F1 telemetry project.",

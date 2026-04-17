@@ -4,10 +4,11 @@ import { parseRoute } from "./routes";
 describe("parseRoute", () => {
   it("parses top-level routes", () => {
     expect(parseRoute("/")).toEqual({ kind: "home" });
-    expect(parseRoute("/copilot")).toEqual({ kind: "copilot" });
+    expect(parseRoute("/experience")).toEqual({ kind: "experience" });
     expect(parseRoute("/projects")).toEqual({ kind: "projects" });
-    expect(parseRoute("/case-studies")).toEqual({ kind: "case-studies" });
-    expect(parseRoute("/about")).toEqual({ kind: "about" });
+    expect(parseRoute("/skills")).toEqual({ kind: "skills" });
+    expect(parseRoute("/education")).toEqual({ kind: "education" });
+    expect(parseRoute("/contact")).toEqual({ kind: "contact" });
   });
 
   it("parses detail routes", () => {
@@ -15,14 +16,10 @@ describe("parseRoute", () => {
       kind: "project-detail",
       slug: "f1-telemetry",
     });
-    expect(parseRoute("/case-studies/making-telemetry-readable")).toEqual({
-      kind: "case-study-detail",
-      slug: "making-telemetry-readable",
-    });
   });
 
   it("normalizes trailing slashes", () => {
     expect(parseRoute("/projects/")).toEqual({ kind: "projects" });
-    expect(parseRoute("/about/")).toEqual({ kind: "about" });
+    expect(parseRoute("/contact/")).toEqual({ kind: "contact" });
   });
 });

@@ -10,7 +10,7 @@ describe("selectKnowledge", () => {
   });
 
   it("boosts page-local knowledge", () => {
-    const matches = selectKnowledge("How is this portfolio structured as a product?", "copilot", "/copilot");
+    const matches = selectKnowledge("How is this portfolio structured as a product?", "home", "/");
 
     expect(matches.length).toBeGreaterThan(0);
     expect(matches[0]?.id).toBe("portfolio-system-knowledge");

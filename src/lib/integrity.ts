@@ -1,4 +1,4 @@
-import { caseStudies, moduleConfigs, projects } from "../content/site";
+import { moduleConfigs, projects } from "../content/site";
 
 let didValidate = false;
 
@@ -22,9 +22,13 @@ export function validateContentIntegrity() {
   assertUnique(moduleConfigs.map((item) => item.id), "module id");
   assertUnique(moduleConfigs.map((item) => item.path), "module path");
   assertUnique(projects.map((item) => item.slug), "project slug");
-  assertUnique(caseStudies.map((item) => item.slug), "case study slug");
 
   const moduleIds = new Set(moduleConfigs.map((item) => item.id));
+  const projectSlugs = new Set(projects.map((item) => item.slug));
+
+  if (projects.length !== 8) {
+    throw new Error(`Expected 8 projects, found ${projects.length}`);
+  }
 
   for (const project of projects) {
     if (!moduleIds.has(project.primaryModuleId)) {
@@ -32,9 +36,11 @@ export function validateContentIntegrity() {
     }
   }
 
-  for (const caseStudy of caseStudies) {
-    if (!moduleIds.has(caseStudy.moduleId)) {
-      throw new Error(`Unknown module on case study ${caseStudy.slug}: ${caseStudy.moduleId}`);
+  for (const module of moduleConfigs) {
+    for (const slug of module.featuredProjectSlugs) {
+      if (!projectSlugs.has(slug)) {
+        throw new Error(`Unknown featured project on module ${module.id}: ${slug}`);
+      }
     }
   }
 

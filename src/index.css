@@ -50,7 +50,8 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
 }
 
@@ -227,6 +228,12 @@ input {
 
 .nav-link-active {
   color: white;
+}
+
+.nav-chip-active {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.22);
+  background: var(--theme-accent-soft);
 }
 
 .typed-wrap {
@@ -460,6 +467,37 @@ input {
 
 .copilot-input::placeholder {
   color: var(--muted);
+}
+
+.contact-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.contact-field {
+  display: grid;
+  gap: 0.55rem;
+  font-size: 0.92rem;
+  color: var(--soft);
+}
+
+.form-field {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.92rem 1rem;
+  color: white;
+  outline: none;
+  resize: vertical;
+}
+
+.form-field::placeholder {
+  color: var(--muted);
+}
+
+.form-textarea {
+  min-height: 9rem;
 }
 
 @keyframes revealUp {

@@ -1,20 +1,17 @@
 import { CSSProperties, FormEvent, useEffect, useMemo, useState } from "react";
-import { knowledgeDocuments, suggestedPrompts } from "./content/knowledge";
 import {
-  caseStudies,
   educationEntries,
   experienceEntries,
   homeHighlights,
   moduleConfigs,
   profile,
   projects,
-  publicMetricsSeed,
   requestedStack,
+  skillsGroups,
 } from "./content/site";
-import { fetchChatResponse, fetchPublicMetrics } from "./lib/api";
 import { validateContentIntegrity } from "./lib/integrity";
 import { AppRoute, navigate, parseRoute } from "./lib/routes";
-import { ChatMessage, Citation, ModuleConfig, PublicMetrics } from "./types";
+import { ModuleConfig, ProjectSummary } from "./types";
 
 validateContentIntegrity();
 
@@ -28,11 +25,7 @@ function LinkButton({
   className?: string;
 }) {
   return (
-    <button
-      className={className}
-      onClick={() => navigate(to)}
-      type="button"
-    >
+    <button className={className} onClick={() => navigate(to)} type="button">
       {children}
     </button>
   );
@@ -62,20 +55,24 @@ function AppLink({
 }
 
 function getModuleForRoute(route: AppRoute): ModuleConfig {
-  if (route.kind === "copilot") {
-    return moduleConfigs.find((item) => item.id === "copilot") ?? moduleConfigs[0];
+  if (route.kind === "experience") {
+    return moduleConfigs.find((item) => item.id === "experience") ?? moduleConfigs[0];
   }
 
   if (route.kind === "projects" || route.kind === "project-detail") {
     return moduleConfigs.find((item) => item.id === "projects") ?? moduleConfigs[0];
   }
 
-  if (route.kind === "case-studies" || route.kind === "case-study-detail") {
-    return moduleConfigs.find((item) => item.id === "case-studies") ?? moduleConfigs[0];
+  if (route.kind === "skills") {
+    return moduleConfigs.find((item) => item.id === "skills") ?? moduleConfigs[0];
   }
 
-  if (route.kind === "about") {
-    return moduleConfigs.find((item) => item.id === "about") ?? moduleConfigs[0];
+  if (route.kind === "education") {
+    return moduleConfigs.find((item) => item.id === "education") ?? moduleConfigs[0];
+  }
+
+  if (route.kind === "contact") {
+    return moduleConfigs.find((item) => item.id === "contact") ?? moduleConfigs[0];
   }
 
   return moduleConfigs[0];
@@ -131,23 +128,78 @@ function useTypedWords(words: string[]) {
   return typedText;
 }
 
+function ProjectCards({
+  items,
+  columns = "xl:grid-cols-2",
+}: {
+  items: ProjectSummary[];
+  columns?: string;
+}) {
+  return (
+    <div className={`grid gap-5 ${columns}`}>
+      {items.map((project, index) => (
+        <article
+          key={project.slug}
+          className="project-card reveal"
+          style={{ animationDelay: `${index * 80}ms` }}
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
+              {project.timeline}
+            </div>
+            <span className="module-status">{project.status}</span>
+          </div>
+          <h3 className="mt-4 text-2xl font-semibold text-white">{project.title}</h3>
+          <p className="mt-4 text-sm leading-7 text-[var(--soft)]">{project.summary}</p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {project.stack.map((item) => (
+              <span key={item} className="stack-pill stack-pill-compact">
+                {item}
+              </span>
+            ))}
+          </div>
+          <div className="mt-6 space-y-3">
+            {project.outcomes.map((point) => (
+              <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
+                <span className="signal-dot" />
+                <span>{point}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <AppLink className="button button-secondary" to={`/projects/${project.slug}`}>
+              Open project
+            </AppLink>
+            {project.href ? (
+              <a className="button button-secondary" href={project.href} rel="noreferrer" target="_blank">
+                GitHub
+              </a>
+            ) : null}
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 function HomeView({ activeModule }: { activeModule: ModuleConfig }) {
   const featuredProjects = projects.filter((item) => activeModule.featuredProjectSlugs.includes(item.slug));
 
   return (
     <div className="space-y-16">
-      <section className="grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
+      <section className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
         <div className="hero-panel reveal">
           <div className="hero-shine" />
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium tracking-[0.24em] text-[var(--muted)] uppercase">
-            Production-grade portfolio system
+            Landing page
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
-            <span className="eyebrow-tag">{activeModule.kicker}</span>
-            <span className="eyebrow-tag">Vercel + Claude + Langfuse</span>
+            <span className="eyebrow-tag">software engineering</span>
+            <span className="eyebrow-tag">data systems</span>
+            <span className="eyebrow-tag">AI-native product thinking</span>
           </div>
           <p className="mt-8 max-w-3xl text-lg leading-9 text-[var(--soft)]">
-            {activeModule.summary}
+            {profile.shortSummary}
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {homeHighlights.map((item) => (
@@ -161,16 +213,14 @@ function HomeView({ activeModule }: { activeModule: ModuleConfig }) {
         </div>
 
         <div className="spotlight-panel reveal" style={{ animationDelay: "120ms" }}>
-          <div className="section-kicker">What this site demonstrates</div>
-          <h2 className="section-title">
-            The portfolio demonstrates the skills it describes.
-          </h2>
+          <div className="section-kicker">Explore the portfolio</div>
+          <h2 className="section-title">A modular site instead of one overloaded resume page.</h2>
           <div className="mt-8 space-y-4">
             {[
-              "A real text copilot powered by Claude instead of front-end-only scripted answers.",
-              "Curated retrieval over your resume, project summaries, and site content.",
-              "Public observability summary cards with raw traces kept private.",
-              "Case-study routing, route-aware accent themes, and reusable product UI patterns.",
+              "Start on the landing page for a concise profile summary and key highlights.",
+              "Open Experience for three work roles across backend, ETL, and information systems.",
+              "Use Projects to review eight builds with descriptions, stacks, and detail pages.",
+              "Visit Skills, Education, and Contact for the remaining hiring context.",
             ].map((point) => (
               <div key={point} className="signal-row">
                 <span className="signal-dot" />
@@ -179,11 +229,11 @@ function HomeView({ activeModule }: { activeModule: ModuleConfig }) {
             ))}
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
-            <LinkButton className="button button-primary" to="/copilot">
-              Open AI Copilot
+            <LinkButton className="button button-primary" to="/projects">
+              View projects
             </LinkButton>
-            <LinkButton className="button button-secondary" to="/projects">
-              Explore Projects
+            <LinkButton className="button button-secondary" to="/experience">
+              View experience
             </LinkButton>
           </div>
         </div>
@@ -191,21 +241,17 @@ function HomeView({ activeModule }: { activeModule: ModuleConfig }) {
 
       <section className="space-y-6">
         <div className="reveal">
-          <div className="section-kicker">Top-level modules</div>
-          <h2 className="section-title">Five routes. One persistent product shell.</h2>
+          <div className="section-kicker">Portfolio modules</div>
+          <h2 className="section-title">Each route is focused on one hiring conversation.</h2>
         </div>
-        <div className="grid gap-4 lg:grid-cols-5">
+        <div className="grid gap-4 lg:grid-cols-3">
           {moduleConfigs.map((item, index) => (
-            <LinkButton
-              key={item.id}
-              className="module-card reveal"
-              to={item.path}
-            >
+            <LinkButton key={item.id} className="module-card reveal" to={item.path}>
               <div className="flex items-center justify-between gap-4">
                 <span className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
                   0{index + 1}
                 </span>
-                <span className="module-status">Route</span>
+                <span className="module-status">Module</span>
               </div>
               <h3 className="mt-5 text-xl font-semibold text-white">{item.navLabel}</h3>
               <p className="mt-3 text-sm leading-7 text-[var(--soft)]">{item.summary}</p>
@@ -216,39 +262,68 @@ function HomeView({ activeModule }: { activeModule: ModuleConfig }) {
 
       <section className="space-y-6">
         <div className="reveal">
-          <div className="section-kicker">Featured work</div>
-          <h2 className="section-title">Highlighted projects for the active portfolio story.</h2>
+          <div className="section-kicker">Featured projects</div>
+          <h2 className="section-title">Proof of work with deeper routes behind every card.</h2>
         </div>
-        <div className="grid gap-5 xl:grid-cols-3">
-          {featuredProjects.map((project, index) => (
-            <article
-              key={project.slug}
-              className="project-card reveal"
-              style={{ animationDelay: `${index * 90}ms` }}
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
-                  {project.timeline}
+        <ProjectCards columns="xl:grid-cols-3" items={featuredProjects} />
+      </section>
+    </div>
+  );
+}
+
+function ExperienceView() {
+  const relatedProjects = projects.filter((item) =>
+    moduleConfigs.find((module) => module.id === "experience")?.featuredProjectSlugs.includes(item.slug),
+  );
+
+  return (
+    <div className="space-y-10">
+      <section className="reveal">
+        <div className="section-kicker">Work experience</div>
+        <h2 className="section-title">Three roles across backend systems, ETL workflows, and data operations.</h2>
+        <p className="section-copy">
+          These experiences shaped how I debug production issues, think about reliability, and connect software decisions
+          to business outcomes.
+        </p>
+      </section>
+
+      <section className="space-y-5">
+        {experienceEntries.map((item, index) => (
+          <article
+            key={`${item.company}-${item.role}`}
+            className="timeline-card reveal"
+            style={{ animationDelay: `${index * 90}ms` }}
+          >
+            <div className="timeline-marker" />
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h3 className="text-xl font-semibold text-white">{item.role}</h3>
+                <div className="mt-2 text-sm text-[var(--theme-secondary)]">{item.company}</div>
+              </div>
+              <div className="text-right text-sm text-[var(--muted)]">
+                <div>{item.timeline}</div>
+                <div className="mt-1">{item.location}</div>
+              </div>
+            </div>
+            <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{item.summary}</p>
+            <div className="mt-6 space-y-3">
+              {item.bullets.map((point) => (
+                <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
+                  <span className="signal-dot" />
+                  <span>{point}</span>
                 </div>
-                <span className="module-status">{project.status}</span>
-              </div>
-              <h3 className="mt-4 text-2xl font-semibold text-white">{project.title}</h3>
-              <p className="mt-4 text-sm leading-7 text-[var(--soft)]">{project.summary}</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {project.stack.map((item) => (
-                  <span key={item} className="stack-pill stack-pill-compact">
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-6">
-                <AppLink className="button button-secondary" to={`/projects/${project.slug}`}>
-                  View detail
-                </AppLink>
-              </div>
-            </article>
-          ))}
+              ))}
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section className="space-y-6">
+        <div className="reveal">
+          <div className="section-kicker">Related projects</div>
+          <h2 className="section-title">Projects that reinforce the same engineering habits.</h2>
         </div>
+        <ProjectCards items={relatedProjects} />
       </section>
     </div>
   );
@@ -259,55 +334,13 @@ function ProjectsView() {
     <div className="space-y-8">
       <div className="reveal">
         <div className="section-kicker">Projects</div>
-        <h2 className="section-title">Proof of work organized for engineering conversations.</h2>
+        <h2 className="section-title">Eight selected projects with descriptions, stacks, and outcomes.</h2>
         <p className="section-copy">
-          These project routes are not filler cards. They are designed to surface the kind of operating signal that
-          matters in interviews: constraints, tradeoffs, observability, and why the system exists.
+          This route is the proof-of-work layer: systems projects, data pipelines, full-stack applications, analytics
+          builds, and experimentation across different engineering domains.
         </p>
       </div>
-      <div className="grid gap-5 xl:grid-cols-2">
-        {projects.map((project, index) => (
-          <article
-            key={project.slug}
-            className="project-card reveal"
-            style={{ animationDelay: `${index * 80}ms` }}
-          >
-            <div className="flex items-center justify-between gap-4">
-              <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
-                {project.timeline}
-              </div>
-              <span className="module-status">{project.status}</span>
-            </div>
-            <h3 className="mt-4 text-2xl font-semibold text-white">{project.title}</h3>
-            <p className="mt-4 text-sm leading-7 text-[var(--soft)]">{project.summary}</p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {project.stack.map((item) => (
-                <span key={item} className="stack-pill stack-pill-compact">
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="mt-6 space-y-3">
-              {project.outcomes.map((point) => (
-                <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
-                  <span className="signal-dot" />
-                  <span>{point}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <AppLink className="button button-secondary" to={`/projects/${project.slug}`}>
-                Open project
-              </AppLink>
-              {project.href ? (
-                <a className="button button-secondary" href={project.href} target="_blank" rel="noreferrer">
-                  GitHub
-                </a>
-              ) : null}
-            </div>
-          </article>
-        ))}
-      </div>
+      <ProjectCards items={projects} />
     </div>
   );
 }
@@ -360,17 +393,17 @@ function ProjectDetailView({ slug }: { slug: string }) {
       </div>
       <div className="closing-panel reveal">
         <div>
-          <div className="section-kicker">Next route</div>
+          <div className="section-kicker">Keep exploring</div>
           <p className="section-copy">
-            The portfolio keeps these routes separate so each project can be discussed as a system instead of a line item.
+            Every project has its own route so the portfolio feels structured and easy to scan during interviews.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
           <LinkButton className="button button-secondary" to="/projects">
             Back to projects
           </LinkButton>
-          <LinkButton className="button button-primary" to="/copilot">
-            Ask the copilot about this
+          <LinkButton className="button button-primary" to="/contact">
+            Contact Parth
           </LinkButton>
         </div>
       </div>
@@ -378,78 +411,30 @@ function ProjectDetailView({ slug }: { slug: string }) {
   );
 }
 
-function CaseStudiesView() {
+function SkillsView() {
   return (
     <div className="space-y-8">
       <div className="reveal">
-        <div className="section-kicker">Case studies</div>
-        <h2 className="section-title">Lighter than the reference portfolio in v1, but structurally ready.</h2>
+        <div className="section-kicker">Skills</div>
+        <h2 className="section-title">Skills grouped by how I use them in real projects.</h2>
         <p className="section-copy">
-          The point of this module is to establish deep-linkable technical storytelling now, then expand the editorial
-          layer later without changing the product shell.
+          Instead of a long keyword dump, the skills route organizes tools by the work they support: product
+          development, APIs, data systems, cloud workflows, and engineering discipline.
         </p>
       </div>
       <div className="grid gap-5 xl:grid-cols-2">
-        {caseStudies.map((caseStudy, index) => (
+        {skillsGroups.map((group, index) => (
           <article
-            key={caseStudy.slug}
-            className="project-card reveal"
-            style={{ animationDelay: `${index * 90}ms` }}
-          >
-            <div className="flex items-center justify-between gap-4">
-              <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
-                {caseStudy.status}
-              </div>
-              <span className="module-status">Essay</span>
-            </div>
-            <h3 className="mt-4 text-2xl font-semibold text-white">{caseStudy.title}</h3>
-            <p className="mt-4 text-sm leading-7 text-[var(--soft)]">{caseStudy.summary}</p>
-            <p className="mt-4 text-sm leading-7 text-[var(--muted)]">{caseStudy.highlight}</p>
-            <div className="mt-8">
-              <AppLink className="button button-secondary" to={`/case-studies/${caseStudy.slug}`}>
-                Read case study
-              </AppLink>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function CaseStudyDetailView({ slug }: { slug: string }) {
-  const caseStudy = caseStudies.find((item) => item.slug === slug);
-
-  if (!caseStudy) {
-    return (
-      <div className="spotlight-panel reveal">
-        <h2 className="section-title">Case study not found.</h2>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-8">
-      <div className="reveal">
-        <div className="section-kicker">Case study</div>
-        <h2 className="section-title">{caseStudy.title}</h2>
-        <p className="section-copy">{caseStudy.summary}</p>
-      </div>
-      <div className="grid gap-6 xl:grid-cols-2">
-        {caseStudy.sections.map((section, index) => (
-          <article
-            key={section.title}
+            key={group.title}
             className="spotlight-panel reveal"
-            style={{ animationDelay: `${index * 90}ms` }}
+            style={{ animationDelay: `${index * 80}ms` }}
           >
-            <div className="section-kicker">{section.title}</div>
-            <p className="mt-5 text-sm leading-8 text-[var(--soft)]">{section.body}</p>
-            <div className="mt-6 space-y-3">
-              {section.bullets.map((point) => (
-                <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
-                  <span className="signal-dot" />
-                  <span>{point}</span>
-                </div>
+            <div className="section-kicker">{group.title}</div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {group.items.map((item) => (
+                <span key={item} className="stack-pill">
+                  {item}
+                </span>
               ))}
             </div>
           </article>
@@ -459,295 +444,179 @@ function CaseStudyDetailView({ slug }: { slug: string }) {
   );
 }
 
-function AboutView() {
+function EducationView() {
   return (
     <div className="space-y-10">
-      <section className="grid gap-8 xl:grid-cols-[0.85fr_1.15fr]">
-        <div className="reveal">
-          <div className="section-kicker">About / Contact</div>
-          <h2 className="section-title">Context, fit, and where the instincts came from.</h2>
-          <p className="section-copy">
-            The goal here is not to write a generic bio. It is to explain the kinds of roles I want, what habits the
-            internships built, and why my strongest projects point toward systems, data, and AI-native product work.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a className="button button-primary" href={`mailto:${profile.email}`}>
-              {profile.email}
-            </a>
-            <a className="button button-secondary" href={profile.github} target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-          </div>
-        </div>
-        <div className="spotlight-panel reveal" style={{ animationDelay: "120ms" }}>
-          <div className="section-kicker">Target roles</div>
-          <div className="mt-6 space-y-4">
-            {[
-              "Software engineering roles where backend systems and product delivery both matter.",
-              "Data engineering roles focused on pipeline quality, reliability, and observability.",
-              "AI systems roles where chat surfaces, tracing, and careful product framing matter together.",
-            ].map((item) => (
-              <div key={item} className="signal-row">
-                <span className="signal-dot" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section className="reveal">
+        <div className="section-kicker">Education</div>
+        <h2 className="section-title">Academic grounding for software, data, and systems work.</h2>
+        <p className="section-copy">
+          The education route keeps the academic context separate from projects and work experience so recruiters and
+          hiring managers can scan it quickly.
+        </p>
       </section>
 
       <section className="grid gap-6 xl:grid-cols-2">
-        <div className="space-y-5">
-          {experienceEntries.map((item, index) => (
-            <article
-              key={item.company}
-              className="timeline-card reveal"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="timeline-marker" />
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-white">{item.role}</h3>
-                  <div className="mt-2 text-sm text-[var(--theme-secondary)]">{item.company}</div>
-                </div>
-                <div className="text-right text-sm text-[var(--muted)]">
-                  <div>{item.timeline}</div>
-                  <div className="mt-1">{item.location}</div>
-                </div>
+        {educationEntries.map((item, index) => (
+          <article
+            key={`${item.school}-${item.degree}`}
+            className="education-card reveal"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h3 className="text-xl font-semibold text-white">{item.degree}</h3>
+                <div className="mt-2 text-sm text-[var(--theme-secondary)]">{item.school}</div>
               </div>
-              <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{item.summary}</p>
-              <div className="mt-6 space-y-3">
-                {item.bullets.map((point) => (
-                  <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
-                    <span className="signal-dot" />
-                    <span>{point}</span>
-                  </div>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-        <div className="space-y-5">
-          {educationEntries.map((item, index) => (
-            <article
-              key={item.school}
-              className="education-card reveal"
-              style={{ animationDelay: `${index * 110}ms` }}
-            >
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-white">{item.degree}</h3>
-                  <div className="mt-2 text-sm text-[var(--theme-secondary)]">{item.school}</div>
-                </div>
-                <div className="text-sm text-[var(--muted)]">{item.timeline}</div>
-              </div>
-              <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{item.detail}</p>
-            </article>
-          ))}
-          <article className="spotlight-panel reveal" style={{ animationDelay: "180ms" }}>
-            <div className="section-kicker">Knowledge corpus</div>
-            <p className="mt-5 text-sm leading-8 text-[var(--soft)]">
-              The copilot answers from a curated knowledge layer built from your resume, project summaries, case-study
-              content, and portfolio copy. That keeps v1 controllable without needing a database or vector store.
-            </p>
-            <div className="mt-6 text-sm text-[var(--muted)]">
-              {knowledgeDocuments.length} curated documents currently indexed for retrieval.
+              <div className="text-sm text-[var(--muted)]">{item.timeline}</div>
             </div>
+            <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{item.detail}</p>
           </article>
-        </div>
+        ))}
+      </section>
+
+      <section className="grid gap-5 xl:grid-cols-3">
+        {[
+          "Graduate study in databases, machine learning, statistics, and data analysis.",
+          "Undergraduate foundation in systems programming, DBMS, software engineering, and web programming.",
+          "Academic work that supports both product implementation and data-oriented roles.",
+        ].map((point, index) => (
+          <article
+            key={point}
+            className="spotlight-panel reveal"
+            style={{ animationDelay: `${index * 90}ms` }}
+          >
+            <div className="section-kicker">Academic signal</div>
+            <p className="mt-5 text-sm leading-8 text-[var(--soft)]">{point}</p>
+          </article>
+        ))}
       </section>
     </div>
   );
 }
 
-function MetricsPanel({ metrics }: { metrics: PublicMetrics }) {
-  return (
-    <div className="grid gap-4 sm:grid-cols-2">
-      <article className="metric-card">
-        <div className="metric-label">Total chats</div>
-        <div className="metric-value">{metrics.totalChats}</div>
-      </article>
-      <article className="metric-card">
-        <div className="metric-label">Average latency</div>
-        <div className="metric-value">{metrics.avgLatencyMs} ms</div>
-      </article>
-      <article className="metric-card">
-        <div className="metric-label">Popular module</div>
-        <div className="metric-value metric-text">{metrics.popularModule}</div>
-      </article>
-      <article className="metric-card">
-        <div className="metric-label">Status</div>
-        <div className="metric-value metric-text">{metrics.serviceStatus}</div>
-      </article>
-    </div>
-  );
-}
-
-function CopilotView({ route }: { route: AppRoute }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      role: "assistant",
-      text:
-        "Ask me about Parth's projects, target roles, observability interests, or how this portfolio is structured as a product.",
-    },
-  ]);
-  const [draft, setDraft] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+function ContactView() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [citations, setCitations] = useState<Citation[]>([]);
-  const [traceId, setTraceId] = useState<string>("");
-  const [metrics, setMetrics] = useState<PublicMetrics>(publicMetricsSeed);
 
-  useEffect(() => {
-    let cancelled = false;
+  const mailtoHref = useMemo(() => {
+    const subject = encodeURIComponent(`Portfolio inquiry from ${name || "a visitor"}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n`,
+    );
 
-    fetchPublicMetrics()
-      .then((data) => {
-        if (!cancelled) {
-          setMetrics(data);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setMetrics(publicMetricsSeed);
-        }
-      });
+    return `mailto:${profile.email}?subject=${subject}&body=${body}`;
+  }, [email, message, name]);
 
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const pagePath =
-    route.kind === "project-detail"
-      ? `/projects/${route.slug}`
-      : route.kind === "case-study-detail"
-        ? `/case-studies/${route.slug}`
-        : route.kind === "copilot"
-          ? "/copilot"
-          : "/";
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const trimmed = draft.trim();
-
-    if (!trimmed || isLoading) {
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setError("Please fill in your name, email, and message.");
       return;
     }
 
-    const nextHistory = [...messages, { role: "user" as const, text: trimmed }];
-    setMessages(nextHistory);
-    setDraft("");
     setError(null);
-    setIsLoading(true);
-
-    try {
-      const response = await fetchChatResponse({
-        message: trimmed,
-        module: "copilot",
-        page: pagePath,
-        history: nextHistory.slice(-8),
-      });
-
-      setMessages((current) => [...current, { role: "assistant", text: response.answer }]);
-      setCitations(response.citations);
-      setTraceId(response.traceId);
-    } catch (requestError) {
-      const message = requestError instanceof Error ? requestError.message : "Unexpected chat failure.";
-      setError(message);
-      setMessages((current) => [
-        ...current,
-        {
-          role: "assistant",
-          text:
-            "The live copilot could not answer right now, so the safe fallback is to explore the Projects and About routes directly.",
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
+    window.location.href = mailtoHref;
   };
 
   return (
     <div className="space-y-8">
-      <section className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
-        <div className="reveal">
-          <div className="section-kicker">AI copilot</div>
-          <h2 className="section-title">Real text chat, curated retrieval, safe fallbacks.</h2>
-          <p className="section-copy">
-            The copilot is implemented as a server-side Vercel function that uses Claude, curated knowledge, and
-            Langfuse-ready tracing hooks. The site only exposes safe summary metrics, not raw traces.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {suggestedPrompts.map((prompt) => (
-              <button
-                key={prompt}
-                className="stack-pill interactive-pill"
-                onClick={() => setDraft(prompt)}
-                type="button"
-              >
-                {prompt}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="reveal" style={{ animationDelay: "120ms" }}>
-          <MetricsPanel metrics={metrics} />
-          <div className="mt-4 text-sm text-[var(--muted)]">
-            Last updated: {metrics.lastUpdated}
-          </div>
-        </div>
-      </section>
-
-      <div className="copilot-shell reveal">
-        <div className="copilot-header">
-          <div>
-            <div className="text-sm font-semibold text-white">{profile.siteName} Copilot</div>
-            <div className="text-xs text-[var(--muted)]">
-              Claude-backed text mode with curated retrieval
-            </div>
-          </div>
-          <div className="status-lamp" />
-        </div>
-        <div className="copilot-body">
-          {messages.map((message, index) => (
-            <div
-              key={`${message.role}-${index}`}
-              className={message.role === "assistant" ? "copilot-message assistant" : "copilot-message user"}
-            >
-              {message.text}
-            </div>
-          ))}
-          {isLoading ? (
-            <div className="copilot-message assistant">Thinking through the best answer...</div>
-          ) : null}
-        </div>
-        <form className="copilot-form" onSubmit={handleSubmit}>
-          <input
-            className="copilot-input"
-            onChange={(event) => setDraft(event.target.value)}
-            placeholder="Ask about projects, systems, observability, or target roles"
-            value={draft}
-          />
-          <button className="button button-primary" disabled={isLoading} type="submit">
-            Send
-          </button>
-        </form>
-        <div className="mt-5 space-y-3 text-sm text-[var(--muted)]">
-          {error ? <div>Fallback triggered: {error}</div> : null}
-          {traceId ? <div>Trace id: {traceId}</div> : null}
-          {citations.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {citations.map((citation) => (
-                <span key={`${citation.path}-${citation.title}`} className="stack-pill stack-pill-compact">
-                  {citation.title}
-                </span>
-              ))}
-            </div>
-          ) : null}
-        </div>
+      <div className="reveal">
+        <div className="section-kicker">Contact</div>
+        <h2 className="section-title">Reach out with a simple form and direct contact options.</h2>
+        <p className="section-copy">
+          Fill in the form below and it will open a ready-to-send email. You can also use the direct links for email,
+          GitHub, resume, and phone.
+        </p>
       </div>
+
+      <section className="grid gap-6 xl:grid-cols-[0.78fr_1.22fr]">
+        <article className="spotlight-panel reveal">
+          <div className="section-kicker">Direct contact</div>
+          <div className="mt-6 space-y-4 text-sm leading-7 text-[var(--soft)]">
+            <div>
+              <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">Email</div>
+              <a className="text-white" href={`mailto:${profile.email}`}>
+                {profile.email}
+              </a>
+            </div>
+            <div>
+              <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">Phone</div>
+              <a className="text-white" href={`tel:${profile.phone.replace(/[^+\d]/g, "")}`}>
+                {profile.phone}
+              </a>
+            </div>
+            <div>
+              <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">Location</div>
+              <div className="text-white">{profile.location}</div>
+            </div>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a className="button button-secondary" href={profile.github} rel="noreferrer" target="_blank">
+              GitHub
+            </a>
+            <a
+              className="button button-primary"
+              href={`${import.meta.env.BASE_URL}${profile.resume}`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              Resume
+            </a>
+          </div>
+        </article>
+
+        <article className="hero-panel reveal" style={{ animationDelay: "120ms" }}>
+          <div className="hero-shine" />
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <label className="contact-field">
+              <span>Name</span>
+              <input
+                className="form-field"
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Your name"
+                type="text"
+                value={name}
+              />
+            </label>
+            <label className="contact-field">
+              <span>Email</span>
+              <input
+                className="form-field"
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="you@example.com"
+                type="email"
+                value={email}
+              />
+            </label>
+            <label className="contact-field">
+              <span>Message</span>
+              <textarea
+                className="form-field form-textarea"
+                onChange={(event) => setMessage(event.target.value)}
+                placeholder="Tell me about the role, project, or conversation you want to have."
+                rows={7}
+                value={message}
+              />
+            </label>
+            {error ? <div className="text-sm text-red-300">{error}</div> : null}
+            <div className="flex flex-wrap gap-3">
+              <button className="button button-primary" type="submit">
+                Open email draft
+              </button>
+              <a className="button button-secondary" href={`mailto:${profile.email}`}>
+                Send direct email
+              </a>
+            </div>
+            <div className="text-sm text-[var(--muted)]">
+              The form opens your default mail app with the message prefilled.
+            </div>
+          </form>
+        </article>
+      </section>
     </div>
   );
 }
@@ -800,12 +669,25 @@ function App() {
             ))}
           </nav>
           <div className="flex gap-3">
-            <a className="button button-secondary" href={profile.github} target="_blank" rel="noreferrer">
+            <a className="button button-secondary" href={profile.github} rel="noreferrer" target="_blank">
               GitHub
             </a>
-            <a className="button button-primary" href={resumeHref} target="_blank" rel="noreferrer">
+            <a className="button button-primary" href={resumeHref} rel="noreferrer" target="_blank">
               Resume
             </a>
+          </div>
+        </div>
+        <div className="mx-auto block w-full max-w-7xl overflow-x-auto px-5 pb-4 lg:hidden sm:px-8">
+          <div className="flex min-w-max gap-3">
+            {moduleConfigs.map((module) => (
+              <AppLink
+                key={module.id}
+                className={module.path === activeModule.path ? "stack-pill nav-chip-active" : "stack-pill"}
+                to={module.path}
+              >
+                {module.navLabel}
+              </AppLink>
+            ))}
           </div>
         </div>
       </header>
@@ -824,19 +706,17 @@ function App() {
               <span className="typed-text">{typedText}</span>
               <span className="typed-cursor" />
             </div>
-            <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--soft)] sm:text-lg">
-              {profile.summary}
-            </p>
+            <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--soft)] sm:text-lg">{profile.summary}</p>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--muted)] sm:text-base">
               {profile.availability}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a className="button button-primary" href={`mailto:${profile.email}`}>
+              <LinkButton className="button button-primary" to="/contact">
                 Contact Parth
-              </a>
-              <AppLink className="button button-secondary" to="/copilot">
-                Talk to the copilot
-              </AppLink>
+              </LinkButton>
+              <LinkButton className="button button-secondary" to="/projects">
+                Explore projects
+              </LinkButton>
             </div>
             <div className="mt-10">
               <div className="marquee">
@@ -877,27 +757,27 @@ function App() {
         </section>
 
         {route.kind === "home" ? <HomeView activeModule={activeModule} /> : null}
-        {route.kind === "copilot" ? <CopilotView route={route} /> : null}
+        {route.kind === "experience" ? <ExperienceView /> : null}
         {route.kind === "projects" ? <ProjectsView /> : null}
         {route.kind === "project-detail" ? <ProjectDetailView slug={route.slug} /> : null}
-        {route.kind === "case-studies" ? <CaseStudiesView /> : null}
-        {route.kind === "case-study-detail" ? <CaseStudyDetailView slug={route.slug} /> : null}
-        {route.kind === "about" ? <AboutView /> : null}
+        {route.kind === "skills" ? <SkillsView /> : null}
+        {route.kind === "education" ? <EducationView /> : null}
+        {route.kind === "contact" ? <ContactView /> : null}
 
         <section className="closing-panel reveal">
           <div>
-            <div className="section-kicker">Built to grow</div>
-            <h2 className="section-title">The next upgrade path is voice, evals, and deeper case-study content.</h2>
+            <div className="section-kicker">Next step</div>
+            <h2 className="section-title">If the work fits, reach out directly.</h2>
             <p className="section-copy">
-              V1 intentionally prioritizes strong routing, a real text copilot, typed content, and a clean Vercel
-              runtime over trying to ship every possible AI feature at once.
+              This portfolio is structured to make hiring conversations easier: quick landing summary, separate work and
+              project modules, grouped skills, academic context, and a direct contact route.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <a className="button button-primary" href={`mailto:${profile.email}`}>
               Email
             </a>
-            <a className="button button-secondary" href={profile.github} target="_blank" rel="noreferrer">
+            <a className="button button-secondary" href={profile.github} rel="noreferrer" target="_blank">
               GitHub
             </a>
           </div>

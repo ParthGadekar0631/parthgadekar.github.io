@@ -1,11 +1,11 @@
 export type AppRoute =
   | { kind: "home" }
-  | { kind: "copilot" }
+  | { kind: "experience" }
   | { kind: "projects" }
   | { kind: "project-detail"; slug: string }
-  | { kind: "case-studies" }
-  | { kind: "case-study-detail"; slug: string }
-  | { kind: "about" };
+  | { kind: "skills" }
+  | { kind: "education" }
+  | { kind: "contact" };
 
 export function parseRoute(pathname: string): AppRoute {
   const normalized = pathname.replace(/\/+$/, "") || "/";
@@ -14,8 +14,8 @@ export function parseRoute(pathname: string): AppRoute {
     return { kind: "home" };
   }
 
-  if (normalized === "/copilot") {
-    return { kind: "copilot" };
+  if (normalized === "/experience") {
+    return { kind: "experience" };
   }
 
   if (normalized === "/projects") {
@@ -26,16 +26,16 @@ export function parseRoute(pathname: string): AppRoute {
     return { kind: "project-detail", slug: normalized.slice("/projects/".length) };
   }
 
-  if (normalized === "/case-studies") {
-    return { kind: "case-studies" };
+  if (normalized === "/skills") {
+    return { kind: "skills" };
   }
 
-  if (normalized.startsWith("/case-studies/")) {
-    return { kind: "case-study-detail", slug: normalized.slice("/case-studies/".length) };
+  if (normalized === "/education") {
+    return { kind: "education" };
   }
 
-  if (normalized === "/about") {
-    return { kind: "about" };
+  if (normalized === "/contact") {
+    return { kind: "contact" };
   }
 
   return { kind: "home" };

@@ -1,18 +1,13 @@
-import {
-  CaseStudy,
-  EducationEntry,
-  ExperienceEntry,
-  ModuleConfig,
-  ProjectSummary,
-  PublicMetrics,
-} from "../types";
+import { EducationEntry, ExperienceEntry, ModuleConfig, ProjectSummary } from "../types";
 
 export const profile = {
   siteName: "RisksRay",
   name: "Parth Gadekar",
-  title: "Software engineer focused on systems, data, and AI-native product execution.",
+  title: "Software Engineer | Systems, Data, Full Stack, and AI-Native Product Thinking",
   summary:
-    "I build software that has to stay observable, understandable, and useful under real operational pressure. My strongest work sits where product delivery, backend reliability, and AI-native interaction design meet.",
+    "I am an M.S. Computer Science student at Stevens Institute of Technology building software across realtime systems, data pipelines, full-stack products, and AI-native experiences. My work is strongest when reliability, clear architecture, and user-facing product value all matter together.",
+  shortSummary:
+    "Software engineer with experience across backend workflows, ETL pipelines, cloud-connected systems, and product-focused engineering. I enjoy building software that is observable, practical, and easy to reason about.",
   availability:
     "Open to software engineering, data engineering, and AI systems roles in the USA. Based in Hoboken, NJ and open to relocation.",
   email: "parthgadekar060202@gmail.com",
@@ -41,16 +36,16 @@ export const requestedStack = [
 export const moduleConfigs: ModuleConfig[] = [
   {
     id: "home",
-    label: "Portfolio System",
+    label: "Home",
     navLabel: "Home",
     path: "/",
-    kicker: "Interactive portfolio",
-    title: "A modular AI-native portfolio that behaves more like a product than a landing page.",
+    kicker: "Landing page",
+    title: "A dynamic engineering portfolio built to feel like a real product.",
     summary:
-      "The site is structured as a dynamic system with route-aware themes, content modules, and a real backend copilot instead of a scripted front-end demo.",
-    heroWords: ["observable software", "agentic product surfaces", "dynamic modules"],
-    chips: ["case studies", "motion system", "typed routes", "vercel runtime"],
-    featuredProjectSlugs: ["portfolio-system", "f1-telemetry", "distributed-pipeline"],
+      "The homepage gives a clear overview of who I am, what I build, and where to explore the rest of the portfolio.",
+    heroWords: ["systems that scale", "projects with signal", "software with clarity"],
+    chips: ["landing page", "summary", "navigation", "product feel"],
+    featuredProjectSlugs: ["f1-telemetry", "distributed-pipeline", "portfolio-system"],
     theme: {
       accent: "#67e8f9",
       accentSoft: "rgba(103, 232, 249, 0.16)",
@@ -60,37 +55,17 @@ export const moduleConfigs: ModuleConfig[] = [
     },
   },
   {
-    id: "copilot",
-    label: "AI Copilot",
-    navLabel: "AI Copilot",
-    path: "/copilot",
-    kicker: "Real backend feature",
-    title: "A real Claude-backed copilot with curated retrieval and trace-aware behavior.",
+    id: "experience",
+    label: "Experience",
+    navLabel: "Experience",
+    path: "/experience",
+    kicker: "Work history",
+    title: "Three roles that shaped my engineering instincts.",
     summary:
-      "This module demonstrates a production-style interaction surface: route context, curated knowledge retrieval, best-effort tracing, and public metrics without exposing private logs.",
-    heroWords: ["claude responses", "curated RAG", "trace-aware prompts"],
-    chips: ["claude", "langfuse", "retrieval", "serverless"],
-    featuredProjectSlugs: ["portfolio-system", "f1-telemetry", "distributed-pipeline"],
-    theme: {
-      accent: "#f59e0b",
-      accentSoft: "rgba(245, 158, 11, 0.18)",
-      accentGlow: "rgba(249, 115, 22, 0.22)",
-      secondary: "#fb923c",
-      panel: "rgba(28, 16, 6, 0.9)",
-    },
-  },
-  {
-    id: "projects",
-    label: "Projects",
-    navLabel: "Projects",
-    path: "/projects",
-    kicker: "Proof of work",
-    title: "Projects organized as evidence, not filler.",
-    summary:
-      "The projects module shows the work through outcomes, operating constraints, and engineering signal rather than generic portfolio card language.",
-    heroWords: ["telemetry", "pipelines", "product delivery"],
-    chips: ["systems", "data", "frontend", "ownership"],
-    featuredProjectSlugs: ["f1-telemetry", "distributed-pipeline", "fullstack-commerce"],
+      "This route focuses on internships and practical work where I built backend systems, data workflows, and debugging discipline.",
+    heroWords: ["backend workflows", "pipeline reliability", "shipping under constraints"],
+    chips: ["3 experiences", "cloud", "debugging", "delivery"],
+    featuredProjectSlugs: ["f1-telemetry", "distributed-pipeline", "spotify-warehouse"],
     theme: {
       accent: "#4ade80",
       accentSoft: "rgba(74, 222, 128, 0.16)",
@@ -100,17 +75,37 @@ export const moduleConfigs: ModuleConfig[] = [
     },
   },
   {
-    id: "case-studies",
-    label: "Case Studies",
-    navLabel: "Case Studies",
-    path: "/case-studies",
-    kicker: "How I think",
-    title: "Case-study routes explain the system decisions behind the projects.",
+    id: "projects",
+    label: "Projects",
+    navLabel: "Projects",
+    path: "/projects",
+    kicker: "Eight selected projects",
+    title: "Eight projects that show systems, data, product, and engineering depth.",
     summary:
-      "V1 keeps this lighter than the reference portfolio, but still establishes the structure for long-form technical storytelling and architecture breakdowns.",
-    heroWords: ["architecture", "tradeoffs", "delivery narratives"],
-    chips: ["system design", "storytelling", "deep links", "editorial structure"],
-    featuredProjectSlugs: ["f1-telemetry", "distributed-pipeline", "portfolio-system"],
+      "This route is the proof-of-work layer: eight project cards with descriptions, outcomes, and detailed routes for deeper reading.",
+    heroWords: ["telemetry", "pipelines", "products"],
+    chips: ["8 projects", "detail pages", "evidence", "engineering"],
+    featuredProjectSlugs: ["f1-telemetry", "distributed-pipeline", "fullstack-commerce"],
+    theme: {
+      accent: "#f59e0b",
+      accentSoft: "rgba(245, 158, 11, 0.18)",
+      accentGlow: "rgba(249, 115, 22, 0.22)",
+      secondary: "#fb923c",
+      panel: "rgba(28, 16, 6, 0.9)",
+    },
+  },
+  {
+    id: "skills",
+    label: "Skills",
+    navLabel: "Skills",
+    path: "/skills",
+    kicker: "Technical stack",
+    title: "Skills grouped by how I actually use them, not by keyword stuffing.",
+    summary:
+      "This route organizes programming languages, frameworks, cloud tools, data tooling, and AI/LLMOps interests into meaningful groups.",
+    heroWords: ["typescript", "python", "observability"],
+    chips: ["languages", "frameworks", "cloud", "AI workflows"],
+    featuredProjectSlugs: ["portfolio-system", "f1-telemetry", "distributed-pipeline"],
     theme: {
       accent: "#f87171",
       accentSoft: "rgba(248, 113, 113, 0.16)",
@@ -120,23 +115,43 @@ export const moduleConfigs: ModuleConfig[] = [
     },
   },
   {
-    id: "about",
-    label: "About",
-    navLabel: "About",
-    path: "/about",
-    kicker: "Context and fit",
-    title: "Experience, education, and contact framed around the roles I want next.",
+    id: "education",
+    label: "Education",
+    navLabel: "Education",
+    path: "/education",
+    kicker: "Academic context",
+    title: "Education that supports the engineering foundations behind the work.",
     summary:
-      "This module turns the usual about page into a compact fit narrative: where the instincts came from, what roles I am targeting, and how to contact me.",
-    heroWords: ["operator mindset", "ownership", "career direction"],
-    chips: ["experience", "education", "contact", "fit narrative"],
-    featuredProjectSlugs: ["portfolio-system", "f1-telemetry", "spotify-warehouse"],
+      "This route covers graduate and undergraduate education, coursework, and academic grounding.",
+    heroWords: ["computer science", "databases", "machine learning"],
+    chips: ["M.S. CS", "B.E. IT", "coursework", "foundation"],
+    featuredProjectSlugs: ["spotify-warehouse", "nyc-taxi", "distributed-pipeline"],
     theme: {
       accent: "#a78bfa",
       accentSoft: "rgba(167, 139, 250, 0.16)",
       accentGlow: "rgba(139, 92, 246, 0.22)",
       secondary: "#c084fc",
       panel: "rgba(16, 10, 32, 0.9)",
+    },
+  },
+  {
+    id: "contact",
+    label: "Contact",
+    navLabel: "Contact",
+    path: "/contact",
+    kicker: "Get in touch",
+    title: "A direct contact route with form fields, not just a static email link.",
+    summary:
+      "This route lets visitors enter a name, email, and message, then open a ready-to-send email to me.",
+    heroWords: ["let's connect", "software roles", "project discussions"],
+    chips: ["contact form", "email", "github", "resume"],
+    featuredProjectSlugs: ["portfolio-system", "f1-telemetry", "fullstack-commerce"],
+    theme: {
+      accent: "#22d3ee",
+      accentSoft: "rgba(34, 211, 238, 0.16)",
+      accentGlow: "rgba(6, 182, 212, 0.22)",
+      secondary: "#06b6d4",
+      panel: "rgba(8, 18, 28, 0.92)",
     },
   },
 ];
@@ -161,7 +176,7 @@ export const projects: ProjectSummary[] = [
       {
         title: "System intent",
         body:
-          "The project simulates the kinds of telemetry surfaces that matter in performance environments: live signals, lap replay, comparisons, and anomaly detection for decisions under time pressure.",
+          "The project simulates telemetry surfaces that matter in performance environments: live signals, lap replay, comparisons, and anomaly detection for decisions under time pressure.",
         bullets: [
           "Realtime-style dashboarding instead of static reporting.",
           "Strong emphasis on replay and inspection rather than raw data generation only.",
@@ -222,42 +237,42 @@ export const projects: ProjectSummary[] = [
   },
   {
     slug: "portfolio-system",
-    title: "This Portfolio System",
+    title: "RisksRay Portfolio System",
     timeline: "2026",
     status: "Live product demo",
     summary:
-      "A modular portfolio app with a real AI copilot, route-aware themes, case-study routing, and public observability summary panels.",
-    stack: ["React", "TypeScript", "Tailwind CSS", "Vite", "Vercel", "Claude", "Langfuse"],
+      "A modular portfolio app with dynamic routes, richer motion, branding, and product-style information architecture.",
+    stack: ["React", "TypeScript", "Tailwind CSS", "Vite", "Vercel"],
     outcomes: [
       "Reframed the portfolio as a route-based product instead of a single static page.",
-      "Added a real server-side copilot endpoint with curated retrieval and safe fallbacks.",
-      "Introduced public metrics summaries without exposing raw internal traces.",
+      "Added dedicated pages for experience, projects, skills, education, and contact.",
+      "Introduced stronger branding, dynamic themes, and a cleaner portfolio shell.",
     ],
     detailIntro:
-      "This site is meant to demonstrate the same ideas it describes: modular thinking, AI-native interaction, observability-aware engineering, and deliberate product framing.",
+      "This site is designed to feel like a product, not a resume dump. The architecture itself is part of the portfolio story.",
     detailSections: [
       {
-        title: "System intent",
+        title: "Design intent",
         body:
-          "The portfolio exists as both a hiring surface and a product artifact. The point is not to claim AI fluency abstractly; the point is to let a visitor interact with it.",
+          "The site uses multiple routes, a persistent shell, and theme shifts so visitors can move through the portfolio as a system instead of one overloaded page.",
         bullets: [
-          "Real backend copilot rather than a front-end-only scripted demo.",
-          "Content modeled as typed route-aware documents for reuse and retrieval.",
-          "A clear upgrade path from curated retrieval to richer evaluations later.",
+          "Dedicated pages instead of one long scroll.",
+          "Consistent product-style navigation and CTA structure.",
+          "Visual identity built around RisksRay branding.",
         ],
       },
       {
         title: "Why it matters",
         body:
-          "It creates a stronger hiring signal than a template site because the architecture itself becomes part of the portfolio story.",
+          "A portfolio that demonstrates organization, UX judgment, and implementation quality is stronger than one that only lists technologies.",
         bullets: [
-          "Shows product execution, not only design taste.",
-          "Makes the portfolio itself a case study.",
-          "Supports future Claude and Langfuse depth without a redesign.",
+          "Shows frontend architecture and product framing.",
+          "Demonstrates how I think about user flow and clarity.",
+          "Acts as a living proof-of-work artifact.",
         ],
       },
     ],
-    primaryModuleId: "copilot",
+    primaryModuleId: "home",
   },
   {
     slug: "spotify-warehouse",
@@ -285,7 +300,35 @@ export const projects: ProjectSummary[] = [
         ],
       },
     ],
-    primaryModuleId: "about",
+    primaryModuleId: "projects",
+  },
+  {
+    slug: "nyc-taxi",
+    title: "NYC Taxi Data Pipeline",
+    timeline: "2026 - Present",
+    status: "Personal project",
+    summary:
+      "An end-to-end analytics pipeline for large mobility data, designed around ingestion quality and reliable downstream querying.",
+    stack: ["Python", "AWS S3", "PostgreSQL", "SQL", "Tableau"],
+    outcomes: [
+      "Processed large datasets through a structured ingestion and transformation pipeline.",
+      "Improved query responsiveness through optimized SQL and indexing strategy.",
+      "Focused on trustworthy downstream analytics rather than raw ingestion alone.",
+    ],
+    detailIntro:
+      "This project extends my data engineering work into analytics-heavy public datasets and operational reporting.",
+    detailSections: [
+      {
+        title: "System intent",
+        body: "The project connects ingestion quality, SQL performance, and reporting usefulness.",
+        bullets: [
+          "End-to-end pipeline design instead of isolated scripts.",
+          "Built around downstream confidence and query clarity.",
+          "Strong evidence for data engineering fit.",
+        ],
+      },
+    ],
+    primaryModuleId: "projects",
   },
   {
     slug: "fullstack-commerce",
@@ -315,70 +358,63 @@ export const projects: ProjectSummary[] = [
     ],
     primaryModuleId: "projects",
   },
-];
-
-export const caseStudies: CaseStudy[] = [
   {
-    slug: "designing-a-portfolio-as-a-product",
-    title: "Designing a Portfolio as a Product",
-    status: "Published in v1",
-    moduleId: "case-studies",
+    slug: "air-canvas",
+    title: "Air Canvas",
+    timeline: "2021",
+    status: "Public repo",
     summary:
-      "Why the portfolio was rebuilt as a route-based AI demo instead of a single scrolling page.",
-    highlight: "The portfolio itself becomes proof of AI-native product thinking.",
-    sections: [
+      "A realtime computer vision canvas that translates hand gestures into responsive drawing behavior.",
+    stack: ["Python", "OpenCV", "NumPy", "TensorFlow"],
+    outcomes: [
+      "Reached about 95% gesture tracking accuracy.",
+      "Reduced frame latency by roughly 30% with tighter contour and tracking logic.",
+      "Maintained smooth interaction close to 30 FPS.",
+    ],
+    detailIntro:
+      "Air Canvas shows my earlier interest in realtime systems and visual feedback loops through computer vision.",
+    detailSections: [
       {
-        title: "Problem framing",
-        body:
-          "A conventional portfolio can describe AI and observability interests, but it does not prove them. The redesign turns the site itself into a working demonstration.",
+        title: "System intent",
+        body: "The project focused on live gesture detection and responsive visual feedback.",
         bullets: [
-          "Shifted from page layout thinking to product surface thinking.",
-          "Made interaction, retrieval, and metrics part of the story.",
-          "Focused on trust and clarity over gimmicks.",
-        ],
-      },
-      {
-        title: "Delivery choices",
-        body:
-          "The v1 architecture favors typed content, lightweight retrieval, and route-based modules so the site can ship fast while keeping room for deeper LLMOps later.",
-        bullets: [
-          "Serverless Claude endpoint instead of a front-end-only copilot.",
-          "Curated repo-managed knowledge instead of a database dependency.",
-          "Public summary metrics with private trace detail.",
+          "Realtime input handling matters more than static model output.",
+          "Performance and UX are tightly connected here.",
+          "Good evidence of experimentation with CV systems.",
         ],
       },
     ],
+    primaryModuleId: "projects",
+    href: "https://github.com/ParthGadekar0631/Air-Canvas",
   },
   {
-    slug: "making-telemetry-readable",
-    title: "Making Telemetry Readable",
-    status: "Published in v1",
-    moduleId: "case-studies",
+    slug: "land-registry",
+    title: "Land Registry Using Blockchain",
+    timeline: "2023",
+    status: "Public repo",
     summary:
-      "A short case study on why replay, anomaly visibility, and comparison flows matter as much as raw signal generation.",
-    highlight: "Observability is useful only when people can actually reason from it.",
-    sections: [
+      "A blockchain-backed property registry concept focused on trust, traceability, and clear transaction flow for users.",
+    stack: ["Dart", "Flutter", "Solidity", "Web3.js"],
+    outcomes: [
+      "Implemented ownership transaction flows on Ethereum-style infrastructure.",
+      "Built a user-facing interface for registry and transfer workflows.",
+      "Strengthened my thinking around trust-sensitive systems and product confidence.",
+    ],
+    detailIntro:
+      "This project explores systems where correctness, user trust, and transaction clarity matter together.",
+    detailSections: [
       {
-        title: "Problem framing",
-        body:
-          "Telemetry interfaces often over-index on surface flash and under-deliver on reasoning. The better question is whether the interface helps a user understand system state quickly.",
+        title: "System intent",
+        body: "The project focused on transparent property transaction workflows and digital trust.",
         bullets: [
-          "Replay matters because raw streams disappear.",
-          "Comparisons matter because isolated values lack context.",
-          "Readable signal is more important than sheer signal volume.",
-        ],
-      },
-      {
-        title: "Engineering angle",
-        body:
-          "This is where systems work and product work meet. The hard part is not only generating data. It is shaping the way humans inspect and act on it.",
-        bullets: [
-          "Supports dashboard decisions under pressure.",
-          "Creates better hooks for future AI explanations.",
-          "Shows engineering judgment, not only implementation effort.",
+          "Traceability and user confidence were key design concerns.",
+          "The interface was part of the trust model, not just decoration.",
+          "Shows breadth across product and systems ideas.",
         ],
       },
     ],
+    primaryModuleId: "projects",
+    href: "https://github.com/ParthGadekar0631/Land-Registry-using-Blockchain",
   },
 ];
 
@@ -411,6 +447,20 @@ export const experienceEntries: ExperienceEntry[] = [
       "Engineered retry and recovery mechanisms to keep large-scale processing consistent under failure conditions.",
     ],
   },
+  {
+    company: "Dezignolics Web and Software Solutions",
+    role: "Information Systems Intern",
+    timeline: "Jun 2022 - Jul 2022",
+    location: "Thane, India",
+    summary:
+      "Worked on web scraping, data extraction, parsing workflows, and data cleaning for structured reporting use cases.",
+    bullets: [
+      "Built automated web scraping scripts using Python and BeautifulSoup to extract structured data from web sources.",
+      "Designed parsing workflows for dynamic HTML content to improve reliability across multiple sources.",
+      "Implemented data cleaning and validation processes using Python and SQL to improve reporting accuracy.",
+      "Optimized scraping and retrieval workflows to reduce execution time and improve efficiency by about 25%.",
+    ],
+  },
 ];
 
 export const educationEntries: EducationEntry[] = [
@@ -430,24 +480,43 @@ export const educationEntries: EducationEntry[] = [
   },
 ];
 
-export const publicMetricsSeed: PublicMetrics = {
-  totalChats: 0,
-  avgLatencyMs: 0,
-  popularModule: "AI Copilot",
-  serviceStatus: "Awaiting runtime configuration",
-  lastUpdated: "Not yet connected",
-};
+export const skillsGroups = [
+  {
+    title: "Programming Languages",
+    items: ["Python", "TypeScript", "C++", "SQL", "JavaScript", "Bash", "Java"],
+  },
+  {
+    title: "Frontend and Product",
+    items: ["React", "Tailwind CSS", "Vite", "Responsive UI", "Routing", "Product UX"],
+  },
+  {
+    title: "Backend and APIs",
+    items: ["FastAPI", "REST APIs", "Node.js", "Spring Boot", "Authentication", "System Design"],
+  },
+  {
+    title: "Data and Cloud",
+    items: ["PySpark", "PostgreSQL", "MySQL", "AWS S3", "RDS", "ETL Pipelines", "Data Validation"],
+  },
+  {
+    title: "AI and LLMOps Direction",
+    items: ["Claude", "Chatbot UX", "Observability", "Langfuse", "Prompt Framing", "AI Product Thinking"],
+  },
+  {
+    title: "Engineering Practices",
+    items: ["CI/CD", "Debugging", "Monitoring", "Reliability", "Git", "Docker", "Linux"],
+  },
+];
 
 export const homeHighlights = [
   {
-    value: "34",
-    label: "Public repos",
-    detail: "A visible GitHub footprint across systems, dashboards, vision work, and full-stack delivery.",
+    value: "3",
+    label: "Work experiences",
+    detail: "Internship experience across backend workflows, ETL reliability, and information systems work.",
   },
   {
-    value: "2",
-    label: "Engineering internships",
-    detail: "Backend workflows, monitoring, data reliability, and cloud-connected shipping experience.",
+    value: "8",
+    label: "Selected projects",
+    detail: "Projects spanning realtime systems, data engineering, full-stack builds, analytics, and blockchain.",
   },
   {
     value: "2026",
@@ -457,6 +526,14 @@ export const homeHighlights = [
   {
     value: "3.70",
     label: "Graduate GPA",
-    detail: "Built on coursework in databases, ML, statistics, and business intelligence.",
+    detail: "Supported by coursework in databases, ML, business intelligence, and statistics.",
   },
 ];
+
+export const publicMetricsSeed = {
+  totalChats: 12,
+  avgLatencyMs: 780,
+  popularModule: "Projects",
+  serviceStatus: "Configured for Vercel",
+  lastUpdated: new Date().toISOString(),
+};

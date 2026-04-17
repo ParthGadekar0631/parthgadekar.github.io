@@ -88,7 +88,7 @@ export function buildCitations(documents: KnowledgeDocument[]): Citation[] {
 
 export function buildFallbackAnswer(query: string, documents: KnowledgeDocument[]) {
   if (documents.length === 0) {
-    return `I do not have a strong curated answer for "${query}" yet. Try asking about the F1 telemetry project, distributed pipelines, target roles, or how this portfolio uses Claude and Langfuse.`;
+    return `I do not have a strong curated answer for "${query}" yet. Try asking about the F1 telemetry project, distributed pipelines, work experience, or core skills.`;
   }
 
   const summary = documents

@@ -1,14 +1,15 @@
-# Parth Gadekar Portfolio
+# RisksRay Portfolio
 
-AI-native portfolio for Parth Gadekar, rebuilt as a modular product demo instead of a single scrolling landing page.
+Modular portfolio for Parth Gadekar, built as a multi-page product-style site instead of a single scrolling page.
 
-The site is designed to demonstrate the same engineering behaviors it talks about:
+The current site is organized around the hiring flow:
 
-- route-based product architecture
-- real Claude-backed text copilot
-- curated retrieval over typed portfolio content
-- Langfuse-ready tracing and public observability summaries
-- dynamic module theming, animation, and case-study routing
+- landing page with a short personal summary
+- dedicated experience page with 3 work experiences
+- projects page with 8 project cards and deep-linkable detail routes
+- grouped skills page
+- education page
+- contact page with name, email, and message fields
 
 ## Stack
 
@@ -20,38 +21,38 @@ The site is designed to demonstrate the same engineering behaviors it talks abou
 - Claude
 - Langfuse
 
-## Top-Level Routes
+## Routes
 
 - `/` Home
-- `/copilot` AI Copilot
-- `/projects` Projects
-- `/projects/:slug` Project detail
-- `/case-studies` Case Studies
-- `/case-studies/:slug` Case study detail
-- `/about` About / Contact
+- `/experience`
+- `/projects`
+- `/projects/:slug`
+- `/skills`
+- `/education`
+- `/contact`
 
 ## Project Structure
 
 ```text
 src/
   App.tsx              Route-based application shell
-  types.ts             Shared route/content/chat types
+  types.ts             Shared content and API types
   content/
-    site.ts            Portfolio modules, projects, case studies, profile data
-    knowledge.ts       Curated retrieval documents and suggested prompts
+    site.ts            Portfolio profile, modules, projects, experience, education, skills
+    knowledge.ts       Curated documents used by the server-side copilot
   lib/
     api.ts             Browser API helpers
     integrity.ts       Runtime content validation
     routes.ts          Client-side route parsing and navigation
-  index.css            Motion system, themed visual language, shared components
+  index.css            Motion system, themed visual language, shared UI styles
   main.tsx             React entry point
 
 api/
-  chat.ts              Claude-backed serverless copilot endpoint
-  metrics.ts           Public observability summary endpoint
+  chat.ts              Claude-backed serverless endpoint
+  metrics.ts           Public summary metrics endpoint
   _lib/
     anthropic.ts       Claude request orchestration
-    langfuse.ts        Langfuse metrics/tracing helpers
+    langfuse.ts        Langfuse metrics and tracing helpers
     shared.ts          Retrieval scoring and shared server helpers
 
 public/
@@ -66,26 +67,31 @@ Install dependencies:
 npm install
 ```
 
-Start the front end locally:
+Run the front end locally:
 
 ```bash
 npm run dev
 ```
 
-Note: `npm run dev` runs the Vite front end only. The `/api` routes are intended for Vercel serverless runtime.
-
-To run the full app locally with serverless routes, use the Vercel runtime:
+Run the full Vercel-style app locally, including `/api` routes:
 
 ```bash
 npx vercel dev
 ```
 
-That is the best way to verify the application behavior end to end, including:
+## Checks
 
-- `/copilot` API requests
-- `/api/chat`
-- `/api/metrics`
-- route fallback behavior
+```bash
+npm run check
+npm run test
+npm run build
+```
+
+CI is configured in `.github/workflows/ci.yml` to run:
+
+- type checking
+- tests
+- production build
 
 ## Environment Variables
 
@@ -101,68 +107,50 @@ LANGFUSE_BASE_URL=https://cloud.langfuse.com
 
 Behavior by configuration:
 
-- Without `ANTHROPIC_API_KEY`, the copilot falls back to curated retrieval summaries.
-- Without Langfuse credentials, public metrics fall back to safe empty defaults.
-
-## Production Build
-
-Create the production build:
-
-```bash
-npm run build
-```
-
-Preview the static front end locally:
-
-```bash
-npm run preview
-```
+- Without `ANTHROPIC_API_KEY`, the server-side copilot falls back to curated retrieval summaries.
+- Without Langfuse credentials, public metrics fall back to safe defaults.
 
 ## Deployment
 
-Primary runtime target is Vercel, not GitHub Pages.
-
-This repo includes:
-
-- `vercel.json` for SPA routing fallback
-- `api/` serverless functions for chat and metrics
-- Vite static output in `dist/`
+Primary runtime target is Vercel.
 
 Recommended deployment flow:
 
-1. Push the repo to GitHub
-2. Import the repo into Vercel
-3. Add the environment variables from `.env.example`
-4. Deploy
+1. Push the repo to GitHub.
+2. Import the repo into Vercel.
+3. Keep the preset as `Vite` and the root directory as `./`.
+4. Add the environment variables from `.env.example`.
+5. Deploy.
+
+Current free production domain pattern:
+
+- `https://<project-name>.vercel.app`
+
+Example:
+
+- `https://risksray.vercel.app`
 
 ## Verification Checklist
 
-After Vercel deploys, check:
+After deployment, verify:
 
-- `/` loads with RisksRay branding and animated module shell
-- `/copilot` loads and the chat form responds
+- `/` loads as the landing page
+- `/experience` shows 3 work experiences
+- `/projects` shows 8 projects
 - `/projects/f1-telemetry` loads directly
-- `/case-studies/designing-a-portfolio-as-a-product` loads directly
-- `/about` loads directly
+- `/skills` loads directly
+- `/education` loads directly
+- `/contact` shows the contact form
 - browser tab title shows `RisksRay | AI-Native Engineering Portfolio`
 
 ## Custom Domain
 
-To use `risksray.io` as the production domain:
+If you buy `risksray.io` later:
 
-1. Open your Vercel project
-2. Go to `Settings -> Domains`
-3. Add `risksray.io`
-4. Add `www.risksray.io` if you want a `www` redirect too
-5. Configure the DNS records Vercel shows for your registrar
-6. Wait for verification and SSL provisioning
+1. Open the Vercel project.
+2. Go to `Settings -> Domains`.
+3. Add `risksray.io`.
+4. Configure the DNS records Vercel provides.
+5. Wait for verification and SSL.
 
-Recommended production target:
-
-- `https://risksray.io`
-
-## Notes
-
-- V1 ships a real text copilot, not voice mode.
-- Public observability is summary-level only; raw traces stay private.
-- Case-study routing is fully implemented, but the editorial layer is intentionally lighter than the reference portfolio in v1.
+Until then, use the default `vercel.app` domain.

@@ -17,7 +17,7 @@ export default async function handler(_req: RequestLike, res: ResponseLike) {
     res.status(200).json({
       totalChats: 0,
       avgLatencyMs: 0,
-      popularModule: "AI Copilot",
+      popularModule: "Projects",
       serviceStatus: "Metrics unavailable",
       lastUpdated: new Date().toISOString(),
     });
