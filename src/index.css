@@ -1,0 +1,307 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #050813;
+  --text: #eef4ff;
+  --soft: rgba(224, 233, 255, 0.78);
+  --muted: rgba(190, 204, 234, 0.68);
+  --surface: rgba(11, 17, 34, 0.84);
+  --border: rgba(255, 255, 255, 0.1);
+  --accent: #5ee7df;
+  --accent-strong: #7be2ff;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(0, 154, 255, 0.16), transparent 26%),
+    radial-gradient(circle at 80% 8%, rgba(94, 231, 223, 0.14), transparent 24%),
+    linear-gradient(180deg, #07101f 0%, #050813 40%, #04060d 100%);
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.aurora {
+  pointer-events: none;
+  position: fixed;
+  inset: auto;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.65;
+}
+
+.aurora-one {
+  top: 6rem;
+  left: -6rem;
+  height: 18rem;
+  width: 18rem;
+  background: rgba(25, 118, 210, 0.2);
+}
+
+.aurora-two {
+  right: -3rem;
+  top: 28rem;
+  height: 20rem;
+  width: 20rem;
+  background: rgba(94, 231, 223, 0.13);
+}
+
+.panel {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  background: linear-gradient(180deg, rgba(12, 18, 37, 0.9), rgba(8, 12, 24, 0.88));
+  padding: 1.5rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.button:hover,
+.pill-button:hover,
+nav a:hover {
+  transform: translateY(-1px);
+}
+
+.button-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #04111d;
+}
+
+.button-secondary {
+  border: 1px solid rgba(126, 170, 230, 0.24);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+}
+
+.pill,
+.stack-chip,
+.status-badge,
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 170, 230, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.pill,
+.stack-chip {
+  padding: 0.55rem 0.95rem;
+  font-size: 0.85rem;
+  color: var(--soft);
+}
+
+.pill-button {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.status-badge {
+  padding: 0.55rem 0.9rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #91f4da;
+  background: rgba(66, 165, 145, 0.12);
+}
+
+.avatar {
+  display: grid;
+  height: 3.5rem;
+  width: 3.5rem;
+  place-items: center;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(94, 231, 223, 0.18), rgba(123, 226, 255, 0.18));
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #94e9fb;
+}
+
+.section-heading {
+  margin-top: 1rem;
+  max-width: 42rem;
+  font-size: clamp(1.8rem, 2.5vw, 3rem);
+  line-height: 1.08;
+  color: white;
+}
+
+.section-copy {
+  margin-top: 1.25rem;
+  max-width: 42rem;
+  font-size: 0.98rem;
+  line-height: 1.9;
+  color: var(--muted);
+}
+
+.impact-card {
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1.3rem;
+}
+
+.impact-card p {
+  margin: 0.9rem 0 0;
+  color: var(--soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.impact-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+}
+
+.project-card {
+  border-radius: 32px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(12, 18, 37, 0.96), rgba(8, 12, 24, 0.9)),
+    radial-gradient(circle at top right, rgba(123, 226, 255, 0.1), transparent 32%);
+  padding: 1.6rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22);
+}
+
+.chat-shell {
+  display: flex;
+  min-height: 34rem;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  background: linear-gradient(180deg, rgba(12, 18, 37, 0.94), rgba(8, 12, 24, 0.92));
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.1rem;
+}
+
+.status-dot {
+  height: 0.9rem;
+  width: 0.9rem;
+  border-radius: 999px;
+  background: #6bf3d4;
+  box-shadow: 0 0 18px rgba(107, 243, 212, 0.7);
+}
+
+.chat-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.2rem;
+}
+
+.message {
+  max-width: 90%;
+  border-radius: 24px;
+  padding: 0.9rem 1rem;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.message.assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--soft);
+}
+
+.message.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, rgba(94, 231, 223, 0.16), rgba(123, 226, 255, 0.15));
+  color: white;
+}
+
+.chat-form {
+  display: flex;
+  gap: 0.8rem;
+  border-top: 1px solid var(--border);
+  padding: 1rem;
+}
+
+.chat-input {
+  flex: 1;
+  border: 1px solid rgba(126, 170, 230, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.9rem 1rem;
+  color: white;
+  outline: none;
+}
+
+.chat-input::placeholder {
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .panel,
+  .project-card,
+  .chat-shell {
+    border-radius: 24px;
+  }
+
+  .chat-form {
+    flex-direction: column;
+  }
+
+  .message {
+    max-width: 100%;
+  }
+}
