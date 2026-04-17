@@ -4,16 +4,15 @@
 
 :root {
   --bg: #040611;
-  --bg-soft: #091122;
   --text: #eef4ff;
   --soft: rgba(229, 236, 255, 0.82);
   --muted: rgba(177, 191, 225, 0.68);
   --border: rgba(255, 255, 255, 0.1);
   --theme-accent: #67e8f9;
-  --theme-accent-soft: rgba(103, 232, 249, 0.18);
-  --theme-accent-glow: rgba(14, 165, 233, 0.28);
+  --theme-accent-soft: rgba(103, 232, 249, 0.16);
+  --theme-accent-glow: rgba(14, 165, 233, 0.24);
   --theme-secondary: #38bdf8;
-  --theme-panel: rgba(7, 16, 30, 0.9);
+  --theme-panel: rgba(7, 16, 30, 0.92);
   color: var(--text);
   background:
     radial-gradient(circle at 8% 12%, var(--theme-accent-glow), transparent 24%),
@@ -69,7 +68,7 @@ input {
 
 .ambient {
   filter: blur(100px);
-  opacity: 0.7;
+  opacity: 0.72;
 }
 
 .ambient-one {
@@ -103,9 +102,7 @@ input {
 .education-card,
 .copilot-shell,
 .closing-panel,
-.module-card,
-.focus-metric,
-.focus-note {
+.module-card {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -123,9 +120,7 @@ input {
 .timeline-card,
 .education-card,
 .copilot-shell,
-.closing-panel,
-.focus-metric,
-.focus-note {
+.closing-panel {
   padding: 1.5rem;
 }
 
@@ -143,17 +138,9 @@ input {
 .module-card:hover,
 .project-card:hover,
 .timeline-card:hover,
-.education-card:hover,
-.focus-metric:hover {
+.education-card:hover {
   transform: translateY(-4px);
   border-color: rgba(255, 255, 255, 0.18);
-}
-
-.module-card-active {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.34),
-    0 0 0 1px var(--theme-accent-soft);
 }
 
 .hero-shine {
@@ -182,7 +169,8 @@ input {
 }
 
 .button:hover,
-.interactive-pill:hover {
+.interactive-pill:hover,
+.nav-link:hover {
   transform: translateY(-2px);
 }
 
@@ -233,14 +221,23 @@ input {
   background: var(--theme-accent-soft);
 }
 
+.nav-link {
+  color: var(--muted);
+}
+
+.nav-link-active {
+  color: white;
+}
+
 .typed-wrap {
   display: block;
-  min-height: 1.2em;
-  margin-top: 0.18em;
+  min-height: 1.4em;
+  margin-top: 0.8rem;
   color: var(--theme-accent);
 }
 
 .typed-text {
+  font-size: clamp(1.3rem, 1.7vw, 1.7rem);
   text-shadow: 0 0 24px var(--theme-accent-glow);
 }
 
@@ -309,16 +306,31 @@ input {
   animation: orbitThree 8s linear infinite;
 }
 
-.metric-card,
-.focus-metric,
-.focus-note {
+.metric-card {
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.04);
+  padding: 1.15rem;
 }
 
-.metric-card {
-  padding: 1.15rem;
+.metric-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.metric-value {
+  margin-top: 0.7rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+}
+
+.metric-text {
+  font-size: 1.1rem;
+  line-height: 1.4;
 }
 
 .signal-row {
@@ -362,22 +374,6 @@ input {
   color: var(--muted);
 }
 
-.timeline-shell {
-  position: relative;
-  display: grid;
-  gap: 1.1rem;
-}
-
-.timeline-shell::before {
-  content: "";
-  position: absolute;
-  left: 18px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(180deg, var(--theme-accent-soft), transparent);
-}
-
 .timeline-card {
   padding-left: 2.8rem;
 }
@@ -396,7 +392,7 @@ input {
 
 .copilot-shell {
   display: flex;
-  min-height: 36rem;
+  min-height: 32rem;
   flex-direction: column;
 }
 
@@ -548,17 +544,11 @@ input {
   .education-card,
   .copilot-shell,
   .closing-panel,
-  .module-card,
-  .focus-metric,
-  .focus-note {
+  .module-card {
     border-radius: 24px;
   }
 
   .copilot-form {
     flex-direction: column;
-  }
-
-  .typed-wrap {
-    min-height: 1.5em;
   }
 }

@@ -1,38 +1,61 @@
 # Parth Gadekar Portfolio
 
-Personal portfolio for Parth Gadekar, built as a polished single-page engineering site inspired by modern interactive portfolio layouts.
+AI-native portfolio for Parth Gadekar, rebuilt as a modular product demo instead of a single scrolling landing page.
 
-The site is designed around Parth's actual resume material, GitHub projects, and target roles across software engineering, data engineering, and AI-native systems work.
+The site is designed to demonstrate the same engineering behaviors it talks about:
 
-## Built With
+- route-based product architecture
+- real Claude-backed text copilot
+- curated retrieval over typed portfolio content
+- Langfuse-ready tracing and public observability summaries
+- dynamic module theming, animation, and case-study routing
+
+## Stack
 
 - React
 - TypeScript
 - Tailwind CSS
 - Vite
+- Vercel
+- Claude
+- Langfuse
 
-## What This Portfolio Includes
+## Top-Level Routes
 
-- A high-signal hero section focused on software engineering, systems, and data work
-- Project storytelling for F1 telemetry, distributed pipelines, Air Canvas, and blockchain work
-- Experience and education sections based on resume content
-- A static chatbot-style portfolio copilot that works on GitHub Pages without a backend
-- GitHub Pages deployment through GitHub Actions
+- `/` Home
+- `/copilot` AI Copilot
+- `/projects` Projects
+- `/projects/:slug` Project detail
+- `/case-studies` Case Studies
+- `/case-studies/:slug` Case study detail
+- `/about` About / Contact
 
 ## Project Structure
 
 ```text
 src/
-  App.tsx          Main portfolio layout
-  content.ts       Portfolio copy, project data, chat knowledge
-  index.css        Global styling and custom visual system
-  main.tsx         React entry point
+  App.tsx              Route-based application shell
+  types.ts             Shared route/content/chat types
+  content/
+    site.ts            Portfolio modules, projects, case studies, profile data
+    knowledge.ts       Curated retrieval documents and suggested prompts
+  lib/
+    api.ts             Browser API helpers
+    integrity.ts       Runtime content validation
+    routes.ts          Client-side route parsing and navigation
+  index.css            Motion system, themed visual language, shared components
+  main.tsx             React entry point
+
+api/
+  chat.ts              Claude-backed serverless copilot endpoint
+  metrics.ts           Public observability summary endpoint
+  _lib/
+    anthropic.ts       Claude request orchestration
+    langfuse.ts        Langfuse metrics/tracing helpers
+    shared.ts          Retrieval scoring and shared server helpers
 
 public/
   Parth_Gadekar_Resume.pdf
-
-.github/workflows/
-  deploy.yml       GitHub Pages deployment workflow
 ```
 
 ## Local Development
@@ -43,11 +66,30 @@ Install dependencies:
 npm install
 ```
 
-Start the development server:
+Start the front end locally:
 
 ```bash
 npm run dev
 ```
+
+Note: `npm run dev` runs the Vite front end only. The `/api` routes are intended for Vercel serverless runtime.
+
+## Environment Variables
+
+Copy `.env.example` and configure:
+
+```bash
+ANTHROPIC_API_KEY=
+ANTHROPIC_MODEL=claude-3-5-sonnet-latest
+LANGFUSE_PUBLIC_KEY=
+LANGFUSE_SECRET_KEY=
+LANGFUSE_BASE_URL=https://cloud.langfuse.com
+```
+
+Behavior by configuration:
+
+- Without `ANTHROPIC_API_KEY`, the copilot falls back to curated retrieval summaries.
+- Without Langfuse credentials, public metrics fall back to safe empty defaults.
 
 ## Production Build
 
@@ -57,7 +99,7 @@ Create the production build:
 npm run build
 ```
 
-Preview the production build locally:
+Preview the static front end locally:
 
 ```bash
 npm run preview
@@ -65,30 +107,23 @@ npm run preview
 
 ## Deployment
 
-This repo is configured for GitHub Pages deployment using GitHub Actions.
+Primary runtime target is Vercel, not GitHub Pages.
 
-### Repository Settings
+This repo includes:
 
-Open the repository Pages settings:
+- `vercel.json` for SPA routing fallback
+- `api/` serverless functions for chat and metrics
+- Vite static output in `dist/`
 
-`https://github.com/ParthGadekar0631/parthgadekar.github.io/settings/pages`
+Recommended deployment flow:
 
-Then set:
-
-- Source: `GitHub Actions`
-
-### Publish Flow
-
-1. Push changes to `main`
-2. GitHub Actions runs `.github/workflows/deploy.yml`
-3. Vite builds the site into `dist/`
-4. GitHub Pages publishes the build
-
-Because this repository is named `parthgadekar.github.io`, the site is intended to publish at:
-
-`https://parthgadekar.github.io/`
+1. Push the repo to GitHub
+2. Import the repo into Vercel
+3. Add the environment variables from `.env.example`
+4. Deploy
 
 ## Notes
 
-- This version uses a static front-end chatbot experience so it can deploy free on GitHub Pages.
-- The site structure is ready for a future AI-backed version using the same UI direction.
+- V1 ships a real text copilot, not voice mode.
+- Public observability is summary-level only; raw traces stay private.
+- Case-study routing is fully implemented, but the editorial layer is intentionally lighter than the reference portfolio in v1.
