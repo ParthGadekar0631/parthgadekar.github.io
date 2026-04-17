@@ -8,6 +8,7 @@ import {
 } from "../types";
 
 export const profile = {
+  siteName: "RisksRay",
   name: "Parth Gadekar",
   title: "Software engineer focused on systems, data, and AI-native product execution.",
   summary:

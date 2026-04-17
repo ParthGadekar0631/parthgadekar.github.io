@@ -703,7 +703,7 @@ function CopilotView({ route }: { route: AppRoute }) {
       <div className="copilot-shell reveal">
         <div className="copilot-header">
           <div>
-            <div className="text-sm font-semibold text-white">Parth Portfolio Copilot</div>
+            <div className="text-sm font-semibold text-white">{profile.siteName} Copilot</div>
             <div className="text-xs text-[var(--muted)]">
               Claude-backed text mode with curated retrieval
             </div>
@@ -786,7 +786,7 @@ function App() {
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[rgba(5,8,20,0.72)] backdrop-blur-2xl">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
           <AppLink className="text-sm font-semibold tracking-[0.34em] text-[var(--muted)] uppercase" to="/">
-            {profile.name}
+            {profile.siteName}
           </AppLink>
           <nav className="hidden items-center gap-6 text-sm text-[var(--muted)] lg:flex">
             {moduleConfigs.map((module) => (
