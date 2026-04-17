@@ -1,7 +1,7 @@
 import { EducationEntry, ExperienceEntry, ModuleConfig, ProjectSummary } from "../types";
 
 export const profile = {
-  siteName: "RisksRay",
+  siteName: "Parth Gadekar",
   name: "Parth Gadekar",
   title: "Software Engineer | Systems, Data, Full Stack, and AI-Native Product Thinking",
   summary:
@@ -14,6 +14,7 @@ export const profile = {
   phone: "+1 (551) 260-5658",
   github: "https://github.com/ParthGadekar0631",
   resume: "Parth_Gadekar_Resume.pdf",
+  photo: "parth-profile.jpg",
   location: "Hoboken, NJ",
 };
 

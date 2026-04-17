@@ -128,6 +128,88 @@ function useTypedWords(words: string[]) {
   return typedText;
 }
 
+function useScrollOffset() {
+  const [scrollOffset, setScrollOffset] = useState(() => window.scrollY || 0);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const onScroll = () => {
+      if (frame !== 0) {
+        return;
+      }
+
+      frame = window.requestAnimationFrame(() => {
+        setScrollOffset(window.scrollY || 0);
+        frame = 0;
+      });
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      if (frame !== 0) {
+        window.cancelAnimationFrame(frame);
+      }
+
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  return scrollOffset;
+}
+
+function ProfileMark({
+  imageHref,
+  scrollOffset,
+}: {
+  imageHref: string;
+  scrollOffset: number;
+}) {
+  const avatarStyle = {
+    transform: `translateY(${Math.min(scrollOffset * 0.02, 4)}px) scale(${Math.max(0.92, 1 - scrollOffset * 0.00012)})`,
+  } as CSSProperties;
+
+  return (
+    <AppLink className="brand-mark" to="/">
+      <div className="brand-avatar-shell" style={avatarStyle}>
+        <img alt="Parth Gadekar" className="brand-avatar" src={imageHref} />
+      </div>
+      <div className="brand-copy">
+        <span className="brand-name">{profile.name}</span>
+        <span className="brand-role">Software Engineer Portfolio</span>
+      </div>
+    </AppLink>
+  );
+}
+
+function HeroPortrait({ imageHref, scrollOffset }: { imageHref: string; scrollOffset: number }) {
+  const imageStyle = {
+    transform: `translate3d(0, ${Math.min(scrollOffset * 0.1, 40)}px, 0) scale(${1.04 + Math.min(scrollOffset, 700) * 0.0001})`,
+  } as CSSProperties;
+
+  return (
+    <aside className="portrait-panel reveal" style={{ animationDelay: "120ms" }}>
+      <div className="section-kicker">Parth Gadekar</div>
+      <h2 className="mt-4 text-2xl font-semibold text-white sm:text-3xl">{profile.title}</h2>
+      <p className="mt-4 text-sm leading-7 text-[var(--soft)]">
+        Based in Hoboken, building software across systems, data pipelines, full-stack products, and AI-native
+        experiences.
+      </p>
+      <div className="portrait-frame">
+        <div className="portrait-glow" />
+        <img alt="Parth Gadekar portrait" className="portrait-image" src={imageHref} style={imageStyle} />
+      </div>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <span className="stack-pill">open to SWE roles</span>
+        <span className="stack-pill">USA relocation</span>
+        <span className="stack-pill">systems + data</span>
+      </div>
+    </aside>
+  );
+}
+
 function ProjectCards({
   items,
   columns = "xl:grid-cols-2",
@@ -635,8 +717,10 @@ function App() {
   }, []);
 
   const activeModule = useMemo(() => getModuleForRoute(route), [route]);
+  const scrollOffset = useScrollOffset();
   const typedText = useTypedWords(activeModule.heroWords);
   const resumeHref = `${import.meta.env.BASE_URL}${profile.resume}`;
+  const profilePhotoHref = `${import.meta.env.BASE_URL}${profile.photo}`;
 
   const themeStyle = {
     "--theme-accent": activeModule.theme.accent,
@@ -654,9 +738,7 @@ function App() {
 
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[rgba(5,8,20,0.72)] backdrop-blur-2xl">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-          <AppLink className="text-sm font-semibold tracking-[0.34em] text-[var(--muted)] uppercase" to="/">
-            {profile.siteName}
-          </AppLink>
+          <ProfileMark imageHref={profilePhotoHref} scrollOffset={scrollOffset} />
           <nav className="hidden items-center gap-6 text-sm text-[var(--muted)] lg:flex">
             {moduleConfigs.map((module) => (
               <AppLink
@@ -731,29 +813,33 @@ function App() {
             </div>
           </div>
 
-          <aside className="signal-panel reveal" style={{ animationDelay: "120ms" }}>
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <div className="text-xs font-semibold tracking-[0.24em] text-[var(--muted)] uppercase">
-                  Active route
+          {route.kind === "home" ? (
+            <HeroPortrait imageHref={profilePhotoHref} scrollOffset={scrollOffset} />
+          ) : (
+            <aside className="signal-panel reveal" style={{ animationDelay: "120ms" }}>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-xs font-semibold tracking-[0.24em] text-[var(--muted)] uppercase">
+                    Active route
+                  </div>
+                  <h2 className="mt-3 text-2xl font-semibold text-white">{activeModule.navLabel}</h2>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--soft)]">{activeModule.summary}</p>
                 </div>
-                <h2 className="mt-3 text-2xl font-semibold text-white">{activeModule.navLabel}</h2>
-                <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--soft)]">{activeModule.summary}</p>
+                <div className="orbital-core">
+                  <span className="orbital-dot orbital-dot-one" />
+                  <span className="orbital-dot orbital-dot-two" />
+                  <span className="orbital-dot orbital-dot-three" />
+                </div>
               </div>
-              <div className="orbital-core">
-                <span className="orbital-dot orbital-dot-one" />
-                <span className="orbital-dot orbital-dot-two" />
-                <span className="orbital-dot orbital-dot-three" />
+              <div className="mt-8 flex flex-wrap gap-3">
+                {activeModule.chips.map((chip) => (
+                  <span key={chip} className="stack-pill">
+                    {chip}
+                  </span>
+                ))}
               </div>
-            </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {activeModule.chips.map((chip) => (
-                <span key={chip} className="stack-pill">
-                  {chip}
-                </span>
-              ))}
-            </div>
-          </aside>
+            </aside>
+          )}
         </section>
 
         {route.kind === "home" ? <HomeView activeModule={activeModule} /> : null}
