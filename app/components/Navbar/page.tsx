@@ -1,0 +1,234 @@
+"use client";
+
+import { useTheme } from 'next-themes'
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useAskScotty } from '@/app/context/AskScottyContext';
+import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
+import { useLoading } from '@/app/context/LoadingContext';
+import './navbar.css';
+import { logo, askScotty } from '../../../data/images';
+
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme()
+  const pathname = usePathname();
+  const router = useRouter();
+  const { setMinimized } = useAskScotty();
+  const { isInitialLoad, setIsInitialLoad, setIsPageLoading, setIsTransitioning } = useLoading();
+
+  useEffect(() => {
+    let isMounted = true;
+    requestAnimationFrame(() => {
+      if (isMounted) setMounted(true);
+      // We use requestAnimationFrame to ensure the component has mounted and rendered
+      // before we check sessionStorage. This prevents a race condition where the
+      // animation is skipped on the very first load.
+      const hasLoaded = sessionStorage.getItem('initialLoadDone');
+      if (hasLoaded && isMounted) {
+        setIsInitialLoad(false);
+        setIsPageLoading(false);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [setIsInitialLoad, setIsPageLoading, setTheme]);
+
+  useEffect(() => {
+    if (!isInitialLoad) return;
+
+    // Simulate initial load time
+    const initialLoadTimer = setTimeout(() => {
+      setIsInitialLoad(false); // Start the navbar animation
+      sessionStorage.setItem('initialLoadDone', 'true');
+
+      // Wait for navbar animation to finish before showing page content
+      const pageLoadTimer = setTimeout(() => {
+        setIsPageLoading(false);
+      }, 700); // This should match the animation duration
+
+      return () => clearTimeout(pageLoadTimer);
+    }, 1000); // Initial delay before animation starts
+
+    return () => clearTimeout(initialLoadTimer);
+  }, [isInitialLoad, setIsInitialLoad, setIsPageLoading, setTheme]);
+
+  if (!mounted) return null;
+
+  const isDark = theme === 'dark';
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (pathname === href) return;
+
+    setIsTransitioning(true);
+    setTimeout(() => {
+      router.push(href);
+    }, 500); // Wait for fade-in to complete
+  };
+
+  return (
+    <>
+      {/* Loading/Growing Navbar */}
+      <header
+        className={`fixed z-50 rounded-4xl glass-container transition-all duration-700 ease-in-out ${isDark ? 'dark' : ''}`}
+        style={{
+          left: '50%',
+          transform: 'translateX(-50%)',
+          top: isInitialLoad ? '50%' : '8px',
+          marginTop: isInitialLoad ? '-24px' : '0',
+          width: isInitialLoad ? '180px' : 'calc(100vw - 32px)',
+          maxWidth: isInitialLoad ? '240px' : '1792px',
+          height: isInitialLoad ? '58px' : '64px',
+          opacity: 1,
+          padding: isInitialLoad ? '20px' : '0',
+          boxShadow: isInitialLoad
+            ? `0 -8px 24px 0 ${isDark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.18)'}, -8px 0 24px 0 rgba(0,0,0,0.10), 8px 0 24px 0 rgba(0,0,0,0.10), inset 0 0 20px ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`
+            : `0 -8px 24px 0 rgba(0,0,0,0.10), -8px 0 24px 0 rgba(0,0,0,0.10), 8px 0 24px 0 rgba(0,0,0,0.10), 0 0 0 2px rgba(0,0,0,0.04)`,
+          animation: isInitialLoad ? 'glowPulse 2s ease-in-out infinite' : 'none',
+        }}
+      >
+        <div className="flex items-center justify-between p-2 px-2 h-full">
+
+          {/* Logo & Site Text as Link */}
+          <Link href="/" onClick={(e) => handleNavClick(e, '/')} className="flex items-center gap-3 flex-shrink-0 group" style={{ textDecoration: 'none' }}>
+            <Image
+              src={logo}
+              alt="Logo"
+              width={40}
+              height={40}
+              className="rounded-full shadow-md"
+              priority
+              loading="eager"
+              fetchPriority="high"
+            />
+            <h3 className={`text-l font-medium select-none accent-hover transition ${isActive('') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`}>Parth Gadekar</h3>
+          </Link>
+
+          {/* Desktop Navbar - Center */}
+          <div
+            className={`hidden lg:flex absolute left-1/2 transform -translate-x-1/2 h-full items-center transition-opacity duration-500 ${isInitialLoad ? 'opacity-0 pointer-events-none' : 'opacity-100 delay-300'
+              }`}
+          >
+            <nav className="flex flex-col lg:flex-row justify-center gap-8">
+              <Link href="/about" className={`accent-hover transition ${isActive('/about') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/about')}>About</Link>
+              <Link href="/projects" className={`accent-hover transition ${isActive('/projects') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/projects')}>Projects</Link>
+              <Link href="/credentials" className={`accent-hover transition ${isActive('/credentials') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/credentials')}>Credentials</Link>
+              <Link href="/contact" className={`accent-hover transition ${isActive('/contact') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/contact')}>Contact</Link>
+            </nav>
+          </div>
+
+          {/* Desktop RisksRay Button & Dark Mode Toggle - Right */}
+          <div className="hidden lg:flex items-center gap-2 flex-shrink-0 ml-auto h-full">
+            {/* Show all buttons only when fully loaded/expanded */}
+            {!isInitialLoad && <>
+              <DarkModeToggle size={16} />
+              <button
+                type="button"
+                onClick={() => setMinimized(false)}
+                className={`glass-button flex items-center justify-center flex-shrink-0 transition-opacity duration-500 opacity-100 delay-300 ${isDark ? 'dark' : ''}`}
+                title="RisksRay"
+              >
+                <Image
+                  src={askScotty}
+                  alt="RisksRay"
+                  width={20}
+                  height={20}
+                  style={{ filter: isDark ? "invert(1)" : "invert(0)" }}
+                />
+              </button>
+            </>}
+          </div>
+
+          {/* Mobile Hamburger Menu */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className={`lg:hidden flex flex-col gap-2 flex-shrink-0 p-2 rounded-lg transition-opacity duration-500 ${isInitialLoad ? 'opacity-0 pointer-events-none' : 'opacity-100 delay-300'
+              }`}
+            style={{
+              background: isDark ? "#0A0A0A" : "transparent",
+
+              WebkitBackdropFilter: 'blur(20px)',
+              border: 'none'
+            }}
+          >
+            <span className={`w-6 h-0.5 transition-all ${isDark ? 'bg-white' : 'bg-black'} ${menuOpen ? "rotate-45 translate-y-2" : ""}`}></span>
+            <span className={`w-6 h-0.5 transition-all ${isDark ? 'bg-white' : 'bg-black'} ${menuOpen ? "opacity-0" : ""}`}></span>
+            <span className={`w-6 h-0.5 transition-all ${isDark ? 'bg-white' : 'bg-black'} ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}></span>
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Menu Backdrop */}
+      {menuOpen && !isInitialLoad && (
+        <div
+          className="lg:hidden fixed inset-0 z-30"
+          style={{
+            background: 'rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+          }}
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Menu - Half Screen Width from Right */}
+      {menuOpen && !isInitialLoad && (
+        <div
+          className={`lg:hidden fixed right-0 top-0 bottom-0 z-40 w-3/5 flex flex-col justify-between p-6 glass-container ${isDark ? 'dark' : ''}`}
+          style={{
+            backdropFilter: 'blur(40px)',
+            WebkitBackdropFilter: 'blur(40px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRight: 'none',
+            animation: 'slideInRight 0.3s ease-out',
+          }}
+        >
+          <nav className="flex flex-col justify-center gap-12 flex-1 text-right my-8">
+            <a
+              href="/about"
+              onClick={(e) => { setMenuOpen(false); handleNavClick(e, '/about'); }}
+              className={`accent-hover transition text-2xl ${isActive('/about') ? 'font-bold' : 'font-medium'} text-white`}
+            >
+              About
+            </a>
+            <a
+              href="/projects"
+              onClick={(e) => { setMenuOpen(false); handleNavClick(e, '/projects'); }}
+              className={`accent-hover transition text-2xl ${isActive('/projects') ? 'font-bold' : 'font-medium'} text-white`}
+            >
+              Projects
+            </a>
+            <a
+              href="/credentials"
+              onClick={(e) => { setMenuOpen(false); handleNavClick(e, '/credentials'); }}
+              className={`accent-hover transition text-2xl ${isActive('/credentials') ? 'font-bold' : 'font-medium'} text-white`}
+            >
+              Credentials
+            </a>
+            <a
+              href="/contact"
+              onClick={(e) => { setMenuOpen(false); handleNavClick(e, '/contact'); }}
+              className={`accent-hover transition text-2xl ${isActive('/contact') ? 'font-bold' : 'font-medium'} text-white`}
+            >
+              Contact
+            </a>
+            {/* Dark mode toggle for mobile */}
+            <div className="mt-8 flex justify-end">
+              <DarkModeToggle size={16} />
+            </div>
+          </nav>
+          <div className="text-right text-sm text-white/50 pb-12">
+            © 2026 Parth Gadekar
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

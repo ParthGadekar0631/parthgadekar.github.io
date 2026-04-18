@@ -1,0 +1,39 @@
+/* Enable native smooth scrolling for the home page */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+/* ===== GLOBAL SCROLLBAR HIDE (KEEP SCROLL FUNCTIONAL) ===== */
+
+html {
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari */
+}
+
+/* ===== @react-three/drei ScrollControls ===== */
+[data-scroll-controls] {
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE/Edge */
+}
+
+[data-scroll-controls]::-webkit-scrollbar {
+  display: none;               /* Chrome/Safari */
+}
+
+/* Hide scrollbars created by drei ScrollControls */
+[data-scroll-controls] > div {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+[data-scroll-controls] > div::-webkit-scrollbar {
+  display: none;
+}

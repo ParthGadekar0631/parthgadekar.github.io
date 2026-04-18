@@ -1,9 +1,8 @@
-node_modules/
-dist/
-.DS_Store
-*.local
+.env.local
 .env
-.env.*
-!.env.example
-.vercel/
-portfolio/
+node_modules/
+.next/
+dist/
+build/
+*.node
+.DS_Store
