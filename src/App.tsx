@@ -58,20 +58,12 @@ function AppLink({
 }
 
 function getModuleForRoute(route: AppRoute): ModuleConfig {
-  if (route.kind === "experience") {
-    return moduleConfigs.find((item) => item.id === "experience") ?? moduleConfigs[0];
-  }
-
   if (route.kind === "projects" || route.kind === "project-detail") {
     return moduleConfigs.find((item) => item.id === "projects") ?? moduleConfigs[0];
   }
 
-  if (route.kind === "skills") {
-    return moduleConfigs.find((item) => item.id === "skills") ?? moduleConfigs[0];
-  }
-
-  if (route.kind === "education") {
-    return moduleConfigs.find((item) => item.id === "education") ?? moduleConfigs[0];
+  if (route.kind === "credentials") {
+    return moduleConfigs.find((item) => item.id === "credentials") ?? moduleConfigs[0];
   }
 
   if (route.kind === "contact") {
@@ -94,7 +86,7 @@ function useTypedWords(words: string[]) {
 
   useEffect(() => {
     const currentWord = words[phraseIndex % words.length];
-    let delay = isDeleting ? 45 : 78;
+    let delay = isDeleting ? 45 : 80;
 
     if (!isDeleting && typedText === currentWord) {
       delay = 1200;
@@ -126,7 +118,7 @@ function useTypedWords(words: string[]) {
     }, delay);
 
     return () => window.clearTimeout(timeout);
-  }, [words, phraseIndex, typedText, isDeleting]);
+  }, [isDeleting, phraseIndex, typedText, words]);
 
   return typedText;
 }
@@ -163,6 +155,28 @@ function useScrollOffset() {
   return scrollOffset;
 }
 
+function getRepoLabel(project: ProjectSummary) {
+  if (!project.href) {
+    return `ParthGadekar0631/${project.slug}`;
+  }
+
+  try {
+    const url = new URL(project.href);
+    return url.pathname.replace(/^\//, "");
+  } catch {
+    return `ParthGadekar0631/${project.slug}`;
+  }
+}
+
+function getInitials(value: string) {
+  return value
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
 function ProfileMark({
   imageHref,
   scrollOffset,
@@ -181,7 +195,7 @@ function ProfileMark({
       </div>
       <div className="brand-copy">
         <span className="brand-name">{profile.name}</span>
-        <span className="brand-role">Software Engineer Portfolio</span>
+        <span className="brand-role">Software Engineer</span>
       </div>
     </AppLink>
   );
@@ -189,31 +203,26 @@ function ProfileMark({
 
 function HeroPortrait({ imageHref, scrollOffset }: { imageHref: string; scrollOffset: number }) {
   const imageStyle = {
-    transform: `translate3d(0, ${Math.min(scrollOffset * 0.1, 40)}px, 0) scale(${1.04 + Math.min(scrollOffset, 700) * 0.0001})`,
+    transform: `translate3d(0, ${Math.min(scrollOffset * 0.08, 28)}px, 0) scale(${1.02 + Math.min(scrollOffset, 700) * 0.00008})`,
   } as CSSProperties;
 
   return (
     <aside className="portrait-panel reveal" style={{ animationDelay: "120ms" }}>
-      <div className="section-kicker">Parth Gadekar</div>
+      <div className="section-kicker">About me</div>
       <h2 className="mt-4 text-2xl font-semibold text-white sm:text-3xl">{profile.title}</h2>
-      <p className="mt-4 text-sm leading-7 text-[var(--soft)]">
-        Based in Hoboken, building software across systems, data pipelines, full-stack products, and AI-native
-        experiences.
-      </p>
+      <p className="mt-4 text-sm leading-7 text-[var(--soft)]">{profile.summary}</p>
       <div className="portrait-frame">
         <div className="portrait-glow" />
         <img alt="Parth Gadekar portrait" className="portrait-image" src={imageHref} style={imageStyle} />
       </div>
       <div className="mt-6 flex flex-wrap gap-3">
-        <span className="stack-pill">open to SWE roles</span>
-        <span className="stack-pill">USA relocation</span>
-        <span className="stack-pill">systems + data</span>
+        <span className="stack-pill">Stevens Institute of Technology</span>
+        <span className="stack-pill">Hoboken, NJ</span>
+        <span className="stack-pill">Open to SWE roles</span>
       </div>
     </aside>
   );
 }
-
-const projectFilterOptions = ["All", "AI & ML", "Data Science", "Full-Stack & Systems"] as const;
 
 function ProjectPreview({ project }: { project: ProjectSummary }) {
   return (
@@ -244,7 +253,7 @@ function ProjectPreview({ project }: { project: ProjectSummary }) {
 
 function ProjectCards({
   items,
-  columns = "xl:grid-cols-2",
+  columns = "xl:grid-cols-3",
   showcase = false,
 }: {
   items: ProjectSummary[];
@@ -252,29 +261,33 @@ function ProjectCards({
   showcase?: boolean;
 }) {
   return (
-    <div className={`grid gap-5 ${columns}`}>
+    <div className={`grid gap-6 ${columns}`}>
       {items.map((project, index) => (
         <article
           key={project.slug}
           className={showcase ? "project-showcase-card reveal" : "project-card reveal"}
-          style={{ animationDelay: `${index * 80}ms` }}
+          style={{ animationDelay: `${index * 70}ms` }}
         >
           <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="text-2xl font-semibold text-white">{project.title}</h3>
               <div className="mt-3 text-base font-semibold text-[var(--theme-secondary)]">{project.category}</div>
-              <div className="mt-2 text-sm leading-7 text-[var(--muted)]">{project.context}</div>
+              <div className="mt-2 flex items-center gap-2 text-sm text-[var(--muted)]">
+                <span className="project-repo-dot" />
+                <span>{getRepoLabel(project)}</span>
+              </div>
             </div>
-            {project.href ? (
-              <a className="project-chip-button" href={project.href} rel="noreferrer" target="_blank">
-                GitHub
-              </a>
-            ) : (
-              <AppLink className="project-chip-button" to={`/projects/${project.slug}`}>
-                Details
-              </AppLink>
-            )}
+            <a
+              className="project-chip-button"
+              href={project.href ?? toAppPath(`/projects/${project.slug}`)}
+              rel="noreferrer"
+              target={project.href ? "_blank" : undefined}
+            >
+              {project.href ? "GitHub" : "Details"}
+            </a>
           </div>
+
+          <div className="mt-4 text-sm leading-7 text-[var(--soft)]">{project.context}</div>
           {showcase ? <ProjectPreview project={project} /> : null}
           <p className="mt-6 text-lg leading-9 text-[var(--soft)]">{project.summary}</p>
           <div className="mt-6 flex flex-wrap gap-2">
@@ -296,26 +309,23 @@ function ProjectCards({
   );
 }
 
-function HomeView() {
+function AboutView() {
   const featuredProjects = projects.filter((item) => homepageProjectSlugs.includes(item.slug));
 
   return (
     <div className="space-y-20">
       <section className="space-y-6">
         <div className="reveal">
-          <div className="section-kicker">Core stack</div>
-          <h2 className="section-title">Tools I use to build backend, data, and product systems.</h2>
+          <div className="section-kicker">Tech stack</div>
+          <h2 className="section-title">Building across product engineering, data pipelines, and cloud-connected systems.</h2>
           <p className="section-copy">
-            This landing page is intentionally shaped more like a strong personal product page: quick positioning, clear
-            technical coverage, outcome-driven project highlights, and direct routes into deeper detail.
+            I am currently pursuing my M.S. in Computer Science at Stevens Institute of Technology while building
+            projects across backend systems, ETL pipelines, full-stack applications, analytics, and applied ML.
           </p>
         </div>
         <div className="skills-cloud reveal" style={{ animationDelay: "120ms" }}>
           {requestedStack.map((item, index) => (
-            <span
-              key={item}
-              className={index % 4 === 0 ? "stack-pill stack-pill-emphasis" : "stack-pill"}
-            >
+            <span key={item} className={index % 4 === 0 ? "stack-pill stack-pill-emphasis" : "stack-pill"}>
               {item}
             </span>
           ))}
@@ -325,15 +335,11 @@ function HomeView() {
       <section className="space-y-6">
         <div className="reveal">
           <div className="section-kicker">Impact snapshot</div>
-          <h2 className="section-title">Project outcomes with measurable signal.</h2>
+          <h2 className="section-title">Selected outcome signals from projects and internships.</h2>
         </div>
         <div className="grid gap-4 lg:grid-cols-3">
           {homepageImpactMetrics.map((item, index) => (
-            <article
-              key={item.label}
-              className="impact-card reveal"
-              style={{ animationDelay: `${index * 80}ms` }}
-            >
+            <article key={item.label} className="impact-card reveal" style={{ animationDelay: `${index * 75}ms` }}>
               <div className="impact-value">{item.value}</div>
               <div className="mt-3 text-lg font-semibold text-white">{item.label}</div>
               <p className="mt-4 text-sm leading-7 text-[var(--soft)]">{item.detail}</p>
@@ -344,24 +350,20 @@ function HomeView() {
 
       <section className="space-y-6">
         <div className="reveal">
-          <div className="section-kicker">Selected work</div>
-          <h2 className="section-title">Six projects I would lead with in an interview conversation.</h2>
+          <div className="section-kicker">Featured projects</div>
+          <h2 className="section-title">The six projects I would lead with in a recruiter or interview conversation.</h2>
         </div>
-        <ProjectCards columns="xl:grid-cols-3" items={featuredProjects} />
+        <ProjectCards items={featuredProjects} />
       </section>
 
       <section className="space-y-6">
         <div className="reveal">
-          <div className="section-kicker">What I focus on</div>
-          <h2 className="section-title">Three capability areas that organize the rest of the portfolio.</h2>
+          <div className="section-kicker">Focus areas</div>
+          <h2 className="section-title">Three capability areas that define how I like to build.</h2>
         </div>
         <div className="grid gap-5 xl:grid-cols-3">
           {capabilitySections.map((section, index) => (
-            <article
-              key={section.title}
-              className="spotlight-panel reveal"
-              style={{ animationDelay: `${index * 90}ms` }}
-            >
+            <article key={section.title} className="spotlight-panel reveal" style={{ animationDelay: `${index * 80}ms` }}>
               <div className="section-kicker">{section.title}</div>
               <p className="mt-5 text-sm leading-8 text-[var(--soft)]">{section.summary}</p>
               <div className="mt-6 space-y-3">
@@ -377,25 +379,48 @@ function HomeView() {
         </div>
       </section>
 
-      <section className="space-y-6">
-        <div className="reveal">
-          <div className="section-kicker">Portfolio routes</div>
-          <h2 className="section-title">A strong landing page on top of modular pages underneath.</h2>
-        </div>
-        <div className="grid gap-4 lg:grid-cols-3">
-          {moduleConfigs.map((item, index) => (
-            <LinkButton key={item.id} className="module-card reveal" to={item.path}>
-              <div className="flex items-center justify-between gap-4">
-                <span className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">
-                  0{index + 1}
-                </span>
-                <span className="module-status">Route</span>
+      <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+        <article className="spotlight-panel reveal">
+          <div className="section-kicker">Work experience</div>
+          <h2 className="mt-4 text-3xl font-semibold text-white">Three internships across systems, ETL, and information workflows.</h2>
+          <div className="mt-6 space-y-5">
+            {experienceEntries.map((item) => (
+              <div key={`${item.company}-${item.role}`} className="credential-preview-row">
+                <div className="credential-preview-mark">{getInitials(item.company)}</div>
+                <div>
+                  <div className="text-lg font-semibold text-white">{item.role}</div>
+                  <div className="text-sm text-[var(--theme-secondary)]">{item.company}</div>
+                  <div className="mt-1 text-sm text-[var(--muted)]">
+                    {item.timeline} · {item.location}
+                  </div>
+                </div>
               </div>
-              <h3 className="mt-5 text-xl font-semibold text-white">{item.navLabel}</h3>
-              <p className="mt-3 text-sm leading-7 text-[var(--soft)]">{item.summary}</p>
+            ))}
+          </div>
+          <div className="mt-8">
+            <LinkButton className="button button-secondary" to="/credentials">
+              View credentials
             </LinkButton>
-          ))}
-        </div>
+          </div>
+        </article>
+
+        <article className="spotlight-panel reveal" style={{ animationDelay: "120ms" }}>
+          <div className="section-kicker">Education</div>
+          <div className="mt-6 space-y-5">
+            {educationEntries.map((item) => (
+              <div key={item.school} className="education-inline-card">
+                <div className="education-mark">{item.badge}</div>
+                <div>
+                  <div className="text-lg font-semibold text-white">{item.school}</div>
+                  <div className="text-sm text-[var(--theme-secondary)]">{item.degree}</div>
+                  <div className="mt-1 text-sm text-[var(--muted)]">
+                    {item.location} · {item.timeline}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </article>
       </section>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -411,63 +436,7 @@ function HomeView() {
   );
 }
 
-function ExperienceView() {
-  const relatedProjects = projects.filter((item) =>
-    moduleConfigs.find((module) => module.id === "experience")?.featuredProjectSlugs.includes(item.slug),
-  );
-
-  return (
-    <div className="space-y-10">
-      <section className="reveal">
-        <div className="section-kicker">Work experience</div>
-        <h2 className="section-title">Three roles across backend systems, ETL workflows, and data operations.</h2>
-        <p className="section-copy">
-          These experiences shaped how I debug production issues, think about reliability, and connect software decisions
-          to business outcomes.
-        </p>
-      </section>
-
-      <section className="space-y-5">
-        {experienceEntries.map((item, index) => (
-          <article
-            key={`${item.company}-${item.role}`}
-            className="timeline-card reveal"
-            style={{ animationDelay: `${index * 90}ms` }}
-          >
-            <div className="timeline-marker" />
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <h3 className="text-xl font-semibold text-white">{item.role}</h3>
-                <div className="mt-2 text-sm text-[var(--theme-secondary)]">{item.company}</div>
-              </div>
-              <div className="text-right text-sm text-[var(--muted)]">
-                <div>{item.timeline}</div>
-                <div className="mt-1">{item.location}</div>
-              </div>
-            </div>
-            <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{item.summary}</p>
-            <div className="mt-6 space-y-3">
-              {item.bullets.map((point) => (
-                <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
-                  <span className="signal-dot" />
-                  <span>{point}</span>
-                </div>
-              ))}
-            </div>
-          </article>
-        ))}
-      </section>
-
-      <section className="space-y-6">
-        <div className="reveal">
-          <div className="section-kicker">Related projects</div>
-          <h2 className="section-title">Projects that reinforce the same engineering habits.</h2>
-        </div>
-        <ProjectCards items={relatedProjects} />
-      </section>
-    </div>
-  );
-}
+const projectFilterOptions = ["All", "AI & ML", "Data Science", "Full-Stack & Systems"] as const;
 
 function ProjectsView() {
   const [activeFilter, setActiveFilter] = useState<(typeof projectFilterOptions)[number]>("All");
@@ -480,7 +449,7 @@ function ProjectsView() {
         <div className="section-kicker">Projects</div>
         <h2 className="section-title">Projects</h2>
         <p className="section-copy">
-          Explore my latest work and contributions across full-stack systems, data engineering, and applied machine
+          Explore my latest work and contributions across backend systems, data engineering, analytics, and applied machine
           learning.
         </p>
       </div>
@@ -533,11 +502,7 @@ function ProjectDetailView({ slug }: { slug: string }) {
       </div>
       <div className="grid gap-6 xl:grid-cols-2">
         {project.detailSections.map((section, index) => (
-          <article
-            key={section.title}
-            className="spotlight-panel reveal"
-            style={{ animationDelay: `${index * 90}ms` }}
-          >
+          <article key={section.title} className="spotlight-panel reveal" style={{ animationDelay: `${index * 90}ms` }}>
             <div className="section-kicker">{section.title}</div>
             <p className="mt-5 text-sm leading-8 text-[var(--soft)]">{section.body}</p>
             <div className="mt-6 space-y-3">
@@ -555,7 +520,8 @@ function ProjectDetailView({ slug }: { slug: string }) {
         <div>
           <div className="section-kicker">Keep exploring</div>
           <p className="section-copy">
-            Every project has its own route so the portfolio feels structured and easy to scan during interviews.
+            Each project has its own route so the portfolio stays easy to scan, but still has depth when someone wants
+            more detail.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -571,91 +537,89 @@ function ProjectDetailView({ slug }: { slug: string }) {
   );
 }
 
-function SkillsView() {
+function CredentialsView() {
   return (
-    <div className="space-y-8">
-      <div className="reveal">
-        <div className="section-kicker">Skills</div>
-        <h2 className="section-title">Skills grouped by how I use them in real projects.</h2>
-        <p className="section-copy">
-          Instead of a long keyword dump, the skills route organizes tools by the work they support: product
-          development, APIs, data systems, cloud workflows, and engineering discipline.
-        </p>
-      </div>
-      <div className="grid gap-5 xl:grid-cols-2">
-        {skillsGroups.map((group, index) => (
-          <article
-            key={group.title}
-            className="spotlight-panel reveal"
-            style={{ animationDelay: `${index * 80}ms` }}
-          >
-            <div className="section-kicker">{group.title}</div>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {group.items.map((item) => (
-                <span key={item} className="stack-pill">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function EducationView() {
-  return (
-    <div className="space-y-10">
-      <section className="reveal">
-        <div className="section-kicker">Education</div>
-        <h2 className="section-title">Academic grounding for software, data, and systems work.</h2>
-        <p className="section-copy">
-          The education route keeps the academic context separate from projects and work experience so recruiters and
-          hiring managers can scan it quickly.
-        </p>
-      </section>
-
-      <section className="grid gap-6 xl:grid-cols-2">
-        {educationEntries.map((item, index) => (
-          <article
-            key={`${item.school}-${item.degree}`}
-            className="education-card reveal"
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <div className="flex flex-wrap items-start justify-between gap-4">
+    <div className="space-y-12">
+      <section className="space-y-6">
+        <div className="reveal">
+          <div className="section-kicker">Education</div>
+          <h2 className="section-title">Academic background aligned with systems, data, and software engineering.</h2>
+        </div>
+        <div className="grid gap-6 xl:grid-cols-2">
+          {educationEntries.map((item, index) => (
+            <article key={item.school} className="education-showcase-card reveal" style={{ animationDelay: `${index * 90}ms` }}>
+              <div className="education-showcase-mark">{item.badge}</div>
               <div>
-                <h3 className="text-xl font-semibold text-white">{item.degree}</h3>
-                <div className="mt-2 text-sm text-[var(--theme-secondary)]">{item.school}</div>
+                <div className="text-2xl font-semibold text-white">{item.school}</div>
+                <div className="mt-2 text-base font-semibold text-[var(--theme-secondary)]">{item.degree}</div>
+                <div className="mt-2 text-sm text-[var(--muted)]">
+                  {item.location} · {item.timeline}
+                </div>
+                <p className="mt-5 text-sm leading-8 text-[var(--soft)]">{item.detail}</p>
               </div>
-              <div className="text-sm text-[var(--muted)]">{item.timeline}</div>
-            </div>
-            <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{item.detail}</p>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-3">
-        {[
-          "Graduate study in databases, machine learning, statistics, and data analysis.",
-          "Undergraduate foundation in systems programming, DBMS, software engineering, and web programming.",
-          "Academic work that supports both product implementation and data-oriented roles.",
-        ].map((point, index) => (
-          <article
-            key={point}
-            className="spotlight-panel reveal"
-            style={{ animationDelay: `${index * 90}ms` }}
-          >
-            <div className="section-kicker">Academic signal</div>
-            <p className="mt-5 text-sm leading-8 text-[var(--soft)]">{point}</p>
-          </article>
-        ))}
+      <section className="space-y-6">
+        <div className="reveal">
+          <div className="section-kicker">Experience</div>
+          <h2 className="section-title">Three internship experiences that shaped how I build and debug systems.</h2>
+        </div>
+        <div className="space-y-5">
+          {experienceEntries.map((item, index) => (
+            <article key={`${item.company}-${item.role}`} className="timeline-card reveal" style={{ animationDelay: `${index * 85}ms` }}>
+              <div className="timeline-marker" />
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <div className="text-xs font-semibold tracking-[0.2em] text-[var(--muted)] uppercase">{item.company}</div>
+                  <h3 className="mt-2 text-2xl font-semibold text-white">{item.role}</h3>
+                </div>
+                <div className="text-right text-sm text-[var(--muted)]">
+                  <div>{item.timeline}</div>
+                  <div className="mt-1">{item.location}</div>
+                </div>
+              </div>
+              <p className="mt-5 text-sm leading-7 text-[var(--soft)]">{item.summary}</p>
+              <div className="mt-6 grid gap-3">
+                {item.bullets.map((point) => (
+                  <div key={point} className="signal-row text-sm leading-7 text-[var(--soft)]">
+                    <span className="signal-dot" />
+                    <span>{point}</span>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <div className="reveal">
+          <div className="section-kicker">Skills</div>
+          <h2 className="section-title">Grouped by how I actually use them in projects and internships.</h2>
+        </div>
+        <div className="grid gap-5 xl:grid-cols-2">
+          {skillsGroups.map((group, index) => (
+            <article key={group.title} className="spotlight-panel reveal" style={{ animationDelay: `${index * 70}ms` }}>
+              <div className="section-kicker">{group.title}</div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {group.items.map((item) => (
+                  <span key={item} className="stack-pill">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
     </div>
   );
 }
 
-function ContactView() {
+function ContactView({ imageHref }: { imageHref: string }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -663,9 +627,7 @@ function ContactView() {
 
   const mailtoHref = useMemo(() => {
     const subject = encodeURIComponent(`Portfolio inquiry from ${name || "a visitor"}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n`,
-    );
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n`);
 
     return `mailto:${profile.email}?subject=${subject}&body=${body}`;
   }, [email, message, name]);
@@ -682,45 +644,43 @@ function ContactView() {
     window.location.href = mailtoHref;
   };
 
+  const socialBubbles = [
+    { label: "in", tone: "var(--bubble-linkedin)" },
+    { label: "gh", tone: "var(--bubble-github)" },
+    { label: "@", tone: "var(--bubble-email)" },
+    { label: "NJ", tone: "var(--bubble-location)" },
+  ];
+
   return (
     <div className="space-y-8">
       <div className="reveal">
         <div className="section-kicker">Contact</div>
-        <h2 className="section-title">Reach out with a simple form and direct contact options.</h2>
+        <h2 className="section-title">Get in Touch</h2>
         <p className="section-copy">
-          Fill in the form below and it will open a ready-to-send email. You can also use the direct links for email,
-          GitHub, LinkedIn, and phone.
+          I&apos;d love to hear from you. Whether you have a question, want to collaborate, or want to discuss a role,
+          use the form below or connect through GitHub and LinkedIn.
         </p>
       </div>
 
-      <section className="grid gap-6 xl:grid-cols-[0.78fr_1.22fr]">
-        <article className="spotlight-panel reveal">
-          <div className="section-kicker">Direct contact</div>
-          <div className="mt-6 space-y-4 text-sm leading-7 text-[var(--soft)]">
-            <div>
-              <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">Email</div>
-              <a className="text-white" href={`mailto:${profile.email}`}>
-                {profile.email}
-              </a>
-            </div>
-            <div>
-              <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">Phone</div>
-              <a className="text-white" href={`tel:${profile.phone.replace(/[^+\d]/g, "")}`}>
-                {profile.phone}
-              </a>
-            </div>
-            <div>
-              <div className="text-xs font-semibold tracking-[0.22em] text-[var(--muted)] uppercase">Location</div>
-              <div className="text-white">{profile.location}</div>
-            </div>
+      <section className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+        <article className="contact-visual-panel reveal">
+          <div className="contact-visual-glow" />
+          <div className="contact-avatar-shell">
+            <img alt="Parth Gadekar" className="contact-avatar" src={imageHref} />
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a className="button button-secondary" href={profile.github} rel="noreferrer" target="_blank">
-              GitHub
-            </a>
-            <a className="button button-primary" href={profile.linkedin} rel="noreferrer" target="_blank">
-              LinkedIn
-            </a>
+          {socialBubbles.map((bubble, index) => (
+            <div
+              key={bubble.label}
+              className={`contact-bubble contact-bubble-${index + 1}`}
+              style={{ "--bubble-tone": bubble.tone } as CSSProperties}
+            >
+              {bubble.label}
+            </div>
+          ))}
+          <div className="mt-8 max-w-sm text-center text-sm leading-7 text-[var(--soft)]">
+            <div className="text-lg font-semibold text-white">{profile.name}</div>
+            <div className="mt-2">{profile.location}</div>
+            <div>{profile.email}</div>
           </div>
         </article>
 
@@ -732,7 +692,7 @@ function ContactView() {
               <input
                 className="form-field"
                 onChange={(event) => setName(event.target.value)}
-                placeholder="Your name"
+                placeholder="Your Name"
                 type="text"
                 value={name}
               />
@@ -742,7 +702,7 @@ function ContactView() {
               <input
                 className="form-field"
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="you@example.com"
+                placeholder="your.email@example.com"
                 type="email"
                 value={email}
               />
@@ -752,7 +712,7 @@ function ContactView() {
               <textarea
                 className="form-field form-textarea"
                 onChange={(event) => setMessage(event.target.value)}
-                placeholder="Tell me about the role, project, or conversation you want to have."
+                placeholder="Your message..."
                 rows={7}
                 value={message}
               />
@@ -762,12 +722,12 @@ function ContactView() {
               <button className="button button-primary" type="submit">
                 Open email draft
               </button>
-              <a className="button button-secondary" href={`mailto:${profile.email}`}>
-                Send direct email
+              <a className="button button-secondary" href={profile.github} rel="noreferrer" target="_blank">
+                GitHub
               </a>
-            </div>
-            <div className="text-sm text-[var(--muted)]">
-              The form opens your default mail app with the message prefilled.
+              <a className="button button-secondary" href={profile.linkedin} rel="noreferrer" target="_blank">
+                LinkedIn
+              </a>
             </div>
           </form>
         </article>
@@ -808,10 +768,10 @@ function App() {
       <div className="ambient ambient-two" />
       <div className="grid-overlay" />
 
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[rgba(5,8,20,0.72)] backdrop-blur-2xl">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[rgba(6,8,18,0.82)] backdrop-blur-2xl">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-5 py-4 sm:px-8">
           <ProfileMark imageHref={profilePhotoHref} scrollOffset={scrollOffset} />
-          <nav className="hidden items-center gap-6 text-sm text-[var(--muted)] lg:flex">
+          <nav className="hidden items-center gap-10 text-sm text-[var(--muted)] lg:flex">
             {moduleConfigs.map((module) => (
               <AppLink
                 key={module.id}
@@ -861,17 +821,15 @@ function App() {
               <span className="typed-cursor" />
             </div>
             <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--soft)] sm:text-lg">
-              {route.kind === "home" ? profile.shortSummary : profile.summary}
+              {route.kind === "about" ? profile.shortSummary : activeModule.summary}
             </p>
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--muted)] sm:text-base">
-              {profile.availability}
-            </p>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--muted)] sm:text-base">{profile.availability}</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <LinkButton className="button button-primary" to="/contact">
-                Let&apos;s connect
+              <LinkButton className="button button-primary" to="/projects">
+                View projects
               </LinkButton>
-              <LinkButton className="button button-secondary" to="/projects">
-                Explore work
+              <LinkButton className="button button-secondary" to="/contact">
+                Contact me
               </LinkButton>
             </div>
             <div className="mt-10">
@@ -887,15 +845,13 @@ function App() {
             </div>
           </div>
 
-          {route.kind === "home" ? (
+          {route.kind === "about" ? (
             <HeroPortrait imageHref={profilePhotoHref} scrollOffset={scrollOffset} />
           ) : (
             <aside className="signal-panel reveal" style={{ animationDelay: "120ms" }}>
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <div className="text-xs font-semibold tracking-[0.24em] text-[var(--muted)] uppercase">
-                    Active route
-                  </div>
+                  <div className="text-xs font-semibold tracking-[0.24em] text-[var(--muted)] uppercase">Current module</div>
                   <h2 className="mt-3 text-2xl font-semibold text-white">{activeModule.navLabel}</h2>
                   <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--soft)]">{activeModule.summary}</p>
                 </div>
@@ -916,21 +872,19 @@ function App() {
           )}
         </section>
 
-        {route.kind === "home" ? <HomeView /> : null}
-        {route.kind === "experience" ? <ExperienceView /> : null}
+        {route.kind === "about" ? <AboutView /> : null}
         {route.kind === "projects" ? <ProjectsView /> : null}
         {route.kind === "project-detail" ? <ProjectDetailView slug={route.slug} /> : null}
-        {route.kind === "skills" ? <SkillsView /> : null}
-        {route.kind === "education" ? <EducationView /> : null}
-        {route.kind === "contact" ? <ContactView /> : null}
+        {route.kind === "credentials" ? <CredentialsView /> : null}
+        {route.kind === "contact" ? <ContactView imageHref={profilePhotoHref} /> : null}
 
         <section className="closing-panel reveal">
           <div>
             <div className="section-kicker">Next step</div>
             <h2 className="section-title">If the work fits, reach out directly.</h2>
             <p className="section-copy">
-              This portfolio is structured to make hiring conversations easier: quick landing summary, separate work and
-              project modules, grouped skills, academic context, and a direct contact route.
+              This portfolio is organized for fast scanning: a landing-page summary, filtered projects, a credentials
+              route, and a direct contact page with all core information on-site.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

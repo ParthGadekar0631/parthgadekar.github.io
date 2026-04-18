@@ -8,6 +8,10 @@
   --soft: rgba(229, 236, 255, 0.82);
   --muted: rgba(177, 191, 225, 0.68);
   --border: rgba(255, 255, 255, 0.1);
+  --bubble-linkedin: #4f7cff;
+  --bubble-github: #18233f;
+  --bubble-email: #f04444;
+  --bubble-location: #8b5cf6;
   --theme-accent: #67e8f9;
   --theme-accent-soft: rgba(103, 232, 249, 0.16);
   --theme-accent-glow: rgba(14, 165, 233, 0.24);
@@ -506,6 +510,13 @@ textarea {
   background: rgba(27, 43, 92, 0.46);
 }
 
+.project-repo-dot {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d4b391, #f2d4a7);
+}
+
 .project-timeline {
   display: inline-flex;
   align-items: center;
@@ -722,6 +733,54 @@ textarea {
   padding-left: 2.8rem;
 }
 
+.credential-preview-row,
+.education-inline-card,
+.education-showcase-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.credential-preview-mark,
+.education-mark,
+.education-showcase-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(circle at top, var(--theme-accent-soft), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.credential-preview-mark,
+.education-mark {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.education-showcase-card {
+  min-height: 100%;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  background:
+    linear-gradient(180deg, rgba(14, 18, 34, 0.96), rgba(12, 14, 28, 0.96)),
+    radial-gradient(circle at top right, var(--theme-accent-soft), transparent 40%);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
+}
+
+.education-showcase-mark {
+  width: 5rem;
+  height: 5rem;
+  font-size: 1.1rem;
+}
+
 .timeline-marker {
   position: absolute;
   left: 10px;
@@ -809,6 +868,88 @@ textarea {
 .contact-form {
   display: grid;
   gap: 1rem;
+}
+
+.contact-visual-panel {
+  position: relative;
+  overflow: hidden;
+  min-height: 34rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 62% 28%, rgba(255, 140, 0, 0.28), transparent 28%),
+    radial-gradient(circle at 38% 44%, rgba(212, 44, 44, 0.22), transparent 34%),
+    linear-gradient(180deg, rgba(10, 11, 18, 0.98), rgba(9, 10, 16, 0.98));
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.32);
+}
+
+.contact-visual-glow {
+  position: absolute;
+  inset: auto 18% 12% 18%;
+  height: 24%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 135, 32, 0.55), transparent 70%);
+  filter: blur(46px);
+}
+
+.contact-avatar-shell {
+  position: relative;
+  z-index: 1;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+}
+
+.contact-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.contact-bubble {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.9rem;
+  height: 3.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--bubble-tone);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+}
+
+.contact-bubble-1 {
+  top: 20%;
+  right: 28%;
+}
+
+.contact-bubble-2 {
+  top: 38%;
+  left: 14%;
+}
+
+.contact-bubble-3 {
+  bottom: 20%;
+  right: 21%;
+}
+
+.contact-bubble-4 {
+  bottom: 13%;
+  left: 22%;
 }
 
 .contact-field {
@@ -934,5 +1075,20 @@ textarea {
 
   .portrait-frame {
     min-height: 24rem;
+  }
+
+  .contact-visual-panel {
+    min-height: 26rem;
+  }
+
+  .contact-avatar-shell {
+    width: 11rem;
+    height: 11rem;
+  }
+
+  .contact-bubble {
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 0.8rem;
   }
 }

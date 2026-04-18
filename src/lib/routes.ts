@@ -1,10 +1,8 @@
 export type AppRoute =
-  | { kind: "home" }
-  | { kind: "experience" }
+  | { kind: "about" }
   | { kind: "projects" }
   | { kind: "project-detail"; slug: string }
-  | { kind: "skills" }
-  | { kind: "education" }
+  | { kind: "credentials" }
   | { kind: "contact" };
 
 const basePath = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
@@ -29,11 +27,11 @@ export function parseRoute(pathname: string): AppRoute {
   const normalized = stripBasePath(pathname).replace(/\/+$/, "") || "/";
 
   if (normalized === "/") {
-    return { kind: "home" };
+    return { kind: "about" };
   }
 
-  if (normalized === "/experience") {
-    return { kind: "experience" };
+  if (normalized === "/about") {
+    return { kind: "about" };
   }
 
   if (normalized === "/projects") {
@@ -44,19 +42,20 @@ export function parseRoute(pathname: string): AppRoute {
     return { kind: "project-detail", slug: normalized.slice("/projects/".length) };
   }
 
-  if (normalized === "/skills") {
-    return { kind: "skills" };
-  }
-
-  if (normalized === "/education") {
-    return { kind: "education" };
+  if (
+    normalized === "/credentials" ||
+    normalized === "/experience" ||
+    normalized === "/skills" ||
+    normalized === "/education"
+  ) {
+    return { kind: "credentials" };
   }
 
   if (normalized === "/contact") {
     return { kind: "contact" };
   }
 
-  return { kind: "home" };
+  return { kind: "about" };
 }
 
 export function toAppPath(path: string) {

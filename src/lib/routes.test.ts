@@ -3,11 +3,13 @@ import { parseRoute } from "./routes";
 
 describe("parseRoute", () => {
   it("parses top-level routes", () => {
-    expect(parseRoute("/")).toEqual({ kind: "home" });
-    expect(parseRoute("/experience")).toEqual({ kind: "experience" });
+    expect(parseRoute("/")).toEqual({ kind: "about" });
+    expect(parseRoute("/about")).toEqual({ kind: "about" });
     expect(parseRoute("/projects")).toEqual({ kind: "projects" });
-    expect(parseRoute("/skills")).toEqual({ kind: "skills" });
-    expect(parseRoute("/education")).toEqual({ kind: "education" });
+    expect(parseRoute("/credentials")).toEqual({ kind: "credentials" });
+    expect(parseRoute("/experience")).toEqual({ kind: "credentials" });
+    expect(parseRoute("/skills")).toEqual({ kind: "credentials" });
+    expect(parseRoute("/education")).toEqual({ kind: "credentials" });
     expect(parseRoute("/contact")).toEqual({ kind: "contact" });
   });
 

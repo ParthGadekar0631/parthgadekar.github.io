@@ -77,6 +77,8 @@ export type ExperienceEntry = {
 export type EducationEntry = {
   school: string;
   degree: string;
+  location: string;
+  badge: string;
   timeline: string;
   detail: string;
 };
