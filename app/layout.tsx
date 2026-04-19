@@ -57,9 +57,9 @@ export const metadata: Metadata = {
   }
   ,
   icons: {
-    icon: "/parth-logo.svg",
-    shortcut: "/parth-logo.svg",
-    apple: "/parth-logo.svg"
+    icon: "/parth-logo-cartoon.png",
+    shortcut: "/parth-logo-cartoon.png",
+    apple: "/parth-logo-cartoon.png"
   }
 };
 
@@ -71,7 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/parth-logo.svg" as="image" />
+        <link rel="preload" href="/parth-logo-cartoon.png" as="image" />
       </head>
       <body suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
