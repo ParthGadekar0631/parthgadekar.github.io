@@ -464,6 +464,44 @@ button {
   }
 }
 
+@keyframes aboutFloatSoft {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes aboutFloatMedium {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes aboutFloatFast {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0);
+  }
+}
+
+@keyframes aboutPulseGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.04);
+  }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

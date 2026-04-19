@@ -1,15 +1,10 @@
-
 "use client";
 
 import React, { Suspense, useRef, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { FormalScottModel } from './Formal-scott';
-import { Model as GraduationScottModel } from './Graduation-scott';
-import { Model as CasualScottModel } from './Casual-scott';
+import { Float, Html, OrbitControls } from '@react-three/drei';
 import { Lights } from './Lights';
 import { useTheme } from 'next-themes';
-
 
 function FloatingModel({ children }: { children: React.ReactNode }) {
     return (
@@ -19,6 +14,108 @@ function FloatingModel({ children }: { children: React.ReactNode }) {
     );
 }
 
+function ProfilePhotoScene({ currentAzimuth }: { currentAzimuth: number }) {
+    const normalized = Math.max(-1, Math.min(1, currentAzimuth / Math.PI));
+    const glowX = normalized * 0.7;
+    const tilt = normalized * 10;
+    const scale = 1 + Math.abs(normalized) * 0.04;
+
+    return (
+        <FloatingModel>
+            <Float speed={1.8} rotationIntensity={0.15} floatIntensity={0.65}>
+                <group>
+                    <mesh position={[glowX, 0.15, -0.5]} scale={[4.4, 4.4, 1]}>
+                        <circleGeometry args={[1, 64]} />
+                        <meshStandardMaterial color="#7c3aed" transparent opacity={0.18} />
+                    </mesh>
+                    <mesh position={[-glowX * 0.55, -0.1, -0.35]} scale={[3.55, 3.55, 1]}>
+                        <circleGeometry args={[1, 64]} />
+                        <meshStandardMaterial color="#2563eb" transparent opacity={0.14} />
+                    </mesh>
+                    <Html transform sprite position={[0, -0.05, 0.25]} distanceFactor={1.55}>
+                        <div
+                            style={{
+                                width: 320,
+                                height: 410,
+                                borderRadius: 36,
+                                overflow: "hidden",
+                                transform: `rotate(${tilt}deg) scale(${scale})`,
+                                transition: "transform 280ms ease, box-shadow 280ms ease",
+                                boxShadow: "0 28px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.14)",
+                                background:
+                                    "linear-gradient(180deg, rgba(17,24,39,0.95), rgba(9,9,11,0.98))",
+                                border: "1px solid rgba(255,255,255,0.12)",
+                                position: "relative",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    inset: 0,
+                                    background:
+                                        "radial-gradient(circle at 20% 18%, rgba(59,130,246,0.22), transparent 36%), radial-gradient(circle at 80% 82%, rgba(168,85,247,0.22), transparent 34%)",
+                                    pointerEvents: "none",
+                                }}
+                            />
+                            <img
+                                src="/parth-profile.jpg"
+                                alt="Parth Gadekar"
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    objectPosition: "center 18%",
+                                    filter: "saturate(1.04) contrast(1.02)",
+                                }}
+                            />
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    left: 18,
+                                    right: 18,
+                                    bottom: 18,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    gap: 12,
+                                    alignItems: "center",
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        borderRadius: 999,
+                                        padding: "8px 12px",
+                                        fontSize: 12,
+                                        fontWeight: 700,
+                                        color: "white",
+                                        background: "rgba(9,9,11,0.7)",
+                                        border: "1px solid rgba(255,255,255,0.14)",
+                                        backdropFilter: "blur(10px)",
+                                    }}
+                                >
+                                    Parth Gadekar
+                                </div>
+                                <div
+                                    style={{
+                                        borderRadius: 999,
+                                        padding: "8px 12px",
+                                        fontSize: 12,
+                                        fontWeight: 700,
+                                        color: "#bfdbfe",
+                                        background: "rgba(17,24,39,0.72)",
+                                        border: "1px solid rgba(96,165,250,0.28)",
+                                        backdropFilter: "blur(10px)",
+                                    }}
+                                >
+                                    Software + Data + AI
+                                </div>
+                            </div>
+                        </div>
+                    </Html>
+                </group>
+            </Float>
+        </FloatingModel>
+    );
+}
 
 export default function ScottModel() {
     const { theme } = useTheme();
@@ -28,11 +125,9 @@ export default function ScottModel() {
         setMounted(true);
     }, []);
 
-    // Start at graduation model: azimuth -Math.PI
     const [currentAzimuth, setCurrentAzimuth] = useState(-Math.PI);
     const [activeModel, setActiveModel] = useState('graduation');
     const [animateIn, setAnimateIn] = useState(true);
-    // Use ref for OrbitControls instance (unknown type to avoid 'any')
     const orbitControlsRef = useRef<unknown>(null);
     const prevModelRef = useRef('graduation');
 
@@ -41,7 +136,7 @@ export default function ScottModel() {
             (orbitControlsRef.current as { reset?: () => void; target?: { set: (x: number, y: number, z: number) => void } }).reset?.();
             (orbitControlsRef.current as { reset?: () => void; target?: { set: (x: number, y: number, z: number) => void } }).target?.set(0, -1, 0);
         }
-    }, [mounted]); // Only run when mounted
+    }, [mounted]);
 
     if (!mounted) return null;
 
@@ -84,9 +179,9 @@ export default function ScottModel() {
                 };
             case 'casual':
                 return {
-                    title: "Selected Projects",
-                    description: "Projects across telemetry systems, ETL pipelines, full-stack engineering, blockchain workflows, and computer vision.",
-                    details: "8 Projects | GitHub Portfolio"
+                    title: "Open Source Contributions",
+                    description: "Active GitHub portfolio across telemetry systems, ETL workflows, analytics dashboards, full-stack builds, and machine learning experiments.",
+                    details: "42 Public Repositories | Live GitHub Portfolio"
                 };
             case 'formal':
                 return {
@@ -139,26 +234,10 @@ export default function ScottModel() {
                             opacity={0}
                         />
                     </mesh>
-
-                    {currentAzimuth >= -Math.PI / 3 && currentAzimuth <= Math.PI / 3 && (
-                        <FloatingModel>
-                            <FormalScottModel scale={4.9} />
-                        </FloatingModel>
-                    )}
-                    {currentAzimuth > Math.PI / 3 && currentAzimuth <= Math.PI && (
-                        <group position={[0, -0.75, 1]}>
-                            <CasualScottModel scale={4.5} />
-                        </group>
-                    )}
-                    {currentAzimuth < -Math.PI / 3 && currentAzimuth >= -Math.PI && (
-                        <FloatingModel>
-                            <GraduationScottModel scale={5.0} />
-                        </FloatingModel>
-                    )}
+                    <ProfilePhotoScene currentAzimuth={currentAzimuth} />
                 </Suspense>
             </Canvas>
 
-            {/* About Me Title Section - moved from about/page.tsx */}
             <div style={{ position: 'absolute', top: '2.5rem', left: 0, width: '100%', zIndex: 10 }}>
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="mb-2">
