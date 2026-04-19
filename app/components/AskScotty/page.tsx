@@ -140,14 +140,14 @@ export default function AskScotty({ question }: { question: string }) {
         <button
           onClick={handleMobileButtonClick}
           className={`glass-button flex items-center justify-center flex-shrink-0 ${isDark ? 'dark' : ''}`}
-          title={mobileOpen ? "Close RisksRay" : "Open RisksRay"}
+          title={mobileOpen ? "Close Risksray" : "Open Risksray"}
         >
           {mobileOpen ? (
             <span className="text-2xl font-small text-primary dark:text-white">×</span>
           ) : (
             <Image
               src="/askscotty.png"
-              alt="RisksRay"
+              alt="Risksray"
               width={24}
               height={24}
               style={{ filter: isDark ? "invert(1)" : "none" }}
@@ -177,7 +177,7 @@ export default function AskScotty({ question }: { question: string }) {
         >
           {/* Header */}
           <div className="h-16 w-full flex items-center justify-between gap-2 p-4 border-b border-white/20 flex-shrink-0">
-            <h3 className={`text-lg font-bold ${colors.headerText}`}>RisksRay</h3>
+            <h3 className={`text-lg font-bold ${colors.headerText}`}>Risksray</h3>
             <button
               onClick={() => { setMobileOpen(false); setMinimized(true); }}
               className={`text-2xl font-bold transition flex-shrink-0 ${colors.secondaryText} hover:text-primary`}
@@ -192,7 +192,7 @@ export default function AskScotty({ question }: { question: string }) {
               <div className="flex items-center justify-center h-full text-center">
                 <div>
                   <p className={`${colors.secondaryText} text-sm`}>
-                    Hi! I&apos;m RisksRay. Ask me anything about Parth&apos;s work, projects, and education!
+                    Hi! I&apos;m Risksray. Ask me anything about Parth&apos;s work, projects, and education!
                   </p>
                 </div>
               </div>
@@ -266,12 +266,12 @@ export default function AskScotty({ question }: { question: string }) {
             >
               <Image
                 src={askScotty}
-                alt="RisksRay Logo"
+                alt="Risksray Logo"
                 width={24}
                 height={24}
                 style={{ filter: isDark ? "invert(1)" : "none" }}
               />
-              <h3 className={`text-md  ${colors.headerText}`}>RisksRay</h3>
+              <h3 className={`text-md  ${colors.headerText}`}>Risksray</h3>
             </button>
             {!minimized && (
               <button
@@ -291,7 +291,7 @@ export default function AskScotty({ question }: { question: string }) {
                   <div className="flex items-center justify-center h-full text-center">
                     <div>
                       <p className={`${colors.secondaryText} text-sm`}>
-                        Hi! I&apos;m RisksRay. Ask me anything about Parth&apos;s work, projects, and education!
+                        Hi! I&apos;m Risksray. Ask me anything about Parth&apos;s work, projects, and education!
                       </p>
                     </div>
                   </div>

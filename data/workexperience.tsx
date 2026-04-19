@@ -1,4 +1,4 @@
-import { city_icon, ap_icon } from "./images";
+import { city_icon, ap_icon, dez_icon } from "./images";
 
 const workexperience = [
   {
@@ -29,7 +29,7 @@ const workexperience = [
     position: "Information Systems Intern",
     company: "Dezignolics Web and Software Solutions",
     href: "https://www.dezignolics.com/",
-    logo: "/icons/dezignolics-badge.svg",
+    logo: dez_icon,
     duration: "June 2022 - July 2022",
     tech: ["Python", "BeautifulSoup", "SQL", "Parsing", "Data Cleaning"],
     responsibilities: [

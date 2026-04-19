@@ -124,7 +124,7 @@ export default function Navbar() {
             </nav>
           </div>
 
-          {/* Desktop RisksRay Button & Dark Mode Toggle - Right */}
+          {/* Desktop Risksray Button & Dark Mode Toggle - Right */}
           <div className="hidden lg:flex items-center gap-2 flex-shrink-0 ml-auto h-full">
             {/* Show all buttons only when fully loaded/expanded */}
             {!isInitialLoad && <>
@@ -133,11 +133,11 @@ export default function Navbar() {
                 type="button"
                 onClick={() => setMinimized(false)}
                 className={`glass-button flex items-center justify-center flex-shrink-0 transition-opacity duration-500 opacity-100 delay-300 ${isDark ? 'dark' : ''}`}
-                title="RisksRay"
+                title="Risksray"
               >
                 <Image
                   src={askScotty}
-                  alt="RisksRay"
+                  alt="Risksray"
                   width={20}
                   height={20}
                   style={{ filter: isDark ? "invert(1)" : "invert(0)" }}

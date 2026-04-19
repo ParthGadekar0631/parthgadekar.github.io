@@ -6,16 +6,16 @@ import Image from "next/image";
 
 
 const screenshots = [
-  "/projects-previews/f1-telemetry-preview.svg",
-  "/projects-previews/distributed-pipeline-preview.svg",
+  "/projects-previews/f1-dashboard-real.png",
+  "/projects-previews/f1-graph-real.png",
   "/projects-previews/fullstack-commerce-preview.svg",
   "/projects-previews/land-registry-preview.svg",
   "/projects-previews/nyc-taxi-preview.svg",
 ];
 
 const screenshotLabels = [
-  "F1 Telemetry",
-  "Distributed Pipeline",
+  "F1 Dashboard",
+  "Telemetry Graph",
   "E-Commerce",
   "Land Registry",
   "NYC Taxi",
@@ -130,7 +130,7 @@ export default function ShowcaseIpad() {
             {/* Screens - overlay positioned relative to iPad frame */}
             <div
               ref={scrollRef}
-              className="absolute left-1/2 top-0 w-[98%] h-full -translate-x-1/2 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory flex"
+              className="absolute left-1/2 top-[4.8%] h-[90.2%] w-[87.5%] -translate-x-1/2 overflow-x-auto overflow-y-hidden rounded-[1.6rem] bg-[#0f172a] p-2 scrollbar-hide snap-x snap-mandatory flex sm:rounded-[2rem] sm:p-3"
               style={{ WebkitOverflowScrolling: "touch" }}
             >
               {screenshots.map((src, idx) => (
@@ -139,7 +139,7 @@ export default function ShowcaseIpad() {
                     src={src}
                     alt={screenshotLabels[idx] ?? "screenshot"}
                     fill
-                    className="object-contain object-center rounded-2xl"
+                    className="object-contain object-top rounded-2xl"
                     priority={idx === 0}
                     sizes="(min-width: 1024px) 700px, 90vw"
                   />

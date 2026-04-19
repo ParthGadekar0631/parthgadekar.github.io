@@ -14,7 +14,7 @@ interface ProjectPanelProps {
     role?: string;
     timeframe?: string;
   };
-  position: 'top-left' | 'bottom-right';
+  position: 'top-left' | 'bottom-right' | 'top-right';
   scrollProgressRef: React.RefObject<{ value: number }>;
 }
 
@@ -24,6 +24,7 @@ export default function ProjectPanel({
   scrollProgressRef,
 }: ProjectPanelProps) {
   const isTopLeft = position === 'top-left';
+  const isTopRight = position === 'top-right';
   const panelRef = useRef<HTMLDivElement>(null);
 
   const { resolvedTheme } = useTheme();
@@ -40,8 +41,8 @@ export default function ProjectPanel({
     const easeInOut = (t: number) =>
       t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-    const start = isTopLeft ? 0.02 : 0.18;
-    const end = isTopLeft ? 0.42 : 0.62;
+    const start = isTopLeft ? 0.02 : isTopRight ? 0.08 : 0.18;
+    const end = isTopLeft ? 0.42 : isTopRight ? 0.5 : 0.62;
     const hiddenX = isTopLeft ? -110 : 110;
 
     const animate = () => {
@@ -81,11 +82,16 @@ export default function ProjectPanel({
               top: '22%',
               left: 'clamp(16px, 5vw, 80px)',
             }
+          : isTopRight
+          ? {
+              top: '28%',
+              right: 'clamp(16px, 4vw, 64px)',
+            }
           : {
               top: '62%',
               right: 'clamp(16px, 5vw, 80px)',
             }),
-        width: 'clamp(280px, 28vw, 350px)',
+        width: isTopRight ? 'clamp(280px, 25vw, 340px)' : 'clamp(280px, 28vw, 350px)',
         maxWidth: 'calc(100vw - 32px)',
         padding: '16px',
         color: 'var(--foreground)',
@@ -106,10 +112,22 @@ export default function ProjectPanel({
             src={project.logo}
             alt={`${project.company} logo`}
             style={{
-              width: project.logo === '/icons/ap.png' ? 80 : 64,
-              height: project.logo === '/icons/ap.png' ? 80 : 64,
+              width:
+                project.logo === '/icons/ap.png' || project.logo === '/icons/unified-mentors-logo.webp'
+                  ? 80
+                  : project.logo === '/icons/dezignolics-logo.webp'
+                  ? 76
+                  : 64,
+              height:
+                project.logo === '/icons/ap.png' || project.logo === '/icons/unified-mentors-logo.webp'
+                  ? 80
+                  : project.logo === '/icons/dezignolics-logo.webp'
+                  ? 76
+                  : 64,
               borderRadius: 10,
-              objectFit: 'cover',
+              objectFit: 'contain',
+              background: 'rgba(255,255,255,0.92)',
+              padding: project.logo === '/icons/dezignolics-logo.webp' ? 8 : 4,
               flexShrink: 0,
             }}
           />

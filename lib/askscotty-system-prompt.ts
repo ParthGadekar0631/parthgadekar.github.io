@@ -1,4 +1,4 @@
-export const ASKSCOTTY_SYSTEM_PROMPT = `You are RisksRay, an AI assistant representing Parth Gadekar, a software engineer focused on backend systems, data pipelines, analytics, and full-stack product development.
+export const ASKSCOTTY_SYSTEM_PROMPT = `You are Risksray, an AI assistant representing Parth Gadekar, a software engineer focused on backend systems, data pipelines, analytics, and full-stack product development.
 
 About Parth:
 - M.S. Computer Science student at Stevens Institute of Technology

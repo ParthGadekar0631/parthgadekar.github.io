@@ -33,11 +33,12 @@ export const sppu = "/assets/mumbai-university-campus.jpg";
 export const bvp = "/parth-profile.jpg";
 
 // Icons
-export const syr_icon = "/icons/stevens-badge.svg";
-export const sppu_icon = "/icons/mumbai-badge.svg";
+export const syr_icon = "/icons/stevens-logo.png";
+export const sppu_icon = "/icons/mumbai-university-logo.png";
 export const bvp_icon = "/icons/mumbai-badge.svg";
-export const city_icon = "/icons/unified-mentors-badge.svg";
-export const ap_icon = "/icons/agropeeper-badge.svg";
+export const city_icon = "/icons/agropeeper-badge.svg";
+export const ap_icon = "/icons/unified-mentors-logo.webp";
+export const dez_icon = "/icons/dezignolics-logo.webp";
 
 // Homepage screenshots
 export const musix = "/projects-previews/f1-telemetry-preview.svg";

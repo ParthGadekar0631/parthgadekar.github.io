@@ -20,6 +20,41 @@ type GitHubInfo = {
 
 type Enriched = { project: Project; roles: string[]; gh: GitHubInfo | null };
 
+const projectPreviewMap: Record<string, string | undefined> = {
+  "f1-telemetry": images.musixPreview,
+  "distributed-pipeline": images.movizPreview,
+  "fullstack-commerce": images.gamingTrendsPreview,
+  "land-registry": images.kdramaAnalyticsPreview,
+  "nyc-taxi": images.lungCancerPreview,
+  "medication-tracker": images.forestWatchPreview,
+  "spotify-data-warehouse": images.universityRecruitmentPreview,
+  "air-canvas": images.bookRecommenderPreview,
+};
+
+function getTitleSizingClasses(title: string): string {
+  const length = title.trim().length;
+
+  if (length > 42) {
+    return "text-[clamp(1rem,0.9rem+0.45vw,1.45rem)] leading-[1.12]";
+  }
+  if (length > 30) {
+    return "text-[clamp(1.05rem,0.94rem+0.55vw,1.6rem)] leading-[1.14]";
+  }
+  return "text-[clamp(1.15rem,1.02rem+0.7vw,1.85rem)] leading-[1.15]";
+}
+
+function getDescriptionSizingClasses(description: string): string {
+  const length = description.trim().length;
+
+  if (length > 130) {
+    return "text-[0.94rem] leading-7";
+  }
+  if (length > 105) {
+    return "text-[0.98rem] leading-7";
+  }
+  return "text-[1rem] leading-8";
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function fetchGitHub(_repo: string, _signal?: AbortSignal): Promise<GitHubInfo | null> {
   // TODO: Implement GitHub fetch logic
@@ -143,7 +178,10 @@ function useGitHubInfo(repo?: string, rootMargin = "200px") {
 
 export default function Projects() {
   const [items] = useState<Enriched[]>(
-    () => projects.map((p) => ({ project: p, roles: inferProjectRoles(p), gh: null as GitHubInfo | null }))
+    () =>
+      projects
+        .filter((p) => p.githubRepo && projectPreviewMap[p.id])
+        .map((p) => ({ project: p, roles: inferProjectRoles(p), gh: null as GitHubInfo | null }))
   );
 
   return (
@@ -159,12 +197,6 @@ function ProjectsClient({ items }: { items: Enriched[] }) {
   const { theme } = useTheme();
   const [colors, setColors] = useState<{ primary: string; secondary: string }>({ primary: '', secondary: '' });
 
-  const roleOptions = useMemo(() => {
-    const set = new Set<string>();
-    items.forEach(({ roles }) => roles.forEach((r) => set.add(r)));
-    return ["All", ...Array.from(set).sort()];
-  }, [items]);
-
   const sectionOptions = useMemo(() => {
     const set = new Set<string>();
     items.forEach(({ project }) => {
@@ -175,19 +207,15 @@ function ProjectsClient({ items }: { items: Enriched[] }) {
     return ["All", ...Array.from(set).sort()];
   }, [items]);
 
-  const [selectedRole, setSelectedRole] = useState<string>("All");
   const [selectedSection, setSelectedSection] = useState<string>("All");
 
   const visible = useMemo(() => {
     let filtered = items;
-    if (selectedRole !== "All") {
-      filtered = filtered.filter(({ roles }) => roles.includes(selectedRole));
-    }
     if (selectedSection !== "All") {
       filtered = filtered.filter(({ project }) => project.section === selectedSection);
     }
     return filtered;
-  }, [items, selectedRole, selectedSection]);
+  }, [items, selectedSection]);
 
   useEffect(() => {
     let isMounted = true;
@@ -268,10 +296,9 @@ function ProjectsClient({ items }: { items: Enriched[] }) {
           <div className={`text-sm text-tertiary ${isDark ? 'dark' : ''}`}>
             Showing {visible.length} project{visible.length !== 1 ? 's' : ''}
           </div>
-          {(selectedRole !== "All" || selectedSection !== "All") && (
+          {selectedSection !== "All" && (
             <button
               onClick={() => {
-                setSelectedRole("All");
                 setSelectedSection("All");
               }}
               className={`
@@ -295,7 +322,7 @@ function ProjectsClient({ items }: { items: Enriched[] }) {
         {visible.length === 0 && (
           <div className={`text-center py-16 glass-container rounded-2xl ${isDark ? 'dark' : ''}`}>
             <p className={`text-lg text-secondary ${isDark ? 'dark' : ''}`}>
-              No projects found for this role
+              No projects found for this category
             </p>
           </div>
         )}
@@ -310,33 +337,22 @@ const ProjectCard = memo(function ProjectCard({ project, isDark }: { project: Pr
   const learnMoreHref = project.liveUrl || gh?.homepage || (gh?.html_url ?? (project.githubRepo ? `https://github.com/${project.githubRepo}` : "#"));
   const desc = gh?.description || project.description;
 
-  // Map project.id to preview PNGs using images.ts
-  // Map project.id to preview image variable (ensure keys match your actual project IDs)
-  const previewPngs: Record<string, string | undefined> = {
-    "f1-telemetry": images.musixPreview,
-    "distributed-pipeline": images.movizPreview,
-    "fullstack-commerce": images.gamingTrendsPreview,
-    "land-registry": images.kdramaAnalyticsPreview,
-    "nyc-taxi": images.lungCancerPreview,
-    "medication-tracker": images.forestWatchPreview,
-    "spotify-warehouse": images.universityRecruitmentPreview,
-    "air-canvas": images.bookRecommenderPreview,
-  };
-  // Fallback: if no preview image, use a generic placeholder or undefined
-  const previewImg = previewPngs[project.id] || undefined;
+  const previewImg = projectPreviewMap[project.id];
+  const titleSizingClasses = getTitleSizingClasses(project.title);
+  const descriptionSizingClasses = getDescriptionSizingClasses(desc);
 
   return (
     <a
       href={learnMoreHref}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group glass-container rounded-2xl p-6 transition-all duration-500 flex flex-col cursor-pointer block overflow-hidden project-card-bg-${project.id}
+      className={`group glass-container rounded-2xl p-6 transition-all duration-500 flex h-full flex-col cursor-pointer block overflow-hidden project-card-bg-${project.id}
         ${isHovered ? 'scale-105 shadow-2xl' : 'shadow-lg'} ${isDark ? 'dark' : ''}
       `}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       ref={ref as React.Ref<HTMLAnchorElement>}
-      style={{ position: 'relative', zIndex: 0, aspectRatio: '1 / 1', width: '100%', minWidth: 0, minHeight: 0, maxWidth: '420px', maxHeight: '420px', margin: 'auto' }}
+      style={{ position: 'relative', zIndex: 0, width: '100%', minWidth: 0, minHeight: '540px', height: 'auto', maxWidth: '460px', margin: 'auto' }}
     >
       {/* PNG as card background, consistent size */}
       <style jsx>{`
@@ -358,14 +374,14 @@ const ProjectCard = memo(function ProjectCard({ project, isDark }: { project: Pr
         .project-card-bg-${project.id}::after {
           content: '';
           position: absolute;
-          top: 50%;
+          top: 53%;
           left: 50%;
           transform: translate(-50%, -50%);
           z-index: 1;
-          width: 280px;
-          height: 185px;
-          max-width: 85%;
-          max-height: 65%;
+          width: 300px;
+          height: 200px;
+          max-width: 82%;
+          max-height: 48%;
           background: ${previewImg ? `url('${previewImg}') center center / contain no-repeat` : 'none'};
           opacity: 0.88;
           pointer-events: none;
@@ -379,9 +395,9 @@ const ProjectCard = memo(function ProjectCard({ project, isDark }: { project: Pr
       <div className="flex flex-col flex-1 relative z-10">
         {/* Header and category at top */}
         <div className="mb-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className={`text-lg font-bold mb-1 transition-colors duration-300 ${isDark ? 'text-white group-hover:text-blue-400' : 'text-gray-900 group-hover:text-blue-600'}`}>
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0 flex-1 pr-2">
+              <h2 className={`mb-1 max-w-[15ch] font-bold tracking-[-0.02em] break-words [overflow-wrap:anywhere] transition-colors duration-300 sm:max-w-[17ch] ${titleSizingClasses} ${isDark ? 'text-white group-hover:text-blue-400' : 'text-gray-900 group-hover:text-blue-600'}`}>
                 {project.title}
               </h2>
               {project.category && (
@@ -391,7 +407,7 @@ const ProjectCard = memo(function ProjectCard({ project, isDark }: { project: Pr
               )}
             </div>
             {project.githubRepo && (
-              <div className="flex flex-col items-end justify-start">
+              <div className="flex flex-shrink-0 flex-col items-end justify-start pt-1">
                 {project.githubRepo && (
                   <button
                     type="button"
@@ -422,10 +438,10 @@ const ProjectCard = memo(function ProjectCard({ project, isDark }: { project: Pr
             </div>
           )}
         </div>
-        <div className="flex-1" />
+        <div className="min-h-[210px] flex-1" />
         {/* Description and tags at bottom */}
         {desc ? (
-          <p className={`mt-4 line-clamp-3 text-sm leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+          <p className={`mt-4 line-clamp-3 ${descriptionSizingClasses} ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
             {desc}
           </p>
         ) : (
@@ -435,11 +451,11 @@ const ProjectCard = memo(function ProjectCard({ project, isDark }: { project: Pr
           </div>
         )}
         {project.tags?.length ? (
-          <div className="flex flex-wrap gap-2 mt-2">
+          <div className="mt-3 flex flex-wrap items-start gap-2">
             {project.tags.map((t) => (
               <span
                 key={t}
-                className={`text-xs px-3 py-1 rounded-full font-medium border transition-all duration-300 ${isDark
+                className={`inline-flex max-w-full items-center rounded-full border px-3 py-1 text-xs font-medium leading-5 transition-all duration-300 ${isDark
                   ? 'bg-blue-900/30 text-blue-300 border-blue-700/50 group-hover:bg-blue-800/50'
                   : 'bg-blue-100/40 text-blue-700 border-blue-200/70 group-hover:bg-blue-100/60'
                   }`}

@@ -51,18 +51,22 @@ function OrbitSection({
         <div className="orbit-container absolute inset-0 flex items-center justify-center">
           {/* Center Image */}
           <div className="absolute z-10">
-            <Image
-              src= {image}
-              alt="Profile"
-              width={160}
-              height={160}
-              className="rounded-full"
+            <div
+              className="relative overflow-hidden rounded-full ring-1 ring-white/10 shadow-2xl"
               style={{
                 width: "min(28vw, 180px)",
                 height: "min(28vw, 180px)",
               }}
-              priority
-            />
+            >
+              <Image
+                src={image}
+                alt="Profile"
+                fill
+                sizes="(max-width: 640px) 28vw, 180px"
+                className="object-cover object-[center_18%]"
+                priority
+              />
+            </div>
           </div>
 
           {/* Orbiting Icons */}

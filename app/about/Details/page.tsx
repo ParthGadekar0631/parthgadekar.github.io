@@ -21,9 +21,9 @@ const education = [
     image: sppu,
     color: "#f59e0b",
     title: "University of Mumbai",
-    subtitle: "Bachelor of Engineering in Information Technology",
+    subtitle: "A.C. Patil College of Engineering · Bachelor of Engineering in Information Technology",
     description:
-      "My undergraduate education built the foundation behind my engineering work: data structures, systems programming, DBMS, software engineering, and web programming. It was during this period that I started building full-stack systems, computer vision projects, backend-heavy applications, and analytics workflows that shaped my direction as a software engineer.",
+      "I completed my bachelor's degree at A.C. Patil College of Engineering under the University of Mumbai. This phase built the foundation behind my engineering work through data structures, systems programming, DBMS, software engineering, and web programming, and it was where I started building full-stack systems, computer vision projects, backend-heavy applications, and analytics workflows that shaped my direction as a software engineer.",
   },
 ];
 

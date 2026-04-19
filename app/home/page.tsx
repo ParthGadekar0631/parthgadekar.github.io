@@ -133,6 +133,13 @@ export default function Home() {
                             scrollProgressRef={scrollProgressRef}
                         />
                     )}
+                    {workexperience.length >= 3 && (
+                        <ProjectPanel
+                            project={workexperience[2]}
+                            position="top-right"
+                            scrollProgressRef={scrollProgressRef}
+                        />
+                    )}
 
                     <Texts />
                     {/* ShowcaseIpad: phones & tablets (< 1024px). Showcase: desktop/laptop (>= 1024px) */}

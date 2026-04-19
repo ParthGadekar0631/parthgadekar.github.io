@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 import { useTheme } from 'next-themes';
 // ...existing code...
 const screenshots = [
-    "/projects-previews/f1-telemetry-preview.svg",
-    "/projects-previews/distributed-pipeline-preview.svg",
+    "/projects-previews/f1-dashboard-real.png",
+    "/projects-previews/f1-graph-real.png",
     "/projects-previews/fullstack-commerce-preview.svg",
     "/projects-previews/land-registry-preview.svg",
     "/projects-previews/nyc-taxi-preview.svg",
 ];
 
 const screenshotLabels = [
-    "F1 Telemetry",
-    "Distributed Pipeline",
+    "F1 Dashboard",
+    "Telemetry Graph",
     "E-Commerce Platform",
     "Land Registry",
     "NYC Taxi Pipeline",
@@ -54,7 +54,7 @@ export default function Showcase() {
                     ))}
                 </div>
             </div>
-            <div className="h-full w-full flex items-end justify-center relative overflow-visible z-1 min-h-[500px] lg:min-h-[500px] mt-0 mb-0">
+            <div className="h-full w-full flex items-end justify-center relative overflow-visible z-1 min-h-[520px] lg:min-h-[540px] mt-0 mb-0">
                 <div className="w-full max-w-[min(1300px,95vw)] flex flex-col items-center justify-center relative">
                     {/* Laptop frame - screenshot overlay uses % of this container so they scale together */}
                     <div className="relative w-full">
@@ -66,14 +66,14 @@ export default function Showcase() {
                             className="w-full h-auto block"
                         />
                         <div
-                            className="absolute left-1/2 top-[1.5%] w-[70.8%] h-[90%] -translate-x-1/2 rounded-t-[50px] overflow-hidden flex items-center justify-center pointer-events-auto"
+                            className="absolute left-1/2 top-[5.2%] w-[68.8%] h-[78.5%] -translate-x-1/2 overflow-hidden rounded-t-[34px] bg-[#0f172a] p-2 sm:p-3 lg:p-4 flex items-center justify-center pointer-events-auto"
                             
                         >
                             <Image
                                 src={screenshots[currentIndex]}
                                 alt={screenshotLabels[currentIndex] || 'screenshot'}
                                 fill
-                                className="object-contain transition-all duration-500"
+                                className="object-contain object-top transition-all duration-500"
                                 sizes="(min-width: 1024px) 700px, 90vw"
                                 priority
                             />

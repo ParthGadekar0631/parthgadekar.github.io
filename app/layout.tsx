@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: "Explore the portfolio of Parth Gadekar, a software engineer building backend systems, data pipelines, full-stack products, and analytics-driven applications.",
   keywords: [
     "Parth Gadekar",
-    "RisksRay",
+    "Risksray",
     "Portfolio",
     "Software Engineer",
     "Data Engineer",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   creator: "Parth Gadekar",
   openGraph: {
     title: "Parth Gadekar | Portfolio",
-    description: "Projects, work experience, education, and a chatbot assistant branded as RisksRay.",
+    description: "Projects, work experience, education, and a chatbot assistant branded as Risksray.",
     url: "https://risksray.vercel.app",
     siteName: "Parth Gadekar Portfolio",
     images: [
