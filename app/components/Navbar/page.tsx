@@ -82,33 +82,38 @@ export default function Navbar() {
           left: '50%',
           transform: 'translateX(-50%)',
           top: isInitialLoad ? '50%' : '8px',
-          marginTop: isInitialLoad ? '-24px' : '0',
-          width: isInitialLoad ? '180px' : 'calc(100vw - 32px)',
-          maxWidth: isInitialLoad ? '240px' : '1792px',
-          height: isInitialLoad ? '58px' : '64px',
+          marginTop: isInitialLoad ? '-32px' : '0',
+          width: isInitialLoad ? '320px' : 'calc(100vw - 32px)',
+          maxWidth: isInitialLoad ? '360px' : '1792px',
+          height: isInitialLoad ? '72px' : '64px',
           opacity: 1,
-          padding: isInitialLoad ? '20px' : '0',
+          padding: '0',
           boxShadow: isInitialLoad
             ? `0 -8px 24px 0 ${isDark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.18)'}, -8px 0 24px 0 rgba(0,0,0,0.10), 8px 0 24px 0 rgba(0,0,0,0.10), inset 0 0 20px ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`
             : `0 -8px 24px 0 rgba(0,0,0,0.10), -8px 0 24px 0 rgba(0,0,0,0.10), 8px 0 24px 0 rgba(0,0,0,0.10), 0 0 0 2px rgba(0,0,0,0.04)`,
           animation: isInitialLoad ? 'glowPulse 2s ease-in-out infinite' : 'none',
         }}
       >
-        <div className="flex items-center justify-between p-2 px-2 h-full">
+        <div className={`flex items-center h-full ${isInitialLoad ? 'justify-center px-5' : 'justify-between p-2 px-2'}`}>
 
           {/* Logo & Site Text as Link */}
-          <Link href="/" onClick={(e) => handleNavClick(e, '/')} className="flex items-center gap-3 flex-shrink-0 group" style={{ textDecoration: 'none' }}>
+          <Link
+            href="/"
+            onClick={(e) => handleNavClick(e, '/')}
+            className={`flex items-center flex-shrink-0 group ${isInitialLoad ? 'gap-4' : 'gap-3'}`}
+            style={{ textDecoration: 'none' }}
+          >
             <Image
               src={logo}
               alt="Logo"
-              width={40}
-              height={40}
-              className="rounded-full shadow-md"
+              width={isInitialLoad ? 52 : 40}
+              height={isInitialLoad ? 52 : 40}
+              className="rounded-full shadow-md object-cover"
               priority
               loading="eager"
               fetchPriority="high"
             />
-            <h3 className={`text-l font-medium select-none accent-hover transition ${isActive('') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`}>Parth Gadekar</h3>
+            <h3 className={`${isInitialLoad ? 'text-2xl' : 'text-l'} font-medium leading-none select-none accent-hover transition ${isActive('') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`}>Parth Gadekar</h3>
           </Link>
 
           {/* Desktop Navbar - Center */}
