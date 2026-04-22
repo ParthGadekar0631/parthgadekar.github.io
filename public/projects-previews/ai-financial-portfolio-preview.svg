@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#0b1020"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#60a5fa"/>
+  <text x="110" y="150" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">AI-Powered Financial Portfolio Optimization</text>
+  <text x="110" y="205" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Python • ML • Finance • Optimization</text>
+  <rect x="110" y="270" width="980" height="320" rx="24" fill="#0f172a" stroke="#22c55e"/>
+  <polyline points="160,500 250,470 340,420 430,445 520,380 610,355 700,332 790,305 880,280 980,250" fill="none" stroke="#60a5fa" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M160 530 C250 485, 340 520, 430 470 C520 420, 610 452, 700 398 C790 344, 880 380, 980 315" fill="none" stroke="#22c55e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  <rect x="170" y="315" width="180" height="52" rx="18" fill="#172033" stroke="#60a5fa"/><text x="230" y="348" fill="#fff" font-size="24" font-family="Segoe UI, Arial">Finance</text>
+  <rect x="380" y="315" width="150" height="52" rx="18" fill="#172033" stroke="#8b5cf6"/><text x="435" y="348" fill="#fff" font-size="24" font-family="Segoe UI, Arial">ML</text>
+  <rect x="560" y="315" width="210" height="52" rx="18" fill="#172033" stroke="#f59e0b"/><text x="616" y="348" fill="#fff" font-size="24" font-family="Segoe UI, Arial">Allocation</text>
+  <text x="110" y="665" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Portfolio scenarios • risk curves • optimization-aware financial strategy</text>
+</svg>

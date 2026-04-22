@@ -123,6 +123,7 @@ export default function Navbar() {
           >
             <nav className="flex flex-col lg:flex-row justify-center gap-8">
               <Link href="/about" className={`accent-hover transition ${isActive('/about') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/about')}>About</Link>
+              <Link href="/work-experience" className={`accent-hover transition ${isActive('/work-experience') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/work-experience')}>Work Experience</Link>
               <Link href="/projects" className={`accent-hover transition ${isActive('/projects') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/projects')}>Projects</Link>
               <Link href="/credentials" className={`accent-hover transition ${isActive('/credentials') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/credentials')}>Credentials</Link>
               <Link href="/contact" className={`accent-hover transition ${isActive('/contact') ? 'font-bold' : 'font-medium'} ${isDark ? 'dark' : 'text-black'}`} onClick={(e) => handleNavClick(e, '/contact')}>Contact</Link>
@@ -202,6 +203,13 @@ export default function Navbar() {
               className={`accent-hover transition text-2xl ${isActive('/about') ? 'font-bold' : 'font-medium'} text-white`}
             >
               About
+            </a>
+            <a
+              href="/work-experience"
+              onClick={(e) => { setMenuOpen(false); handleNavClick(e, '/work-experience'); }}
+              className={`accent-hover transition text-2xl ${isActive('/work-experience') ? 'font-bold' : 'font-medium'} text-white`}
+            >
+              Work Experience
             </a>
             <a
               href="/projects"

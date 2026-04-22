@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#0b1020"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#22c55e"/>
+  <text x="110" y="150" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">Algorithmic Trading System</text>
+  <text x="110" y="205" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Python • Trading • Signals • Strategy</text>
+  <rect x="110" y="270" width="980" height="320" rx="24" fill="#0f172a" stroke="#60a5fa"/>
+  <polyline points="150,495 230,450 310,470 390,390 470,420 550,360 630,385 710,320 790,352 870,290 950,315 1030,250" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="150,530 230,520 310,500 390,485 470,455 550,435 630,415 710,395 790,380 870,360 950,340 1030,322" fill="none" stroke="#ef4444" stroke-width="6" stroke-dasharray="16 12"/>
+  <text x="110" y="665" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Signal curves • price action • strategy-driven market monitoring</text>
+</svg>

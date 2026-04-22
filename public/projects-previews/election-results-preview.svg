@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#08111f"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#60a5fa"/>
+  <text x="110" y="150" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">Election Results Monitoring System</text>
+  <text x="110" y="205" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Python • BeautifulSoup • Selenium • Automation</text>
+
+  <rect x="100" y="270" width="440" height="310" rx="26" fill="#0f172a" stroke="#2563eb"/>
+  <text x="140" y="325" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Polling Snapshot</text>
+  <line x1="150" y1="515" x2="490" y2="515" stroke="#334155" stroke-width="6"/>
+  <rect x="175" y="405" width="68" height="110" rx="16" fill="#60a5fa"/>
+  <rect x="280" y="355" width="68" height="160" rx="16" fill="#818cf8"/>
+  <rect x="385" y="315" width="68" height="200" rx="16" fill="#f59e0b"/>
+  <text x="186" y="555" fill="#cbd5e1" font-size="24" font-family="Segoe UI, Arial">A</text>
+  <text x="292" y="555" fill="#cbd5e1" font-size="24" font-family="Segoe UI, Arial">B</text>
+  <text x="397" y="555" fill="#cbd5e1" font-size="24" font-family="Segoe UI, Arial">C</text>
+
+  <rect x="600" y="270" width="480" height="310" rx="26" fill="#0f172a" stroke="#8b5cf6"/>
+  <text x="640" y="325" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Live Result Updates</text>
+  <polyline points="660,490 730,440 800,455 870,390 940,405 1010,345" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="660" cy="490" r="10" fill="#22c55e"/>
+  <circle cx="730" cy="440" r="10" fill="#22c55e"/>
+  <circle cx="800" cy="455" r="10" fill="#22c55e"/>
+  <circle cx="870" cy="390" r="10" fill="#22c55e"/>
+  <circle cx="940" cy="405" r="10" fill="#22c55e"/>
+  <circle cx="1010" cy="345" r="10" fill="#22c55e"/>
+  <rect x="660" y="360" width="180" height="52" rx="18" fill="#172033" stroke="#60a5fa"/>
+  <text x="694" y="393" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Scraping</text>
+  <rect x="858" y="360" width="180" height="52" rx="18" fill="#172033" stroke="#f59e0b"/>
+  <text x="883" y="393" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Automation</text>
+
+  <text x="110" y="650" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Polling charts • Update tracking • Result collection automation</text>
+</svg>

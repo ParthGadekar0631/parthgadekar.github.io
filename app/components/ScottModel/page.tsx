@@ -8,7 +8,7 @@ import { useTheme } from 'next-themes';
 
 function FloatingModel({ children }: { children: React.ReactNode }) {
     return (
-        <group position={[0, -1, 1]}>
+        <group position={[0, -0.2, 1]}>
             {children}
         </group>
     );
@@ -32,7 +32,7 @@ function ProfilePhotoScene({ currentAzimuth }: { currentAzimuth: number }) {
                         <circleGeometry args={[1, 64]} />
                         <meshStandardMaterial color="#2563eb" transparent opacity={0.14} />
                     </mesh>
-                    <Html transform sprite position={[0, -0.05, 0.25]} distanceFactor={1.55}>
+                    <Html transform sprite position={[0, 0.45, 0.25]} distanceFactor={1.55}>
                         <div
                             style={{
                                 width: 320,

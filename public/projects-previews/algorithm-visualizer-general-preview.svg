@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#0b1020"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#60a5fa"/>
+  <text x="110" y="150" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">Algorithm Visualizer</text>
+  <text x="110" y="205" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Python • Algorithms • Systems • Visualization</text>
+  <rect x="110" y="270" width="980" height="320" rx="24" fill="#0f172a" stroke="#818cf8"/>
+  <rect x="180" y="430" width="90" height="120" rx="16" fill="#60a5fa"/>
+  <rect x="300" y="350" width="90" height="200" rx="16" fill="#22c55e"/>
+  <rect x="420" y="455" width="90" height="95" rx="16" fill="#f59e0b"/>
+  <rect x="540" y="315" width="90" height="235" rx="16" fill="#f97316"/>
+  <rect x="660" y="385" width="90" height="165" rx="16" fill="#a78bfa"/>
+  <rect x="780" y="300" width="90" height="250" rx="16" fill="#38bdf8"/>
+  <rect x="900" y="340" width="90" height="210" rx="16" fill="#34d399"/>
+  <text x="110" y="665" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Sorting states • bar transitions • algorithm-friendly system visualization</text>
+</svg>

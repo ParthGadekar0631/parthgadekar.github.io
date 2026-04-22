@@ -1,0 +1,382 @@
+.root {
+  --scale: 0.1;
+  --space: 8vmin;
+  color: hsl(0, 0%, 95%);
+  background-color: hsl(5, 15%, 5%);
+  font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+  font-family: inherit;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion) {
+  .root {
+    --scale: 0;
+  }
+}
+
+.root * {
+  box-sizing: border-box;
+}
+
+.hero {
+  min-height: 48vh;
+  padding: 7rem clamp(1.25rem, 4vw, 4rem) 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.95;
+  font-weight: 700;
+}
+
+.heroSubtitle {
+  margin: 0;
+  max-width: 68ch;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.section {
+  transform-origin: center top;
+  transform: scaleY(calc(1 - var(--scale)));
+}
+
+.section > * {
+  transform-origin: center top;
+  transform: scaleY(calc(1 / (1 - var(--scale))));
+  opacity: 0.98;
+}
+
+.imageContainer {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.certificateBackdrop {
+  position: absolute;
+  inset: 0;
+  background-image: var(--certificate-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: saturate(0.9) contrast(0.92) brightness(0.7);
+  transform: scale(1.04);
+}
+
+.companyStage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 8rem 2rem 5rem;
+  background:
+    radial-gradient(circle at 18% 24%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 26%),
+    radial-gradient(circle at 82% 72%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 28%),
+    linear-gradient(180deg, rgba(7, 9, 20, 0.54), rgba(7, 9, 20, 0.72));
+}
+
+.brandGlow {
+  position: absolute;
+  inset: auto;
+  width: min(52vw, 620px);
+  height: min(52vw, 620px);
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 36%, transparent), transparent 68%);
+  filter: blur(34px);
+  opacity: 0.9;
+}
+
+.brandShell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.35rem;
+}
+
+.brandBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(180px, 22vw, 260px);
+  height: clamp(180px, 22vw, 260px);
+  border-radius: 2rem;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.heroLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.brandMeta {
+  text-align: center;
+}
+
+.brandEyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.56);
+}
+
+.brandLabel {
+  margin: 0;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.02;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.stageTags {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  max-width: 54rem;
+}
+
+.stageTag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.82rem 1.12rem;
+  border-radius: 999px;
+  font-size: 0.94rem;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, rgba(255, 255, 255, 0.12));
+  backdrop-filter: blur(10px);
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 6, 18, 0.22) 0%, rgba(5, 6, 18, 0.5) 48%, rgba(5, 6, 18, 0.92) 100%);
+}
+
+.content {
+  position: relative;
+  margin: -48vh auto 0;
+  padding: var(--space);
+  max-width: min(68rem, calc(100% - 2rem));
+  width: calc(100% - var(--space));
+  border-radius: 1.6rem;
+  color: inherit;
+}
+
+.cardHeader {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.logoWrap {
+  width: 86px;
+  height: 86px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem;
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.meta {
+  min-width: 0;
+}
+
+.role {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.company {
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.05rem, 1rem + 0.4vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.duration {
+  margin: 0.85rem 0 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.summary {
+  margin: 1.5rem 0 0;
+  max-width: 62ch;
+  font-size: clamp(1rem, 0.98rem + 0.25vw, 1.14rem);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.detailCard {
+  border-radius: 1.25rem;
+  padding: 1.15rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detailTitle {
+  margin: 0 0 0.9rem;
+  font-size: 0.86rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.highlight {
+  position: relative;
+  padding-left: 1.15rem;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.highlight::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.techWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tech {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  background: rgba(13, 16, 31, 0.66);
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, rgba(255, 255, 255, 0.08));
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.3rem;
+  padding: 0.95rem 1.2rem;
+  border-radius: 0.95rem;
+  text-decoration: none;
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content {
+    margin-top: -42vh;
+    width: calc(100% - 1.25rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 40vh;
+    padding-top: 6rem;
+  }
+
+  .companyStage {
+    padding: 7rem 1rem 4rem;
+  }
+
+  .brandBadge {
+    width: 158px;
+    height: 158px;
+    border-radius: 1.4rem;
+  }
+
+  .stageTags {
+    gap: 0.7rem;
+  }
+
+  .stageTag {
+    padding: 0.7rem 0.95rem;
+    font-size: 0.88rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+  }
+
+  .logoWrap {
+    width: 74px;
+    height: 74px;
+  }
+
+  .content {
+    padding: 1.3rem;
+  }
+}

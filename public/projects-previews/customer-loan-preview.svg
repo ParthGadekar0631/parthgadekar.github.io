@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#0b1020"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#818cf8"/>
+  <text x="110" y="150" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">Customer Loan Default Risk Analysis</text>
+  <text x="110" y="205" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Python • Risk Modeling • Finance • Analytics</text>
+  <rect x="110" y="270" width="480" height="310" rx="26" fill="#0f172a" stroke="#60a5fa"/>
+  <text x="150" y="325" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Risk Factors</text>
+  <rect x="160" y="370" width="110" height="120" rx="18" fill="#1f2a44" stroke="#475569"/><text x="188" y="438" fill="#fff" font-size="28" font-family="Segoe UI, Arial" font-weight="700">ML</text>
+  <rect x="290" y="370" width="110" height="120" rx="18" fill="#1f2a44" stroke="#475569"/><text x="316" y="438" fill="#fff" font-size="28" font-family="Segoe UI, Arial" font-weight="700">Risk</text>
+  <rect x="420" y="370" width="110" height="120" rx="18" fill="#1f2a44" stroke="#475569"/><text x="441" y="438" fill="#fff" font-size="28" font-family="Segoe UI, Arial" font-weight="700">Loan</text>
+  <rect x="650" y="270" width="440" height="310" rx="26" fill="#0f172a" stroke="#8b5cf6"/>
+  <text x="690" y="325" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Default Trend</text>
+  <polyline points="710,505 770,470 830,485 890,430 950,448 1010,392" fill="none" stroke="#f59e0b" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="710" cy="505" r="10" fill="#f59e0b"/><circle cx="770" cy="470" r="10" fill="#f59e0b"/><circle cx="830" cy="485" r="10" fill="#f59e0b"/><circle cx="890" cy="430" r="10" fill="#f59e0b"/><circle cx="950" cy="448" r="10" fill="#f59e0b"/><circle cx="1010" cy="392" r="10" fill="#f59e0b"/>
+  <text x="110" y="665" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Feature analysis • default scoring • finance-facing risk dashboards</text>
+</svg>

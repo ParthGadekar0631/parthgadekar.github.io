@@ -12,13 +12,13 @@ import Skills1 from './Skills/page1';
 function getColors(isDark: boolean) {
     if (isDark) {
         return {
-            primary: 'bg-purple-500',
-            secondary: 'bg-violet-950'
+            primary: 'bg-red-600',
+            secondary: 'bg-amber-500'
         };
     } else {
         return {
-            primary: 'bg-yellow-200',
-            secondary: 'bg-blue-950'
+            primary: 'bg-orange-200',
+            secondary: 'bg-emerald-200'
         };
     }
 }

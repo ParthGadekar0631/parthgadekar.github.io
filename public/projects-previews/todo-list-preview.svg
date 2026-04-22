@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#0b1020"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#60a5fa"/>
+  <text x="110" y="150" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">To Do List</text>
+  <text x="110" y="205" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">CSS • Productivity • Tasks • Full-Stack</text>
+  <rect x="110" y="270" width="980" height="320" rx="24" fill="#0f172a" stroke="#22c55e"/>
+  <rect x="250" y="315" width="700" height="230" rx="24" fill="#172033" stroke="#a78bfa"/>
+  <rect x="310" y="360" width="36" height="36" rx="10" fill="#22c55e"/><rect x="375" y="368" width="280" height="18" rx="9" fill="#e5e7eb"/>
+  <rect x="310" y="425" width="36" height="36" rx="10" fill="#60a5fa"/><rect x="375" y="433" width="360" height="18" rx="9" fill="#cbd5e1"/>
+  <rect x="310" y="490" width="36" height="36" rx="10" fill="#f59e0b"/><rect x="375" y="498" width="220" height="18" rx="9" fill="#94a3b8"/>
+  <text x="110" y="665" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Task items • checklist flow • lightweight productivity interface</text>
+</svg>

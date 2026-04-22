@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#0b1020"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#22c55e"/>
+  <text x="110" y="150" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">Blockchain Voting System</text>
+  <text x="110" y="205" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Blockchain • JavaScript • Voting • Verification</text>
+  <rect x="110" y="270" width="980" height="320" rx="24" fill="#0f172a" stroke="#60a5fa"/>
+  <rect x="180" y="345" width="190" height="150" rx="24" fill="#172033" stroke="#60a5fa"/>
+  <path d="M240 405 L275 440 L330 375" fill="none" stroke="#22c55e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="460" y="355" width="130" height="130" rx="22" fill="#172033" stroke="#a78bfa"/>
+  <rect x="620" y="355" width="130" height="130" rx="22" fill="#172033" stroke="#a78bfa"/>
+  <rect x="780" y="355" width="130" height="130" rx="22" fill="#172033" stroke="#a78bfa"/>
+  <path d="M370 420 L460 420 M590 420 L620 420 M750 420 L780 420 M910 420 L995 420" stroke="#475569" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="1025" cy="420" r="30" fill="#f59e0b"/>
+  <text x="1012" y="431" fill="#111827" font-size="28" font-family="Segoe UI, Arial" font-weight="700">#</text>
+  <text x="110" y="665" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Ballot validation • linked blocks • tamper-aware voting workflow</text>
+</svg>

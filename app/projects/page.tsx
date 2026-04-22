@@ -31,6 +31,18 @@ type Enriched = {
 const GITHUB_REPOS_ENDPOINT =
   "https://api.github.com/users/ParthGadekar0631/repos?per_page=100&sort=updated";
 
+const EXCLUDED_REPO_NAMES = new Set([
+  "parthgadekar.github.io",
+  "parthgadekar0631",
+  "aai-595_homeworks",
+  "cs-513_kdd_homeworks",
+  "certificates",
+  "hacktoberfest2021",
+  "frontend-nanodegree-resume",
+  "oep-frontend",
+  "security_hacking_scripts",
+]);
+
 const projectPreviewMap: Record<string, string | undefined> = {
   "f1-telemetry": images.musixPreview,
   "distributed-pipeline": images.movizPreview,
@@ -40,7 +52,74 @@ const projectPreviewMap: Record<string, string | undefined> = {
   "medication-tracker": images.forestWatchPreview,
   "spotify-data-warehouse": images.universityRecruitmentPreview,
   "air-canvas": images.bookRecommenderPreview,
+  "election-results-monitoring-system": images.electionResultsPreview,
+  "algorithm-visualizer-cpp": images.algorithmVisualizerPreview,
+  "customer-loan-default-risk-analysis": images.customerLoanPreview,
+  "anxiety-attack-detection-system": images.anxietyAttackPreview,
+  "point-of-sale-system": images.pointOfSalePreview,
+  "gold-price-prediction": images.goldPricePreview,
+  "rent-it": images.rentItPreview,
+  "enterprise-network-threat-assessment": images.enterpriseThreatPreview,
+  "client-segmentation-analytics": images.clientSegmentationPreview,
+  "ai-financial-portfolio-optimization": images.aiFinancialPortfolioPreview,
 };
+
+const repoPreviewMap: Record<string, string | undefined> = {
+  "virtualartguide-using-qr": images.virtualArtGuidePreview,
+  "threat-asset-tool": images.threatAssetToolPreview,
+  "algorithmic-trading-system": images.algorithmicTradingPreview,
+  "generative-ai-for-personalized-healthcare-recommendations": images.generativeHealthcarePreview,
+  "catering-reservation-and-ordering-system": images.cateringReservationPreview,
+  "tic-tac-toe": images.ticTacToePreview,
+  "to-do-list": images.todoListPreview,
+  "algorithm-visualizer": images.algorithmVisualizerRepoPreview,
+  "algo-visualizer": images.algorithmVisualizerRepoPreview,
+  "sorting-algo-visualizer": images.sortingAlgoPreview,
+  "corporate-bankruptcy-prediction-system": images.corporateBankruptcyPreview,
+  "simplified-search-engine": images.simplifiedSearchPreview,
+  "credit-card-fraud-detection": images.creditCardFraudPreview,
+  "heart-disease-prediction": images.heartDiseasePreview,
+  "heart_disease_prediction": images.heartDiseasePreview,
+  "blockchain-voting-system": images.blockchainVotingPreview,
+};
+
+function normalizePreviewKey(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+function buildSource(project: Partial<Project>, repo?: GitHubRepo | null): string {
+  return [
+    project.title,
+    project.description,
+    project.category,
+    project.section,
+    ...(project.tags ?? []),
+    ...(project.tech ?? []),
+    repo?.name,
+    repo?.description ?? "",
+    ...(repo?.topics ?? []),
+    repo?.language ?? "",
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+}
+
+function shouldIncludeRepo(repo: GitHubRepo): boolean {
+  const name = repo.name.toLowerCase();
+  const source = `${repo.name} ${repo.description ?? ""} ${(repo.topics ?? []).join(" ")}`.toLowerCase();
+
+  if (EXCLUDED_REPO_NAMES.has(name)) return false;
+  if (name.includes("homework")) return false;
+  if (name.includes("github.io")) return false;
+  if (source.includes("nanodegree resume")) return false;
+  if (source.includes("certificate")) return false;
+  if (source.includes("hacktoberfest")) return false;
+  if (source.includes("oep frontend")) return false;
+  if (source.includes("security hacking scripts")) return false;
+
+  return true;
+}
 
 function getTitleSizingClasses(title: string): string {
   const length = title.trim().length;
@@ -68,38 +147,48 @@ function getDescriptionSizingClasses(description: string): string {
 
 function inferProjectRoles(project: Project): string[] {
   const roles = new Set<string>();
+  const source = buildSource(project);
   const tags = (project.tags ?? []).map((tag) => tag.toLowerCase());
-  const title = project.title.toLowerCase();
 
-  if (tags.some((tag) => ["ai", "llm", "transformers"].includes(tag) || tag.includes("rag"))) {
+  if (source.includes("ai") || source.includes("machine learning") || source.includes("ml")) {
     roles.add("AI/ML");
   }
-  if (tags.some((tag) => tag.includes("assistant") || tag.includes("agentic"))) {
-    roles.add("Assistant/Agentic");
-  }
-  if (tags.some((tag) => tag.includes("recommender"))) {
+  if (source.includes("recommender")) {
     roles.add("Recommender Systems");
   }
-  if (tags.some((tag) => tag.includes("nlp") || tag.includes("sentiment"))) {
+  if (source.includes("nlp") || source.includes("sentiment")) {
     roles.add("NLP");
   }
-  if (tags.some((tag) => tag.includes("computer vision") || tag.includes("vision"))) {
+  if (source.includes("computer vision") || source.includes("vision")) {
     roles.add("Computer Vision");
   }
-  if (tags.some((tag) => tag.includes("iot"))) {
-    roles.add("IoT/Embedded");
+  if (
+    source.includes("etl") ||
+    source.includes("pipeline") ||
+    source.includes("warehouse") ||
+    source.includes("analytics") ||
+    source.includes("dashboard") ||
+    source.includes("scrap")
+  ) {
+    roles.add("Data/Analytics");
   }
-  if (tags.some((tag) => tag.includes("etl") || tag.includes("scraping") || tag.includes("automation"))) {
-    roles.add("Data/ETL");
-  }
-  if (tags.some((tag) => tag.includes("full-stack") || tag.includes("full stack"))) {
+  if (
+    source.includes("full-stack") ||
+    source.includes("full stack") ||
+    source.includes("frontend") ||
+    source.includes("backend") ||
+    source.includes("web")
+  ) {
     roles.add("Full-Stack");
   }
-  if (tags.some((tag) => tag.includes("lms")) || title.includes("lms")) {
-    roles.add("ERP");
+  if (source.includes("security") || source.includes("threat") || source.includes("cyber")) {
+    roles.add("Security");
   }
-  if (roles.size === 0 && (title.includes("ai") || title.includes("assistant"))) {
-    roles.add("AI/ML");
+  if (source.includes("blockchain")) {
+    roles.add("Blockchain");
+  }
+  if (roles.size === 0) {
+    roles.add("Software");
   }
 
   return Array.from(roles);
@@ -145,74 +234,78 @@ function humanizeRepoName(name: string): string {
 }
 
 function inferSectionFromRepo(repo: GitHubRepo): string {
-  const source = `${repo.name} ${repo.description ?? ""} ${(repo.topics ?? []).join(" ")} ${repo.language ?? ""}`.toLowerCase();
+  return inferSection(buildAutoProject(repo), repo);
+}
 
+function inferSection(project: Partial<Project>, repo?: GitHubRepo | null): string {
+  const source = buildSource(project, repo);
+
+  if (source.includes("blockchain")) return "Blockchain";
+  if (source.includes("security") || source.includes("threat") || source.includes("cyber")) {
+    return "Cybersecurity";
+  }
   if (
-    [
-      "ai",
-      "ml",
-      "machine learning",
-      "prediction",
-      "detector",
-      "vision",
-      "recommend",
-      "portfolio optimization",
-      "healthcare",
-      "fraud",
-      "bankruptcy",
-      "disease",
-      "heart",
-    ].some((token) => source.includes(token))
+    source.includes("ai") ||
+    source.includes("machine learning") ||
+    source.includes("ml") ||
+    source.includes("vision") ||
+    source.includes("prediction") ||
+    source.includes("recommend")
   ) {
     return "AI & ML";
   }
-
   if (
-    [
-      "data",
-      "pipeline",
-      "analytics",
-      "dashboard",
-      "warehouse",
-      "sql",
-      "etl",
-      "kdd",
-      "segmentation",
-      "scraper",
-      "feedback",
-      "results",
-    ].some((token) => source.includes(token))
+    source.includes("data") ||
+    source.includes("pipeline") ||
+    source.includes("analytics") ||
+    source.includes("warehouse") ||
+    source.includes("dashboard") ||
+    source.includes("etl") ||
+    source.includes("sql") ||
+    source.includes("segmentation") ||
+    source.includes("scraper")
   ) {
-    return "Data Science";
+    return "Data Engineering & Analytics";
   }
-
+  if (
+    source.includes("frontend") ||
+    source.includes("website") ||
+    source.includes("web") ||
+    source.includes("react") ||
+    source.includes("javascript") ||
+    source.includes("html")
+  ) {
+    return "Web & Frontend";
+  }
   return "Full-Stack & Systems";
 }
 
-function inferCategoryFromRepo(repo: GitHubRepo, section: string): string {
-  const source = `${repo.name} ${repo.description ?? ""}`.toLowerCase();
+function inferCategory(project: Partial<Project>, section: string, repo?: GitHubRepo | null): string {
+  const source = buildSource(project, repo);
 
   if (section === "AI & ML") {
     if (source.includes("vision")) return "Computer Vision / AI";
     if (source.includes("recommend")) return "Recommender Systems / AI";
-    if (source.includes("prediction") || source.includes("forecast")) return "ML / Forecasting";
-    if (source.includes("health")) return "AI / Healthcare";
+    if (source.includes("forecast") || source.includes("prediction")) return "Forecasting / ML";
+    if (source.includes("health")) return "Healthcare / AI";
+    if (source.includes("finance") || source.includes("loan") || source.includes("portfolio")) return "Finance / ML";
     return "AI / Machine Learning";
   }
 
-  if (section === "Data Science") {
-    if (source.includes("warehouse")) return "Warehouse / Analytics / BI";
-    if (source.includes("dashboard")) return "Dashboard / Analytics / BI";
-    if (source.includes("pipeline")) return "Data Pipeline / ETL / Analytics";
-    if (source.includes("scraper") || source.includes("monitor")) return "Automation / Data Collection";
-    return "Data Science / Analytics";
+  if (section === "Data Engineering & Analytics") {
+    if (source.includes("warehouse")) return "Data Warehouse / BI";
+    if (source.includes("dashboard")) return "Dashboard / Analytics";
+    if (source.includes("pipeline") || source.includes("etl")) return "Data Pipeline / ETL";
+    if (source.includes("scraper") || source.includes("monitor")) return "Data Collection / Automation";
+    return "Data Engineering / Analytics";
   }
 
-  if (source.includes("blockchain")) return "Blockchain / Full-Stack / Security";
-  if (source.includes("telemetry")) return "Realtime / Telemetry / Full-Stack";
-  if (source.includes("network") || source.includes("security")) return "Cybersecurity / Systems";
-  if (source.includes("frontend") || source.includes("website")) return "Web / Frontend";
+  if (section === "Blockchain") return "Blockchain / Full-Stack";
+  if (section === "Cybersecurity") return "Cybersecurity / Systems";
+  if (section === "Web & Frontend") return source.includes("frontend") ? "Web / Frontend" : "Web Application";
+  if (source.includes("telemetry")) return "Realtime / Telemetry / Systems";
   if (source.includes("java")) return "Java / Systems";
+  if (source.includes("retail") || source.includes("reservation") || source.includes("commerce")) return "Application / Full-Stack";
   return "Full-Stack / Systems";
 }
 
@@ -262,12 +355,17 @@ function buildFallbackDescription(repo: GitHubRepo, category: string): string {
 }
 
 function buildAutoProject(repo: GitHubRepo): Project {
-  const section = inferSectionFromRepo(repo);
-  const category = inferCategoryFromRepo(repo, section);
-
-  return {
+  const projectBase: Project = {
     id: `github-${repo.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
     title: humanizeRepoName(repo.name),
+    description: "",
+    githubRepo: repo.full_name,
+  };
+  const section = inferSection(projectBase, repo);
+  const category = inferCategory(projectBase, section, repo);
+
+  return {
+    ...projectBase,
     description: buildFallbackDescription(repo, category),
     tags: inferTagsFromRepo(repo, section),
     githubRepo: repo.full_name,
@@ -286,11 +384,20 @@ function buildAutoProject(repo: GitHubRepo): Project {
 function buildInitialItems(): Enriched[] {
   return projects
     .filter((project) => project.githubRepo)
-    .map((project) => ({ project, roles: inferProjectRoles(project), gh: null as GitHubRepo | null }));
+    .map((project) => {
+      const normalizedSection = inferSection(project, null);
+      const normalizedProject = {
+        ...project,
+        section: normalizedSection,
+        category: inferCategory(project, normalizedSection, null),
+      };
+      return { project: normalizedProject, roles: inferProjectRoles(normalizedProject), gh: null as GitHubRepo | null };
+    });
 }
 
 function mergeProjects(curatedItems: Enriched[], repos: GitHubRepo[]): Enriched[] {
-  const repoMap = new Map(repos.map((repo) => [repo.full_name.toLowerCase(), repo]));
+  const filteredRepos = repos.filter(shouldIncludeRepo);
+  const repoMap = new Map(filteredRepos.map((repo) => [repo.full_name.toLowerCase(), repo]));
   const curatedRepoNames = new Set<string>();
 
   const mergedCurated = curatedItems.map((item) => {
@@ -299,13 +406,22 @@ function mergeProjects(curatedItems: Enriched[], repos: GitHubRepo[]): Enriched[
       curatedRepoNames.add(repoKey);
     }
 
+    const section = inferSection(item.project, repoKey ? repoMap.get(repoKey) ?? null : null);
+    const normalizedProject = {
+      ...item.project,
+      section,
+      category: inferCategory(item.project, section, repoKey ? repoMap.get(repoKey) ?? null : null),
+    };
+
     return {
       ...item,
+      project: normalizedProject,
+      roles: inferProjectRoles(normalizedProject),
       gh: repoKey ? repoMap.get(repoKey) ?? item.gh : item.gh,
     };
   });
 
-  const importedRepos = repos
+  const importedRepos = filteredRepos
     .filter((repo) => !curatedRepoNames.has(repo.full_name.toLowerCase()))
     .map((repo) => {
       const project = buildAutoProject(repo);
@@ -396,12 +512,12 @@ function ProjectsClient({ items: initialItems }: { items: Enriched[] }) {
     let isMounted = true;
     requestAnimationFrame(() => {
       if (isMounted) setMounted(true);
-      const blueShades = ["bg-blue-500", "bg-blue-600", "bg-cyan-500", "bg-indigo-500"];
-      const purpleShades = ["bg-purple-500", "bg-purple-600", "bg-violet-500", "bg-pink-500"];
+      const warmPrimaryShades = ["bg-red-500", "bg-rose-500", "bg-orange-500", "bg-amber-500"];
+      const warmSecondaryShades = ["bg-emerald-500", "bg-lime-500", "bg-yellow-500", "bg-orange-400"];
       if (isMounted) {
         setColors({
-          primary: blueShades[Math.floor(Math.random() * blueShades.length)],
-          secondary: purpleShades[Math.floor(Math.random() * purpleShades.length)],
+          primary: warmPrimaryShades[Math.floor(Math.random() * warmPrimaryShades.length)],
+          secondary: warmSecondaryShades[Math.floor(Math.random() * warmSecondaryShades.length)],
         });
       }
     });
@@ -510,7 +626,7 @@ function ProjectPreview({
     return (
       <div
         className={`relative overflow-hidden rounded-2xl border p-4 ${isDark ? "border-white/10 bg-black/35" : "border-black/10 bg-white/60"}`}
-        style={{ minHeight: "200px" }}
+        style={{ height: "220px" }}
       >
         <div
           className="absolute inset-0 opacity-90"
@@ -522,29 +638,42 @@ function ProjectPreview({
     );
   }
 
+  const primary = tags?.[0] ?? "Project";
+  const secondary = tags?.[1] ?? "Engineering";
+  const tertiary = tags?.[2] ?? "Build";
+
   return (
     <div
       className={`relative overflow-hidden rounded-2xl border p-5 ${isDark ? "border-white/10 bg-slate-950/60" : "border-black/10 bg-slate-100/80"}`}
-      style={{ minHeight: "200px" }}
+      style={{ height: "220px" }}
     >
-      <div className="absolute inset-0 opacity-60" style={{ background: "linear-gradient(135deg, rgba(59,130,246,0.18), rgba(168,85,247,0.18))" }} />
-      <div className="relative flex h-full flex-col justify-between">
+      <div className="absolute inset-0 opacity-70" style={{ background: "linear-gradient(135deg, rgba(59,130,246,0.16), rgba(168,85,247,0.18))" }} />
+      <div className="relative flex h-full flex-col">
         <div>
-          <div className={`text-lg font-semibold leading-tight ${isDark ? "text-white" : "text-gray-900"}`}>{title}</div>
+          <div className={`line-clamp-2 text-lg font-semibold leading-tight ${isDark ? "text-white" : "text-gray-900"}`}>{title}</div>
           {category ? <div className={`mt-2 text-xs font-medium ${isDark ? "text-blue-300" : "text-blue-700"}`}>{category}</div> : null}
         </div>
-        {tags?.length ? (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {tags.slice(0, 3).map((tag) => (
+        <div className="mt-5 grid grid-cols-3 gap-3">
+          {[primary, secondary, tertiary].map((chip, index) => (
+            <div
+              key={`${chip}-${index}`}
+              className={`flex min-h-[76px] items-center justify-center rounded-2xl border px-3 py-4 text-center text-[11px] font-semibold leading-snug ${isDark ? "border-white/10 bg-white/5 text-white/85" : "border-black/10 bg-white/70 text-gray-800"}`}
+            >
+              {chip}
+            </div>
+          ))}
+        </div>
+        <div className={`mt-auto rounded-2xl border px-4 py-3 ${isDark ? "border-white/10 bg-black/20" : "border-black/10 bg-white/60"}`}>
+          <div className="flex h-16 items-end gap-2">
+            {[28, 44, 36, 58, 42, 68].map((height, index) => (
               <span
-                key={tag}
-                className={`inline-flex rounded-full px-3 py-1 text-[11px] font-semibold ${isDark ? "bg-white/10 text-white/80" : "bg-black/10 text-gray-800"}`}
-              >
-                {tag}
-              </span>
+                key={index}
+                className={`flex-1 rounded-t-xl ${isDark ? "bg-blue-400/50" : "bg-blue-500/50"}`}
+                style={{ height: `${height}%` }}
+              />
             ))}
           </div>
-        ) : null}
+        </div>
       </div>
     </div>
   );
@@ -555,7 +684,7 @@ const ProjectCard = memo(function ProjectCard({ entry, isDark }: { entry: Enrich
   const [isHovered, setIsHovered] = useState(false);
   const learnMoreHref = project.liveUrl || gh?.homepage || gh?.html_url || (project.githubRepo ? `https://github.com/${project.githubRepo}` : "#");
   const desc = gh?.description?.trim() || project.description;
-  const previewImg = projectPreviewMap[project.id];
+  const previewImg = projectPreviewMap[project.id] ?? (gh ? repoPreviewMap[normalizePreviewKey(gh.name)] : undefined);
   const titleSizingClasses = getTitleSizingClasses(project.title);
   const descriptionSizingClasses = getDescriptionSizingClasses(desc);
 
@@ -569,14 +698,14 @@ const ProjectCard = memo(function ProjectCard({ entry, isDark }: { entry: Enrich
       `}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ width: "100%", minWidth: 0, minHeight: "560px", height: "auto", maxWidth: "460px", margin: "auto" }}
+      style={{ width: "100%", minWidth: 0, minHeight: "620px", height: "100%", maxWidth: "460px", margin: "auto" }}
     >
       <div className="flex flex-col flex-1">
         <div className="mb-4">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 flex-1 pr-2">
               <h2
-                className={`mb-1 max-w-[15ch] font-bold tracking-[-0.02em] break-words [overflow-wrap:anywhere] transition-colors duration-300 sm:max-w-[17ch] ${titleSizingClasses} ${isDark ? "text-white group-hover:text-blue-400" : "text-gray-900 group-hover:text-blue-600"}`}
+                className={`mb-1 max-w-[15ch] min-h-[112px] font-bold tracking-[-0.02em] break-words [overflow-wrap:anywhere] transition-colors duration-300 sm:max-w-[17ch] ${titleSizingClasses} ${isDark ? "text-white group-hover:text-blue-400" : "text-gray-900 group-hover:text-blue-600"}`}
               >
                 {project.title}
               </h2>
@@ -617,9 +746,9 @@ const ProjectCard = memo(function ProjectCard({ entry, isDark }: { entry: Enrich
         </div>
 
         <div className="mt-auto">
-          <p className={`${descriptionSizingClasses} ${isDark ? "text-gray-300" : "text-gray-700"}`}>{desc}</p>
+          <p className={`line-clamp-5 min-h-[152px] ${descriptionSizingClasses} ${isDark ? "text-gray-300" : "text-gray-700"}`}>{desc}</p>
           {project.tags?.length ? (
-            <div className="mt-4 flex flex-wrap items-start gap-2">
+            <div className="mt-4 flex min-h-[72px] flex-wrap items-start gap-2">
               {project.tags.map((tag) => (
                 <span
                   key={tag}

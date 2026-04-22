@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#0b1020"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#ef4444"/>
+  <text x="110" y="150" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">Enterprise Network Threat Assessment</text>
+  <text x="110" y="205" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Security • Networks • Risk Surface • Analysis</text>
+  <rect x="110" y="270" width="980" height="320" rx="24" fill="#0f172a" stroke="#8b5cf6"/>
+  <circle cx="255" cy="430" r="26" fill="#60a5fa"/><circle cx="455" cy="330" r="26" fill="#22c55e"/><circle cx="645" cy="470" r="26" fill="#f59e0b"/><circle cx="865" cy="345" r="26" fill="#ef4444"/><circle cx="1010" cy="470" r="26" fill="#a78bfa"/>
+  <path d="M255 430 L455 330 L645 470 L865 345 L1010 470" stroke="#475569" stroke-width="8" fill="none"/>
+  <path d="M770 435 L840 275 L910 435 Z" fill="#ef4444" opacity="0.85"/>
+  <text x="794" y="405" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">!</text>
+  <rect x="170" y="305" width="180" height="52" rx="18" fill="#172033" stroke="#60a5fa"/><text x="225" y="338" fill="#fff" font-size="24" font-family="Segoe UI, Arial">Security</text>
+  <rect x="380" y="305" width="180" height="52" rx="18" fill="#172033" stroke="#22c55e"/><text x="427" y="338" fill="#fff" font-size="24" font-family="Segoe UI, Arial">Network</text>
+  <rect x="590" y="305" width="180" height="52" rx="18" fill="#172033" stroke="#f59e0b"/><text x="656" y="338" fill="#fff" font-size="24" font-family="Segoe UI, Arial">Threats</text>
+  <text x="110" y="665" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Attack surfaces • node relationships • enterprise risk visibility</text>
+</svg>
