@@ -94,7 +94,7 @@ export default function AskScotty({ question }: { question: string }) {
       if (data.error) {
         addMessage({
           role: 'assistant',
-          content: "I'm having trouble responding right now. Please try again later!",
+          content: `I'm having trouble responding right now. ${data.error}`,
         });
       } else {
         addMessage({

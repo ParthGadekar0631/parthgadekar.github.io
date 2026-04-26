@@ -40,7 +40,9 @@ const EXCLUDED_REPO_NAMES = new Set([
   "hacktoberfest2021",
   "frontend-nanodegree-resume",
   "oep-frontend",
+  "oep_frontend",
   "security_hacking_scripts",
+  "security-hacking-scripts",
 ]);
 
 const projectPreviewMap: Record<string, string | undefined> = {
@@ -117,6 +119,7 @@ function shouldIncludeRepo(repo: GitHubRepo): boolean {
   if (source.includes("hacktoberfest")) return false;
   if (source.includes("oep frontend")) return false;
   if (source.includes("security hacking scripts")) return false;
+  if (source.includes("security_hacking_scripts")) return false;
 
   return true;
 }

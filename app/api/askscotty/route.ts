@@ -3,15 +3,24 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const { messages, systemPrompt } = await request.json();
+    const apiKey = process.env.OPENAI_API_KEY;
+    const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: 'Missing OPENAI_API_KEY environment variable.' },
+        { status: 500 }
+      );
+    }
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model,
         messages: [
           {
             role: 'system',
@@ -27,13 +36,29 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
+      const providerMessage =
+        data?.error?.message ||
+        data?.message ||
+        `OpenAI request failed with status ${response.status}.`;
+      console.error('AskRisksray provider error:', {
+        status: response.status,
+        model,
+        providerMessage,
+      });
       return NextResponse.json(
-        { error: 'Failed to get response from OpenAI' },
-        { status: 500 }
+        { error: providerMessage },
+        { status: response.status || 500 }
       );
     }
 
-    const message = data.choices[0].message.content;
+    const message = data?.choices?.[0]?.message?.content;
+
+    if (!message) {
+      return NextResponse.json(
+        { error: 'OpenAI returned an empty response.' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ message });
   } catch (error) {
