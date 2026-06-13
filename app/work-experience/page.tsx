@@ -6,8 +6,9 @@ import LenisProvider from "../components/LenisProvider";
 import workexperience from "@/data/workexperience";
 import styles from "./experience.module.css";
 
-const accents = ["#8b5cf6", "#38bdf8", "#f97316"];
+const accents = ["#EF4444", "#2563EB", "#10B981", "#FACC15"];
 const certificates = [
+  "/assets/associated-press-experience.svg",
   "/assets/unified-mentors-certificate.png",
   "/assets/agropeeper-certificate.png",
   "/assets/dezignolics-certificate.jpg",
@@ -25,10 +26,10 @@ export default function WorkExperiencePage() {
         <p className={styles.eyebrow}>Professional timeline</p>
         <h1 className={styles.heroTitle}>Work Experience</h1>
         <p className={styles.heroSubtitle}>
-          Three internships across web engineering, data engineering, and
-          information systems work. Each role sharpened a different part of my
-          approach: building reliable flows, improving data quality, and
-          turning manual work into repeatable systems.
+          Experience across newsroom automation, web engineering, data
+          engineering, and information systems work. Each role sharpened a
+          different part of my approach: building reliable flows, improving
+          data quality, and turning manual processes into repeatable systems.
         </p>
       </header>
 

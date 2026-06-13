@@ -26,11 +26,11 @@ function ProfilePhotoScene({ currentAzimuth }: { currentAzimuth: number }) {
                 <group>
                     <mesh position={[glowX, 0.15, -0.5]} scale={[4.4, 4.4, 1]}>
                         <circleGeometry args={[1, 64]} />
-                        <meshStandardMaterial color="#7c3aed" transparent opacity={0.18} />
+                        <meshStandardMaterial color="#2563EB" transparent opacity={0.18} />
                     </mesh>
                     <mesh position={[-glowX * 0.55, -0.1, -0.35]} scale={[3.55, 3.55, 1]}>
                         <circleGeometry args={[1, 64]} />
-                        <meshStandardMaterial color="#2563eb" transparent opacity={0.14} />
+                        <meshStandardMaterial color="#10B981" transparent opacity={0.16} />
                     </mesh>
                     <Html transform sprite position={[0, 0.45, 0.25]} distanceFactor={1.55}>
                         <div
@@ -53,7 +53,7 @@ function ProfilePhotoScene({ currentAzimuth }: { currentAzimuth: number }) {
                                     position: "absolute",
                                     inset: 0,
                                     background:
-                                        "radial-gradient(circle at 20% 18%, rgba(59,130,246,0.22), transparent 36%), radial-gradient(circle at 80% 82%, rgba(168,85,247,0.22), transparent 34%)",
+                                        "radial-gradient(circle at 20% 18%, rgba(37,99,235,0.2), transparent 36%), radial-gradient(circle at 80% 82%, rgba(239,68,68,0.18), transparent 34%), radial-gradient(circle at 50% 54%, rgba(16,185,129,0.12), transparent 28%)",
                                     pointerEvents: "none",
                                 }}
                             />
@@ -100,9 +100,9 @@ function ProfilePhotoScene({ currentAzimuth }: { currentAzimuth: number }) {
                                         padding: "8px 12px",
                                         fontSize: 12,
                                         fontWeight: 700,
-                                        color: "#bfdbfe",
+                                        color: "#a7f3d0",
                                         background: "rgba(17,24,39,0.72)",
-                                        border: "1px solid rgba(96,165,250,0.28)",
+                                        border: "1px solid rgba(16,185,129,0.28)",
                                         backdropFilter: "blur(10px)",
                                     }}
                                 >

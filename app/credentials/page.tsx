@@ -27,7 +27,7 @@ export default function Credentials() {
 
   const stats = useMemo(
     () => [
-      { label: "Internships", value: String(workexperience.length) },
+      { label: "Experience Entries", value: String(workexperience.length) },
       { label: "Publication", value: String(publications.length) },
       { label: "Certifications", value: String(certificates.length) },
     ],
@@ -41,9 +41,9 @@ export default function Credentials() {
       <LenisProvider />
 
       <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute left-[8%] top-28 h-80 w-80 rounded-full bg-red-500/15 blur-3xl" />
-        <div className="absolute right-[10%] top-[36%] h-[26rem] w-[26rem] rounded-full bg-amber-500/12 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 h-72 w-[34rem] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute left-[8%] top-28 h-80 w-80 rounded-full nyc-glow-red blur-3xl" />
+        <div className="absolute right-[10%] top-[36%] h-[26rem] w-[26rem] rounded-full nyc-glow-gold blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 h-72 w-[34rem] -translate-x-1/2 rounded-full nyc-glow-green blur-3xl" />
       </div>
 
       <div className="mx-auto mt-12 max-w-7xl px-4">
@@ -73,7 +73,7 @@ export default function Credentials() {
 
         <section className="mb-16">
           <div className="mb-6 flex items-center gap-3">
-            <BriefcaseBusiness className={`h-5 w-5 ${isDark ? "text-blue-300" : "text-blue-700"}`} />
+            <BriefcaseBusiness className={`h-5 w-5 ${isDark ? "text-cyan-300" : "text-cyan-700"}`} />
             <h2 className={`text-3xl font-semibold tracking-[-0.02em] ${isDark ? "text-white" : "text-gray-950"}`}>
               Work Experience
             </h2>
@@ -110,7 +110,7 @@ export default function Credentials() {
                 <ul className={`mb-5 space-y-3 text-sm leading-7 ${isDark ? "text-white/70" : "text-gray-600"}`}>
                   {item.responsibilities.map((responsibility) => (
                     <li key={responsibility} className="flex gap-3">
-                      <span className={`mt-2 h-2 w-2 rounded-full ${isDark ? "bg-blue-300" : "bg-blue-600"}`} />
+                      <span className={`mt-2 h-2 w-2 rounded-full ${isDark ? "bg-emerald-300" : "bg-emerald-600"}`} />
                       <span>{responsibility}</span>
                     </li>
                   ))}
@@ -122,8 +122,8 @@ export default function Credentials() {
                       key={tech}
                       className={`rounded-full border px-3 py-1 text-xs font-medium ${
                         isDark
-                          ? "border-blue-500/35 bg-blue-500/10 text-blue-200"
-                          : "border-blue-200 bg-blue-50 text-blue-700"
+                          ? "border-emerald-500/35 bg-emerald-500/10 text-emerald-200"
+                          : "border-emerald-200 bg-emerald-50 text-emerald-700"
                       }`}
                     >
                       {tech}
@@ -272,7 +272,7 @@ export default function Credentials() {
 
         <section>
           <div className="mb-6 flex items-center gap-3">
-            <Award className={`h-5 w-5 ${isDark ? "text-orange-300" : "text-orange-700"}`} />
+            <Award className={`h-5 w-5 ${isDark ? "text-red-300" : "text-red-700"}`} />
             <h2 className={`text-3xl font-semibold tracking-[-0.02em] ${isDark ? "text-white" : "text-gray-950"}`}>
               Certifications
             </h2>
@@ -304,8 +304,8 @@ export default function Credentials() {
                       key={skill}
                       className={`rounded-full border px-3 py-1 text-xs font-medium ${
                         isDark
-                          ? "border-orange-500/35 bg-orange-500/10 text-orange-200"
-                          : "border-orange-200 bg-orange-50 text-orange-700"
+                          ? "border-red-500/35 bg-red-500/10 text-red-200"
+                          : "border-red-200 bg-red-50 text-red-700"
                       }`}
                     >
                       {skill}

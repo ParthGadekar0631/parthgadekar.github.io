@@ -39,6 +39,7 @@ export const bvp_icon = "/icons/mumbai-badge.svg";
 export const city_icon = "/icons/agropeeper-badge.svg";
 export const ap_icon = "/icons/unified-mentors-logo.webp";
 export const dez_icon = "/icons/dezignolics-logo.webp";
+export const associated_press_icon = "/icons/associated-press-badge.svg";
 
 // Homepage screenshots
 export const musix = "/projects-previews/f1-telemetry-preview.svg";
@@ -72,6 +73,12 @@ export const creditCardFraudPreview = "/projects-previews/credit-card-fraud-prev
 export const heartDiseasePreview = "/projects-previews/heart-disease-preview.svg";
 export const blockchainVotingPreview = "/projects-previews/blockchain-voting-preview.svg";
 export const aiFinancialPortfolioPreview = "/projects-previews/ai-financial-portfolio-preview.svg";
+export const salesRevenuePreview = "/projects-previews/sales-revenue-preview.svg";
+export const cloudInfrastructurePreview = "/projects-previews/cloud-infrastructure-preview.svg";
+export const athletePerformancePreview = "/projects-previews/athlete-performance-preview.svg";
+export const realtimeAiEvaluationPreview = "/projects-previews/realtime-ai-evaluation-preview.svg";
+export const linkedinAutomationPreview = "/projects-previews/linkedin-automation-preview.svg";
+export const jobIntelligencePreview = "/projects-previews/job-intelligence-preview.svg";
 export const virtualArtGuidePreview = "/projects-previews/virtual-art-guide-preview.svg";
 export const threatAssetToolPreview = "/projects-previews/threat-asset-tool-preview.svg";
 export const algorithmicTradingPreview = "/projects-previews/algorithmic-trading-preview.svg";

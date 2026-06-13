@@ -1,6 +1,23 @@
-import { city_icon, ap_icon, dez_icon } from "./images";
+import { city_icon, ap_icon, dez_icon, associated_press_icon } from "./images";
 
 const workexperience = [
+  {
+    position: "Elections Automated Web Scraper",
+    company: "The Associated Press",
+    href: "https://apnews.com/",
+    linkedinUrl: "https://www.linkedin.com/in/parthgadekar622/",
+    photo: "/assets/associated-press-experience.svg",
+    logo: associated_press_icon,
+    duration: "April 2026 - Present",
+    summary:
+      "Current work focused on election-night data capture, scraper reliability, and automation flows for tracking polling updates, result changes, and high-frequency newsroom signals.",
+    tech: ["Python", "Selenium", "BeautifulSoup", "Automation", "Monitoring"],
+    responsibilities: [
+      "Built and maintained automated scraping workflows for election result feeds and polling-related public data sources.",
+      "Added validation, retry-safe processing, and monitoring logic so result updates could be captured reliably during fast-moving reporting windows.",
+      "Focused on repeatable automation pipelines that reduce manual intervention while improving result freshness and change visibility.",
+    ],
+  },
   {
     position: "Web Development Intern",
     company: "Unified Mentors",

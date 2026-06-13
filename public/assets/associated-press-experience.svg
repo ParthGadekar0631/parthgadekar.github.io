@@ -1,0 +1,71 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#0C1018"/>
+  <rect x="0" y="0" width="1600" height="900" fill="url(#paint0_radial)"/>
+  <rect x="0" y="0" width="1600" height="900" fill="url(#paint1_radial)"/>
+  <g opacity="0.18">
+    <path d="M78 128H1522" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M78 236H1522" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M78 344H1522" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M78 452H1522" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M78 560H1522" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M78 668H1522" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+  </g>
+  <g opacity="0.18">
+    <path d="M210 96V760" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M486 96V760" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M762 96V760" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M1038 96V760" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+    <path d="M1314 96V760" stroke="white" stroke-width="2" stroke-dasharray="8 12"/>
+  </g>
+  <rect x="110" y="88" width="312" height="208" rx="36" fill="rgba(255,255,255,0.95)"/>
+  <rect x="134" y="110" width="264" height="164" rx="28" fill="#111318"/>
+  <rect x="156" y="232" width="220" height="18" rx="9" fill="#ED1C24"/>
+  <path d="M175 212V140H240.5C269.5 140 286 156 286 176C286 196.5 269.5 212 240.5 212H204V198H175ZM204 184H235.5C251 184 260.5 180 260.5 176C260.5 172 251 168 235.5 168H204V184Z" fill="white"/>
+  <path d="M305 212V156H334V212H305Z" fill="white"/>
+  <g opacity="0.96">
+    <rect x="920" y="150" width="420" height="220" rx="34" fill="#111721" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+    <text x="960" y="210" fill="#F3F4F6" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700">Election Desk</text>
+    <text x="960" y="260" fill="#F59E0B" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Automated Results Monitoring</text>
+    <rect x="962" y="294" width="130" height="22" rx="11" fill="#1D4ED8"/>
+    <rect x="1110" y="294" width="110" height="22" rx="11" fill="#ED1C24"/>
+    <rect x="1234" y="294" width="70" height="22" rx="11" fill="#F59E0B"/>
+    <text x="962" y="348" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="22">Polling feeds</text>
+    <text x="962" y="386" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="22">Scrapers + Selenium checks</text>
+    <text x="962" y="424" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="22">Change detection + alerts</text>
+  </g>
+  <g opacity="0.9">
+    <rect x="188" y="420" width="490" height="252" rx="38" fill="#121827" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+    <text x="226" y="474" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">State Feed Throughput</text>
+    <path d="M246 608L316 548L390 562L470 498L562 512L628 456" stroke="#F59E0B" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="246" cy="608" r="12" fill="#F59E0B"/>
+    <circle cx="316" cy="548" r="12" fill="#F59E0B"/>
+    <circle cx="390" cy="562" r="12" fill="#F59E0B"/>
+    <circle cx="470" cy="498" r="12" fill="#F59E0B"/>
+    <circle cx="562" cy="512" r="12" fill="#F59E0B"/>
+    <circle cx="628" cy="456" r="12" fill="#F59E0B"/>
+    <path d="M246 636H628" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+    <path d="M246 520H246V636" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+  </g>
+  <g opacity="0.92">
+    <rect x="760" y="462" width="660" height="210" rx="38" fill="#111721" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+    <text x="800" y="520" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Live Race Snapshot</text>
+    <rect x="804" y="552" width="118" height="62" rx="22" fill="rgba(29,78,216,0.22)" stroke="#1D4ED8" stroke-width="2"/>
+    <rect x="948" y="532" width="118" height="82" rx="22" fill="rgba(237,28,36,0.2)" stroke="#ED1C24" stroke-width="2"/>
+    <rect x="1092" y="566" width="118" height="48" rx="22" fill="rgba(245,158,11,0.2)" stroke="#F59E0B" stroke-width="2"/>
+    <rect x="1236" y="512" width="118" height="102" rx="22" fill="rgba(37,99,235,0.18)" stroke="#2563EB" stroke-width="2"/>
+    <text x="822" y="647" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="22">NY</text>
+    <text x="967" y="647" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="22">CA</text>
+    <text x="1110" y="647" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="22">PA</text>
+    <text x="1248" y="647" fill="#E5E7EB" font-family="Arial, Helvetica, sans-serif" font-size="22">TX</text>
+  </g>
+  <defs>
+    <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1228 160) rotate(132.853) scale(518.749 508.481)">
+      <stop stop-color="#ED1C24" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ED1C24" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="paint1_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(396 696) rotate(47.8099) scale(526.982 480.439)">
+      <stop stop-color="#1D4ED8" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#1D4ED8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

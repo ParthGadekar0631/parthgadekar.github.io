@@ -349,6 +349,7 @@ export const projects: Project[] = [
     description:
       "Business dashboard for tracking revenue movement, sales health, and trend-driven performance reporting.",
     tags: ["Dashboard", "Analytics", "Revenue", "BI"],
+    githubRepo: "ParthGadekar0631/Sales-Performance-Revenue-Trend-Dashboard",
     tech: ["SQL", "Visualization", "Dashboarding", "Reporting"],
     highlights: [
       "Built KPI-oriented revenue and sales trend views for business reporting.",
@@ -357,6 +358,92 @@ export const projects: Project[] = [
     role: "Data Analyst",
     timeframe: "2023",
     category: "Dashboard / Revenue Analytics / BI",
+    section: "Data Science",
+  },
+  {
+    id: "cloud-infrastructure-deployment-aws",
+    title: "Cloud Infrastructure Deployment on AWS",
+    description:
+      "AWS deployment project focused on provisioning cloud infrastructure, application rollout, and production-style environment setup.",
+    tags: ["AWS", "Cloud", "DevOps", "Infrastructure"],
+    githubRepo: "ParthGadekar0631/Cloud-Infrastructure-Deployment-on-AWS",
+    tech: ["AWS", "Java", "Cloud Deployment", "Infrastructure", "Automation"],
+    highlights: [
+      "Structured the project around deploying application components into an AWS-hosted environment.",
+      "Focused on reliable infrastructure setup, cloud networking, and repeatable deployment workflows.",
+    ],
+    role: "Cloud Engineer",
+    timeframe: "2026",
+    category: "Cloud / DevOps / AWS",
+    section: "Full-Stack & Systems",
+  },
+  {
+    id: "athlete-performance-monitoring",
+    title: "Athlete Performance Monitoring & Injury Risk Analytics System",
+    description:
+      "Sports analytics system for tracking athlete performance signals, modeling injury risk, and surfacing readiness trends from monitored metrics.",
+    tags: ["Sports Analytics", "Machine Learning", "Monitoring", "Health"],
+    githubRepo:
+      "ParthGadekar0631/Athlete-Performance-Monitoring-Injury-Risk-Analytics-System",
+    tech: ["Python", "Analytics", "Risk Modeling", "Monitoring", "Visualization"],
+    highlights: [
+      "Built the project around athlete monitoring workflows and injury-risk oriented analytics.",
+      "Combined tracked performance metrics with model-driven insights for sports-readiness analysis.",
+    ],
+    role: "ML Engineer",
+    timeframe: "2026",
+    category: "Sports Analytics / AI / Monitoring",
+    section: "AI & ML",
+  },
+  {
+    id: "realtime-conversational-ai-evaluation",
+    title: "Real-Time Conversational AI Evaluation System",
+    description:
+      "Realtime LLM evaluation workflow for scoring conversational quality, latency, and response behavior across live AI interactions.",
+    tags: ["AI", "Evaluation", "Realtime", "LLMOps"],
+    githubRepo: "ParthGadekar0631/Real-Time-Conversational-AI-Evaluation-System",
+    tech: ["Python", "Conversational AI", "Evaluation", "Observability", "Realtime"],
+    highlights: [
+      "Designed an evaluation layer for measuring conversational quality and runtime response behavior.",
+      "Focused on live scoring, observability-style analysis, and repeatable AI performance checks.",
+    ],
+    role: "AI Engineer",
+    timeframe: "2026",
+    category: "AI Evaluation / Realtime / LLMOps",
+    section: "AI & ML",
+  },
+  {
+    id: "linkedin-content-automation-agent",
+    title: "LinkedIn Content Automation Agent",
+    description:
+      "Agentic content workflow for drafting, refining, and automating LinkedIn post generation with reusable prompts and delivery logic.",
+    tags: ["Agentic AI", "Automation", "Content", "TypeScript"],
+    githubRepo: "ParthGadekar0631/LinkedIn-Content-Automation-Agent",
+    tech: ["TypeScript", "Automation", "Prompting", "Agent Workflows"],
+    highlights: [
+      "Built an agent-style workflow for generating and refining LinkedIn-ready content.",
+      "Focused on reusable prompting, automation, and content pipeline consistency.",
+    ],
+    role: "Automation Engineer",
+    timeframe: "2026",
+    category: "Agentic AI / Automation / Content",
+    section: "AI & ML",
+  },
+  {
+    id: "automated-job-intelligence-pipeline",
+    title: "Automated Job Intelligence Pipeline",
+    description:
+      "Automation pipeline for collecting job-market signals, organizing opportunity data, and generating structured intelligence for targeted applications.",
+    tags: ["Automation", "Pipeline", "Analytics", "Jobs"],
+    githubRepo: "ParthGadekar0631/Automated-Job-Intelligence-Pipeline",
+    tech: ["Python", "Data Pipeline", "Automation", "Scraping", "Analytics"],
+    highlights: [
+      "Built a pipeline for collecting and organizing job-related data into structured outputs.",
+      "Focused on automation, filtering, and insight generation for opportunity tracking workflows.",
+    ],
+    role: "Data Engineer",
+    timeframe: "2026",
+    category: "Automation / Job Intelligence / Pipeline",
     section: "Data Science",
   },
   {

@@ -103,8 +103,8 @@ export default function ContactPage() {
   }, []);
 
   const colors = {
-    primary: isDark ? 'bg-red-600' : 'bg-red-300',
-    secondary: isDark ? 'bg-yellow-500' : 'bg-yellow-300',
+    primary: isDark ? 'nyc-glow-red' : 'bg-blue-300',
+    secondary: isDark ? 'nyc-glow-amber' : 'bg-emerald-300',
     textPrimary: isDark ? 'text-primary dark:text-primary' : 'text-primary',
     textSecondary: isDark ? 'text-secondary dark:text-secondary' : 'text-secondary',
     glassContainer: isDark ? 'glass-container rounded-2xl' : 'bg-white rounded-2xl border border-gray-200 shadow',
@@ -163,10 +163,10 @@ export default function ContactPage() {
       {/* Background gradient blur effect */}
       <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
         <div
-          className={`absolute top-20 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-30 spiral-1 ${colors.primary}`}
+          className={`absolute top-20 left-[16%] w-96 h-96 rounded-full blur-3xl opacity-35 spiral-1 ${colors.primary}`}
         />
         <div
-          className={`absolute bottom-40 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-30 spiral-2 ${colors.secondary}`}
+          className={`absolute bottom-40 right-[14%] w-96 h-96 rounded-full blur-3xl opacity-32 spiral-2 ${colors.secondary}`}
         />
       </div>
 

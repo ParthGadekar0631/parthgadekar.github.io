@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#07101b"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#1d428a"/>
+  <text x="110" y="145" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">Automated Job Intelligence Pipeline</text>
+  <text x="110" y="200" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Python • Automation • Data Pipeline • Opportunity Analytics</text>
+
+  <rect x="100" y="255" width="455" height="330" rx="28" fill="#0f172a" stroke="#60a5fa"/>
+  <text x="140" y="315" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Collection Stages</text>
+  <rect x="145" y="370" width="125" height="120" rx="20" fill="#13233d" stroke="#60a5fa"/>
+  <rect x="290" y="370" width="125" height="120" rx="20" fill="#13233d" stroke="#f58426"/>
+  <rect x="435" y="370" width="90" height="120" rx="20" fill="#13233d" stroke="#60a5fa"/>
+  <text x="177" y="435" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Collect</text>
+  <text x="316" y="435" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Filter</text>
+  <text x="455" y="435" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Rank</text>
+
+  <rect x="620" y="255" width="480" height="330" rx="28" fill="#0f172a" stroke="#f59e0b"/>
+  <text x="660" y="315" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Insight Feed</text>
+  <line x1="680" y1="510" x2="1040" y2="510" stroke="#334155" stroke-width="6"/>
+  <polyline points="700,470 770,435 840,445 910,390 980,360 1050,305" fill="none" stroke="#f58426" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="700" cy="470" r="10" fill="#f58426"/>
+  <circle cx="770" cy="435" r="10" fill="#f58426"/>
+  <circle cx="840" cy="445" r="10" fill="#f58426"/>
+  <circle cx="910" cy="390" r="10" fill="#f58426"/>
+  <circle cx="980" cy="360" r="10" fill="#f58426"/>
+  <circle cx="1050" cy="305" r="10" fill="#f58426"/>
+
+  <text x="110" y="650" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Job scraping • filtering • pipeline-based opportunity intelligence</text>
+</svg>

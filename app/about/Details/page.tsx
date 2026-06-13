@@ -10,7 +10,7 @@ const education = [
   {
     icon: syr_icon,
     image: syr,
-    color: "#a855f7",
+    color: "#1D428A",
     title: "Stevens Institute of Technology",
     subtitle: "Master of Science in Computer Science",
     description:
@@ -19,7 +19,7 @@ const education = [
   {
     icon: sppu_icon,
     image: sppu,
-    color: "#f59e0b",
+    color: "#EF4444",
     title: "University of Mumbai",
     subtitle: "A.C. Patil College of Engineering · Bachelor of Engineering in Information Technology",
     description:

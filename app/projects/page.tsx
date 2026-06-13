@@ -60,6 +60,12 @@ const projectPreviewMap: Record<string, string | undefined> = {
   "anxiety-attack-detection-system": images.anxietyAttackPreview,
   "point-of-sale-system": images.pointOfSalePreview,
   "gold-price-prediction": images.goldPricePreview,
+  "sales-performance-revenue-dashboard": images.salesRevenuePreview,
+  "cloud-infrastructure-deployment-aws": images.cloudInfrastructurePreview,
+  "athlete-performance-monitoring": images.athletePerformancePreview,
+  "realtime-conversational-ai-evaluation": images.realtimeAiEvaluationPreview,
+  "linkedin-content-automation-agent": images.linkedinAutomationPreview,
+  "automated-job-intelligence-pipeline": images.jobIntelligencePreview,
   "rent-it": images.rentItPreview,
   "enterprise-network-threat-assessment": images.enterpriseThreatPreview,
   "client-segmentation-analytics": images.clientSegmentationPreview,
@@ -515,8 +521,8 @@ function ProjectsClient({ items: initialItems }: { items: Enriched[] }) {
     let isMounted = true;
     requestAnimationFrame(() => {
       if (isMounted) setMounted(true);
-      const warmPrimaryShades = ["bg-red-500", "bg-rose-500", "bg-orange-500", "bg-amber-500"];
-      const warmSecondaryShades = ["bg-emerald-500", "bg-lime-500", "bg-yellow-500", "bg-orange-400"];
+      const warmPrimaryShades = ["nyc-glow-red", "nyc-glow-rose", "nyc-glow-amber", "nyc-glow-gold"];
+      const warmSecondaryShades = ["nyc-glow-green", "nyc-glow-teal", "nyc-glow-gold", "nyc-glow-amber"];
       if (isMounted) {
         setColors({
           primary: warmPrimaryShades[Math.floor(Math.random() * warmPrimaryShades.length)],
@@ -537,8 +543,8 @@ function ProjectsClient({ items: initialItems }: { items: Enriched[] }) {
     <div className={`min-h-screen py-16 ${isDark ? "dark" : ""}`}>
       <LenisProvider />
       <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className={`absolute top-20 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-30 spiral-1 ${colors.primary}`} />
-        <div className={`absolute bottom-40 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-30 spiral-2 ${colors.secondary}`} />
+        <div className={`absolute top-20 left-[15%] w-96 h-96 rounded-full blur-3xl opacity-38 spiral-1 ${colors.primary}`} />
+        <div className={`absolute bottom-40 right-[12%] w-96 h-96 rounded-full blur-3xl opacity-32 spiral-2 ${colors.secondary}`} />
       </div>
 
       <div className="max-w-7xl mt-12 mx-auto px-4">
@@ -588,7 +594,7 @@ function ProjectsClient({ items: initialItems }: { items: Enriched[] }) {
               onClick={() => setSelectedSection("All")}
               className={`
                 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300
-                border ${isDark ? "border-gray-700/50 text-secondary hover:border-red-500/50 hover:text-red-400" : "border-white/40 text-secondary hover:border-red-500/50 hover:text-red-600"}
+                border ${isDark ? "border-gray-700/50 text-secondary hover:border-emerald-500/50 hover:text-emerald-300" : "border-white/40 text-secondary hover:border-emerald-500/50 hover:text-emerald-700"}
               `}
             >
               Clear Filters
@@ -650,11 +656,11 @@ function ProjectPreview({
       className={`relative overflow-hidden rounded-2xl border p-5 ${isDark ? "border-white/10 bg-slate-950/60" : "border-black/10 bg-slate-100/80"}`}
       style={{ height: "220px" }}
     >
-      <div className="absolute inset-0 opacity-70" style={{ background: "linear-gradient(135deg, rgba(59,130,246,0.16), rgba(168,85,247,0.18))" }} />
+      <div className="absolute inset-0 opacity-70" style={{ background: "linear-gradient(135deg, rgba(37,99,235,0.14), rgba(239,68,68,0.14), rgba(16,185,129,0.12))" }} />
       <div className="relative flex h-full flex-col">
         <div>
           <div className={`line-clamp-2 text-lg font-semibold leading-tight ${isDark ? "text-white" : "text-gray-900"}`}>{title}</div>
-          {category ? <div className={`mt-2 text-xs font-medium ${isDark ? "text-blue-300" : "text-blue-700"}`}>{category}</div> : null}
+          {category ? <div className={`mt-2 text-xs font-medium ${isDark ? "text-emerald-300" : "text-emerald-700"}`}>{category}</div> : null}
         </div>
         <div className="mt-5 grid grid-cols-3 gap-3">
           {[primary, secondary, tertiary].map((chip, index) => (
@@ -671,7 +677,7 @@ function ProjectPreview({
             {[28, 44, 36, 58, 42, 68].map((height, index) => (
               <span
                 key={index}
-                className={`flex-1 rounded-t-xl ${isDark ? "bg-blue-400/50" : "bg-blue-500/50"}`}
+                className={`flex-1 rounded-t-xl ${isDark ? "bg-emerald-400/45" : "bg-emerald-500/45"}`}
                 style={{ height: `${height}%` }}
               />
             ))}
@@ -708,12 +714,12 @@ const ProjectCard = memo(function ProjectCard({ entry, isDark }: { entry: Enrich
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 flex-1 pr-2">
               <h2
-                className={`mb-1 max-w-[15ch] min-h-[112px] font-bold tracking-[-0.02em] break-words [overflow-wrap:anywhere] transition-colors duration-300 sm:max-w-[17ch] ${titleSizingClasses} ${isDark ? "text-white group-hover:text-blue-400" : "text-gray-900 group-hover:text-blue-600"}`}
+                className={`mb-1 max-w-[15ch] min-h-[112px] font-bold tracking-[-0.02em] break-words [overflow-wrap:anywhere] transition-colors duration-300 sm:max-w-[17ch] ${titleSizingClasses} ${isDark ? "text-white group-hover:text-red-400" : "text-gray-900 group-hover:text-red-600"}`}
               >
                 {project.title}
               </h2>
               {project.category && (
-                <div className={`text-xs my-2 font-semibold ${isDark ? "text-blue-300" : "text-blue-700"}`}>{project.category}</div>
+                <div className={`text-xs my-2 font-semibold ${isDark ? "text-emerald-300" : "text-emerald-700"}`}>{project.category}</div>
               )}
             </div>
             {project.githubRepo && (
@@ -757,8 +763,8 @@ const ProjectCard = memo(function ProjectCard({ entry, isDark }: { entry: Enrich
                   key={tag}
                   className={`inline-flex max-w-full items-center rounded-full border px-3 py-1 text-xs font-medium leading-5 transition-all duration-300 ${
                     isDark
-                      ? "bg-blue-900/30 text-blue-300 border-blue-700/50 group-hover:bg-blue-800/50"
-                      : "bg-blue-100/40 text-blue-700 border-blue-200/70 group-hover:bg-blue-100/60"
+                      ? "bg-emerald-900/20 text-emerald-200 border-emerald-700/40 group-hover:bg-red-900/20 group-hover:text-red-200 group-hover:border-red-700/40"
+                      : "bg-emerald-100/40 text-emerald-700 border-emerald-200/70 group-hover:bg-red-100/50 group-hover:text-red-700 group-hover:border-red-200/70"
                   }`}
                 >
                   {tag}

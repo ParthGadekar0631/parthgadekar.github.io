@@ -113,13 +113,17 @@ export default function ProjectPanel({
             alt={`${project.company} logo`}
             style={{
               width:
-                project.logo === '/icons/ap.png' || project.logo === '/icons/unified-mentors-logo.webp'
+                project.logo === '/icons/ap.png' ||
+                project.logo === '/icons/unified-mentors-logo.webp' ||
+                project.logo === '/icons/associated-press-badge.svg'
                   ? 80
                   : project.logo === '/icons/dezignolics-logo.webp'
                   ? 76
                   : 64,
               height:
-                project.logo === '/icons/ap.png' || project.logo === '/icons/unified-mentors-logo.webp'
+                project.logo === '/icons/ap.png' ||
+                project.logo === '/icons/unified-mentors-logo.webp' ||
+                project.logo === '/icons/associated-press-badge.svg'
                   ? 80
                   : project.logo === '/icons/dezignolics-logo.webp'
                   ? 76

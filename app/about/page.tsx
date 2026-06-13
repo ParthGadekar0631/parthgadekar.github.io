@@ -12,12 +12,12 @@ import Skills1 from './Skills/page1';
 function getColors(isDark: boolean) {
     if (isDark) {
         return {
-            primary: 'bg-red-600',
-            secondary: 'bg-amber-500'
+            primary: 'nyc-glow-red',
+            secondary: 'nyc-glow-amber'
         };
     } else {
         return {
-            primary: 'bg-orange-200',
+            primary: 'bg-red-200',
             secondary: 'bg-emerald-200'
         };
     }
@@ -87,8 +87,8 @@ export default function Home() {
 
                 {mounted && (
                     <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-                        <div className={`absolute top-20 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-30 spiral-1 ${colors.primary}`} />
-                        <div className={`absolute bottom-40 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-30 spiral-2 ${colors.secondary}`} />
+                        <div className={`absolute top-20 left-[18%] h-[26rem] w-[26rem] rounded-full blur-3xl opacity-40 spiral-1 ${colors.primary}`} />
+                        <div className={`absolute bottom-24 right-[14%] h-[24rem] w-[24rem] rounded-full blur-3xl opacity-35 spiral-2 ${colors.secondary}`} />
                     </div>
                 )}
             </div>

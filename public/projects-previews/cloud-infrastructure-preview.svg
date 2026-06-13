@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#07101b"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#1d428a"/>
+  <text x="110" y="145" fill="#fff" font-size="48" font-family="Segoe UI, Arial" font-weight="700">Cloud Infrastructure Deployment on AWS</text>
+  <text x="110" y="200" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">AWS • Java • Deployment • Infrastructure</text>
+
+  <rect x="95" y="250" width="460" height="330" rx="28" fill="#0f172a" stroke="#60a5fa"/>
+  <text x="145" y="315" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Infrastructure Stack</text>
+  <rect x="145" y="370" width="110" height="120" rx="20" fill="#13233d" stroke="#60a5fa"/>
+  <rect x="275" y="370" width="110" height="120" rx="20" fill="#13233d" stroke="#f58426"/>
+  <rect x="405" y="370" width="110" height="120" rx="20" fill="#13233d" stroke="#60a5fa"/>
+  <text x="176" y="435" fill="#e5e7eb" font-size="28" font-family="Segoe UI, Arial">VPC</text>
+  <text x="302" y="435" fill="#e5e7eb" font-size="28" font-family="Segoe UI, Arial">EC2</text>
+  <text x="431" y="435" fill="#e5e7eb" font-size="28" font-family="Segoe UI, Arial">RDS</text>
+  <line x1="255" y1="430" x2="275" y2="430" stroke="#e5e7eb" stroke-width="8"/>
+  <line x1="385" y1="430" x2="405" y2="430" stroke="#e5e7eb" stroke-width="8"/>
+
+  <rect x="610" y="250" width="500" height="330" rx="28" fill="#0f172a" stroke="#f59e0b"/>
+  <text x="650" y="315" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Deployment Flow</text>
+  <polyline points="680,470 760,390 840,440 920,340 1000,390" fill="none" stroke="#f58426" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="680" cy="470" r="11" fill="#f58426"/>
+  <circle cx="760" cy="390" r="11" fill="#f58426"/>
+  <circle cx="840" cy="440" r="11" fill="#f58426"/>
+  <circle cx="920" cy="340" r="11" fill="#f58426"/>
+  <circle cx="1000" cy="390" r="11" fill="#f58426"/>
+  <rect x="675" y="355" width="145" height="46" rx="16" fill="#13233d" stroke="#60a5fa"/>
+  <text x="713" y="385" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Deploy</text>
+  <rect x="840" y="355" width="170" height="46" rx="16" fill="#13233d" stroke="#f58426"/>
+  <text x="867" y="385" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Scale Ready</text>
+
+  <text x="110" y="650" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Cloud rollout • AWS setup • deployment automation</text>
+</svg>

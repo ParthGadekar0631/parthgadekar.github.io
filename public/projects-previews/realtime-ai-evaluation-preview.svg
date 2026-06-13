@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780">
+  <rect width="1200" height="780" rx="40" fill="#07101b"/>
+  <rect x="60" y="60" width="1080" height="660" rx="28" fill="#111827" stroke="#1d428a"/>
+  <text x="110" y="145" fill="#fff" font-size="46" font-family="Segoe UI, Arial" font-weight="700">Real-Time Conversational AI Evaluation System</text>
+  <text x="110" y="200" fill="#93c5fd" font-size="24" font-family="Segoe UI, Arial">Python • Realtime • LLM Evaluation • Observability</text>
+
+  <rect x="100" y="255" width="460" height="330" rx="28" fill="#0f172a" stroke="#60a5fa"/>
+  <text x="140" y="315" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Conversation Quality</text>
+  <rect x="150" y="360" width="360" height="62" rx="20" fill="#13233d" stroke="#60a5fa"/>
+  <rect x="150" y="448" width="260" height="62" rx="20" fill="#13233d" stroke="#f58426"/>
+  <text x="185" y="400" fill="#e5e7eb" font-size="26" font-family="Segoe UI, Arial">Response coherence score</text>
+  <text x="185" y="488" fill="#e5e7eb" font-size="26" font-family="Segoe UI, Arial">Latency + trace checks</text>
+
+  <rect x="620" y="255" width="480" height="330" rx="28" fill="#0f172a" stroke="#f59e0b"/>
+  <text x="660" y="315" fill="#fff" font-size="34" font-family="Segoe UI, Arial" font-weight="700">Realtime Signal Flow</text>
+  <polyline points="685,500 755,455 825,405 895,375 965,345 1035,300" fill="none" stroke="#f58426" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="685" cy="500" r="10" fill="#f58426"/>
+  <circle cx="755" cy="455" r="10" fill="#f58426"/>
+  <circle cx="825" cy="405" r="10" fill="#f58426"/>
+  <circle cx="895" cy="375" r="10" fill="#f58426"/>
+  <circle cx="965" cy="345" r="10" fill="#f58426"/>
+  <circle cx="1035" cy="300" r="10" fill="#f58426"/>
+  <rect x="695" y="360" width="160" height="46" rx="16" fill="#13233d" stroke="#60a5fa"/>
+  <text x="731" y="390" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Scoring</text>
+  <rect x="875" y="360" width="160" height="46" rx="16" fill="#13233d" stroke="#f58426"/>
+  <text x="906" y="390" fill="#e5e7eb" font-size="24" font-family="Segoe UI, Arial">Tracing</text>
+
+  <text x="110" y="650" fill="#e5e7eb" font-size="30" font-family="Segoe UI, Arial">Live evaluation • latency visibility • conversational QA</text>
+</svg>

@@ -216,7 +216,7 @@ export default function Home() {
                             position: 'absolute',
                             inset: 0,
                             background:
-                                'radial-gradient(circle at 50% 26%, rgba(115, 58, 255, 0.16), transparent 32%), radial-gradient(circle at 18% 74%, rgba(59, 130, 246, 0.12), transparent 26%), radial-gradient(circle at 82% 68%, rgba(251, 146, 60, 0.12), transparent 24%)',
+                                'radial-gradient(circle at 48% 24%, rgba(0, 107, 182, 0.18), transparent 30%), radial-gradient(circle at 18% 74%, rgba(245, 132, 38, 0.16), transparent 25%), radial-gradient(circle at 82% 68%, rgba(241, 241, 241, 0.08), transparent 22%)',
                             pointerEvents: 'none',
                         }}
                     />
