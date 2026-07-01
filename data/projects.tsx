@@ -14,6 +14,9 @@ export type Project = {
   notebookUrl?: string;
   emoji?: string;
   section?: string;
+  featured?: boolean;
+  priority?: number;
+  updatedAt?: string | null;
 };
 
 export const projects: Project[] = [
